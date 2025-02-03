@@ -1,0 +1,17 @@
+
+/* 로고 스타일 */
+.logo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ff6347; /* 밝은 주황색으로 강조 */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* 텍스트 그림자 */
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* 로고 강조 효과 */
+.logo:hover {
+    transform: scale(1.1); /* 확대 효과 */
+    color: #ff4500; /* 더 강한 색상으로 변경 */
+}

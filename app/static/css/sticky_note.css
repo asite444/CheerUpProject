@@ -1,0 +1,13 @@
+/* 포스트잇 스타일 */
+#sticky-note {
+    display: none;
+    position: absolute;
+    background: #ffff88;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    max-width: 1000px;
+    z-index: 1000;
+}

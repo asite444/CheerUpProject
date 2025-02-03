@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>분석</title>
+    <!-- css경로 -->
+    <link rel="stylesheet" href="..\static\css\topmenu.css">
+    <link rel="stylesheet" href="..\static\css\logo.css">
+     <link rel="stylesheet" href="..\static\css\toggle.css"> 
+     <link rel="stylesheet" href="..\static\css\container.css"> 
+     <link rel="stylesheet" href="..\static\css\sticky_note.css"> 
+    <!--  jquery 사용하기 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- 디자인된 경고,확인창 사용하기-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script> 
+    
+
+
+    <script>
+  // 서버에서 전달된 JSON 데이터를 삽입
+  const techStackData = JSON.parse('{{ stack_data | tojson | safe }}');      // 현재 예시데이터가 온다. 이건 나중에 재수정할것것
+  console.log(techStackData)
+  let techKeywords = [
+    "R", "C", "C++", "C#", "PHP", "Ruby", "Scala", "Perl", "Go", "Rust", 
+    "ElasticSearch", "Java", "Python", "Spring Boot", "HTML5", "JavaScript",
+    "Kubernetes", "Docker", "Ansible", "TensorFlow", "PyTorch", "박사 학위","석사 학위","Swift"
+];
+const maxRetries = 3; // 최대 재시도 횟수
+// 카테고리별 ID 매핑
+const categoryMapping = {
+    "language": "#lang-list",
+    "framework": "#frame-list",
+    "library": "#lib-list",
+    "tool": "#devtool-list"
+};
+$(document).ready(function () {
+    extractKeywords(); // 동적으로 추가 키워드 감지
+    appendItemsToCategory(techStackData,categoryMapping);
+   
+    // initializeGapToggle();
+    // 아이템 리스트 클릭 이벤트 바인딩
+    $('.item-list').on('click', '.item', handleItemClick);
+
+    // X 버튼 클릭 이벤트 바인딩
+    $('.selected-items').on('click', '.remove-item', handleRemoveItem);
+
+    // 토글 버튼 클릭 이벤트 바인딩
+    $('.toggle-btn').on('click', handleToggleClick);
+
+    // 드래그 후 마우스 놓기 이벤트 바인딩
+    $(document).on('mouseup', handleMouseUp);
+}); // end
+/**
+ * AJAX 요청을 처리하고 실패 시 재시도
+ */
+ function processAjaxRequest(selectedText, mouseX, mouseY, retries = 0) {
+    $.ajax({
+        url: "/process_ajax/", // FastAPI 엔드포인트
+        type: "POST",
+        data: { keywords: selectedText },
+        xhrFields: { responseType: 'blob' }, // Blob 데이터 처리
+        success: function (data) {
+            const url = URL.createObjectURL(data); // Blob URL 생성
+            const img = new Image();
+            img.src = url;
+            img.style.maxWidth = "100%";
+
+            img.onload = function () {
+                $("#sticky-note").html(img); // 이미지를 sticky-note에 추가
+                URL.revokeObjectURL(url); // Blob URL 해제
+            };
+
+            img.onerror = function () {
+                console.error("이미지 로드 실패: Blob URL에서 에러 발생");
+                $("#sticky-note").html("<p>이미지 로드에 실패했습니다.</p>");
+            };
+        },
+        error: function (xhr, status, error) {
+            if (retries < maxRetries) {
+                console.warn(`요청 실패. 재시도 중 (${retries + 1}/${maxRetries})...`);
+                const retryDelay = 1000 * Math.pow(2, retries); // 지수 백오프
+                setTimeout(() => {
+                    processAjaxRequest(selectedText, mouseX, mouseY, retries + 1);
+                }, retryDelay);
+            } else {
+                console.error(`최대 재시도 도달. 에러: ${error}`);
+                $("#sticky-note").html("<p>데이터 검색 실패. 나중에 다시 시도해주세요.</p>");
+            }
+        }
+    });
+}
+
+/**
+ * 포스트잇 표시 함수
+ */
+function showStickyNote(mouseX, mouseY, text) {
+    const stickyNote = $("#sticky-note");
+    const windowWidth = window.innerWidth;
+    const stickyWidth = 300; // 포스트잇 예상 너비
+    let adjustedX = mouseX + 10; // 기본 위치는 마우스 오른쪽
+
+    // 화면 오른쪽 끝에 가까우면 왼쪽으로 표시
+    if (mouseX + stickyWidth > windowWidth) {
+        adjustedX = mouseX - stickyWidth - 10; // 왼쪽으로 이동
+    }
+
+    stickyNote.text(text)
+        .css({
+            top: mouseY + 10 + "px", // 마우스 아래쪽
+            left: adjustedX + "px"   // 조정된 X 좌표
+        })
+        .fadeIn(200);
+}
+
+/**
+ * 포스트잇 숨기기 함수
+ */
+function hideStickyNote() {
+    $("#sticky-note").fadeOut(200);
+}
+
+/**
+ * 페이지 로드 시 동적 키워드 추가
+ */
+function extractKeywords() {
+    const content = $("body").text();
+    const potentialKeywords = content.split(/[\s,.]+/); // 공백, 점, 쉼표로 단어 분리
+
+    const dynamicKeywords = potentialKeywords.filter(word =>
+        /^[A-Z][a-zA-Z0-9+#]*$/.test(word) ||  // 대문자로 시작하며 숫자와 특수문자 포함
+        /^[가-힣\s]+$/.test(word)               // 한글 키워드
+    );
+
+    // 동적으로 감지된 키워드를 기존 키워드에 병합 (중복 제거)
+    techKeywords = Array.from(new Set([...techKeywords, ...dynamicKeywords]));
+    //console.log("추가된 기술 키워드:", dynamicKeywords);
+}
+
+
+/*
+사용자가 입력한 정보 서버에 ajax전달
+*/
+function userInfoSubmitAjax() {
+    $('#user-input-form').off('submit').on('submit', function (event) {
+    event.preventDefault();
+
+    const selectedLangs = [];
+    const selectedFrames = [];
+    const selectedLibs = [];
+    const selectedDebTools = [];
+    const selectedJobs = [];
+
+    // 데이터 수집
+    $('#selected-lang .selected-item').each(function () {
+        selectedLangs.push($(this).data('value-selected'));
+    });
+    $('#selected-frame .selected-item').each(function () {
+        selectedFrames.push($(this).data('value-selected'));
+    });
+    $('#selected-lib .selected-item').each(function () {
+        selectedLibs.push($(this).data('value-selected'));
+    });
+    $('#selected-devtool .selected-item').each(function () {
+        selectedDebTools.push($(this).data('value-selected'));
+    });
+    $('#selected-job .selected-item').each(function () {
+        selectedJobs.push($(this).data('value-selected'));
+    });
+
+    const dataToSend = {
+        languages: selectedLangs,
+        frameworks: selectedFrames,
+        librarys: selectedLibs,
+        devtools: selectedDebTools,
+        jobs: selectedJobs,
+    };
+
+    // console.log('보낼 데이터:', dataToSend);
+
+    Swal.fire({
+        title: '분석을 진행하시겠습니까?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '확인',
+        cancelButtonText: '취소',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/user-input-data',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(dataToSend),
+                success: function (response) {
+                    $('#result-container').html(
+                        `<h1 id="result_arr">결과값 출력</h1>
+                         <p id="result_text">${response.message}</p>`
+                    );
+                },
+                error: function (xhr, status, error) {
+                    console.error('오류 발생:', error);
+                    $('#result-container').html(
+                        '<h1>오류</h1><p>데이터 전송 중 문제가 발생했습니다.</p>'
+                    );
+                },
+            });
+
+            Swal.fire({
+                title: '분석이 완료되었습니다',
+                icon: 'success',
+            });
+        }
+    });
+});
+
+}
+
+
+
+
+/**
+ * 공백기 입력칸 활성화/비활성화 초기화
+ */
+ function initializeGapToggle() {
+    $('#gap').on('change', function () {
+        if ($(this).val() === 'yes') {
+            $('#gap-details').show(); // 공백기 세부 입력칸 활성화
+        } else {
+            $('#gap-details').hide(); // 공백기 세부 입력칸 숨기기
+            $('#gap-description').val(''); // 입력값 초기화
+        }
+    });
+}
+
+        // 항목 추가 함수 정의
+function appendItemsToCategory(data, mapping) {
+            data.forEach(item => {
+                const targetList = mapping[item.category];
+                if (targetList) {
+                    $(targetList).append(
+                        `<div class="item" data-type="${item.category}" data-value="${item.name}">${item.name}</div>`
+                    );
+                }
+            });
+        }
+
+
+// 아이템 리스트 클릭 이벤트 처리 함수
+function handleItemClick(event) {
+    const selectedType = $(event.currentTarget).data('type');
+    const selectedValue = $(event.currentTarget).data('value');
+
+    // 중복 확인
+    if ($(`[data-type-selected='${selectedType}'][data-value-selected='${selectedValue}']`).length > 0) {
+        
+  
+                Swal.fire({
+                    icon: 'warning',
+                    title: '이미 선택된 항목입니다.',
+                    text: '',
+                });
+        return;
+    }
+
+    // 선택된 항목 추가
+    const selectedItem = $(
+        `<div class="selected-item" data-type-selected="${selectedType}" data-value-selected="${selectedValue}">
+            <span>${selectedValue}</span>
+            <button type="button" class="remove-item">X</button>
+        </div>`
+    );
+
+    // 언어와 프레임워크, 라이브러리, 개발툴 구분하여 추가
+    if (selectedType === 'language') {
+        $('#selected-lang').append(selectedItem);
+    } else if (selectedType === 'framework') {
+        $('#selected-frame').append(selectedItem);
+    } else if (selectedType === 'library') {
+        $('#selected-lib').append(selectedItem);
+    } else if (selectedType === 'tool') {
+        $('#selected-devtool').append(selectedItem);
+    } else if (selectedType === 'job') {
+        $('#selected-job').append(selectedItem);
+    } 
+}
+
+// 항목 제거 처리 함수
+function handleRemoveItem(event) {
+    $(event.currentTarget).parent().remove();
+}
+
+// 토글 애니메이션 처리 함수
+function handleToggleClick(event) {
+    const content = $(event.currentTarget).next(".toggle-content");
+    content.slideToggle(300); // 부드러운 토글 애니메이션
+}
+
+// 드래그 후 텍스트 선택 처리 함수
+function handleMouseUp(event) {
+    const selectedText = window.getSelection().toString().trim();
+
+    // 선택한 텍스트가 너무 길면 무시
+    const MAX_LENGTH = 50; // 허용하는 최대 길이
+    if (selectedText.length > MAX_LENGTH) {
+        console.warn("선택한 텍스트가 너무 깁니다. 요청을 무시합니다.");
+        hideStickyNote();
+        return;
+    }
+
+    if (selectedText) {
+        const keywordInfo = `데이터 검색중입니다......`; // 임시 데이터
+        showStickyNote(event.pageX, event.pageY, keywordInfo);
+        processAjaxRequest(selectedText, event.pageX, event.pageY);
+    } else {
+        hideStickyNote();
+    }
+}
+
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">취얼업</div>
+            <ul class="nav-menu">
+                <li><a href="#report">기술레포트</a></li>
+                <li><a href="#backend">백엔드</a></li>
+                <li><a href="#frontend">프론트엔드</a></li>
+                <li><a href="#ai">AI개발자</a></li>
+                <li><a href="#data">데이터분석가</a></li>
+                <li><a href="#pm">PM</a></li>
+            </ul>
+        </nav>
+    </header>
+<div>
+
+    <main>
+        <!-- 사용자가 구글 트렌드를 검색하면 나타날 화면면 -->
+        <div id="sticky-note"></div>
+        <div class="">
+
+    <section class="toggle-boxes-top">
+     <!-- 사용자 입력 화면 -->
+     <div class="container">
+        <h1>사용자 데이터 입력</h1>
+        <form id="user-input-form">
+
+ 
+<!--     -->
+        
+            
+
+           <!-- 프레임워크 선택 -->
+           <div class="category">
+            <label>직업 선택</label>
+            <div class="item-list" id="job-list">
+                   <!-- PM -->
+        <div class="item" data-type="job" data-value="개발PM">개발PM</div>
+        <div class="item" data-type="job" data-value="개발 매니저">개발 매니저</div>
+        <div class="item" data-type="job" data-value="프로덕트 매니저">프로덕트 매니저</div>
+
+        <!-- 데이터 직무 -->
+        <div class="item" data-type="job" data-value="DBA">DBA</div>
+        <div class="item" data-type="job" data-value="데이터 엔지니어링">데이터 엔지니어링</div>
+        <div class="item" data-type="job" data-value="데이터 엔지니어">데이터 엔지니어</div>
+        <div class="item" data-type="job" data-value="빅데이터 엔지니어">빅데이터 엔지니어</div>
+
+        <!-- 백엔드 -->
+        <div class="item" data-type="job" data-value="서버/백엔드">서버/백엔드</div>
+        <div class="item" data-type="job" data-value="서버 개발자">서버 개발자</div>
+        <div class="item" data-type="job" data-value="웹 개발자">웹 개발자</div>
+
+        <!-- 인프라 엔지니어 -->
+        <div class="item" data-type="job" data-value="데브옵스">데브옵스</div>
+        <div class="item" data-type="job" data-value="인터넷 보안">인터넷 보안</div>
+        <div class="item" data-type="job" data-value="DevOps / 시스템 관리자">DevOps / 시스템 관리자</div>
+        <div class="item" data-type="job" data-value="보안 엔지니어">보안 엔지니어</div>
+        <div class="item" data-type="job" data-value="네트워크 관리자">네트워크 관리자</div>
+        <div class="item" data-type="job" data-value="소프트웨어 엔지니어">소프트웨어 엔지니어</div>
+
+        <!-- 앱 개발자 -->
+        <div class="item" data-type="job" data-value="iOS">iOS</div>
+        <div class="item" data-type="job" data-value="안드로이드">안드로이드</div>
+        <div class="item" data-type="job" data-value="안드로이드 개발자">안드로이드 개발자</div>
+        <div class="item" data-type="job" data-value="iOS 개발자">iOS 개발자</div>
+        <div class="item" data-type="job" data-value="크로스플랫폼 앱 개발자">크로스플랫폼 앱 개발자</div>
+            </div>
+        </div>
+        
+        <!-- 선택된 프레임워크 표시 -->
+        <div class="selected-items">
+            <div class="selected-category" id="selected-job">
+                <p>선택된 직업:</p>
+            </div>
+        </div>
+
+
+<!--  -->
+
+            
+            
+ <!-- 언어 선택 -->
+<div class="category">
+    <label>언어 선택</label>
+    <div class="item-list" id="lang-list">
+
+    </div>
+</div>
+
+<!-- 선택된 언어 표시 -->
+<div class="selected-items">
+    <div class="selected-category" id="selected-lang">
+        <p>선택된 언어:</p>
+    </div>
+</div>
+
+
+           <!-- 프레임워크 선택 -->
+<div class="category">
+    <label>프레임워크 선택</label>
+    <div class="item-list" id="frame-list">
+       
+    </div>
+</div>
+
+<!-- 선택된 프레임워크 표시 -->
+<div class="selected-items">
+    <div class="selected-category" id="selected-frame">
+        <p>선택된 프레임워크:</p>
+    </div>
+</div>
+<!-- 라이브러리 선택 -->
+<div class="category">
+    <label>라이브러리 선택</label>
+    <div class="item-list" id="lib-list">
+    </div>
+</div>
+
+<!-- 선택된 라이브러리 표시 -->
+<div class="selected-items">
+    <div class="selected-category" id="selected-lib">
+        <p>선택된 라이브러리:</p>
+    </div>  
+</div>
+
+<!-- 개발툴 선택 -->
+<div class="category">
+    <label>개발툴 선택</label>
+    <div class="item-list" id="devtool-list">
+    </div>
+</div>
+
+<!-- 선택된 개발툴 표시 -->
+<div class="selected-items">
+    <div class="selected-category" id="selected-devtool">
+        <p>선택된 개발툴:</p>
+    </div>  
+</div>
+<button type="submit" onclick="userInfoSubmitAjax();">결과 보기</button>
+
+
+        </form>
+    </div>
+
+    <!-- 결과값 출력 화면 -->
+    <div class="result-container" id="result-container" tabindex="-1" role="alert" aria-live="assertive">
+        <h1 id="result_arr">결과값 출력</h1>
+        <p id="result_text">여기에 결과값이 표시됩니다.</p>
+    </div>
+    </section>
+        
+                
+        <section class="toggle-boxes">
+            <div class="toggle-box">
+                
+                    <p>
+                        {{ lang_text }} <!-- 여기는 분석내용-->
+                    </p>
+                </div>
+                <button class="toggle-btn">직무 분석 데이터</button>
+                <div class="toggle-content">
+                    <p>
+                        {{ back_lang }} <!-- 여기는 분석 결과값-->
+                    </p>
+                </div>
+           
+        </section>
+
+   
+        <section class="toggle-boxes">
+
+            <p>
+                이 데이터는 백엔드, 데브옵스, 데이터 분야에서 사용되는 프레임워크 및 기술 요소의 조합을 분석한 결과로, 각 조합이 전체 데이터에서 얼마나 자주 언급되었는지를 퍼센트로 표시하고 있습니다. 분석 및 요약은 다음과 같습니다:
+
+                주요 프레임워크 및 기술 요소:
+                
+                Spring, Docker, Kubernetes는 각각 **2.06%**로 가장 높은 빈도를 차지하며, 백엔드 개발 및 데브옵스에서 핵심 기술로 자리 잡고 있습니다.
+                SpringBoot, NestJS, MySQL도 주요 기술로 언급되며, 데이터베이스와 백엔드 프레임워크의 조합이 중요하게 다뤄집니다.
+                복합 조합의 다양성:
+                
+                다양한 기술이 조합으로 언급되며, 예를 들어 Spring + Docker, Kubernetes나 MySQL, Redis와 같은 조합은 데이터 관리와 배포 환경에서 중요한 역할을 합니다.
+                Flask, FastAPI, Redis와 같은 기술도 특정 조합에서 반복적으로 나타나며, 파이썬 기반 프레임워크와 데이터 처리가 포함된 작업 환경을 반영합니다.
+                특이 사항:
+                
+                일부 조합은 기술의 폭넓은 사용을 보여줍니다. 예를 들어 Ansible, Docker, Kubernetes, ElasticSearch와 같은 조합은 대규모 분산 시스템이나 클라우드 환경을 다루는 데 적합합니다.
+                Github, Jenkins와 같은 CI/CD 도구도 조합에 포함되어, DevOps 과정의 자동화와 관리 중요성이 강조됩니다.
+                요약: Spring, Docker, Kubernetes가 백엔드 및 데브옵스 분야에서 핵심 기술로 두드러지며, 다양한 기술 조합이 데이터 처리, 배포, 자동화에 초점을 맞추고 있습니다. 이 데이터는 최신 기술 트렌드와 함께 복합 기술 환경에서의 요구사항을 반영하며, 학습 방향 설정 및 기술 스택 준비에 중요한 정보를 제공합니다.
+            </p>
+            <div class="toggle-box">
+                <button class="toggle-btn">프레임워크 데이터</button>
+                <div class="toggle-content">
+                    <p>{'Spring': 2.0618556701030926, 'Docker': 2.0618556701030926, 'Docker,Kubernetes': 2.0618556701030926, 'Kubernetes': 2.0618556701030926, 'Spring,SpringBoot': 2.0618556701030926, 'NestJS': 2.0618556701030926, 'MySQL': 1.0309278350515463, 'Kubernetes,MySQL,Redis': 1.0309278350515463, 'Spring, + Docker,Kubernetes': 1.0309278350515463, 'MySQL,Redis': 1.0309278350515463, 'Spring,Docker,Kubernetes + MongoDB': 1.0309278350515463, 'Spring, + MongoDB': 1.0309278350515463, 'Docker,Kubernetes,Couchbase,MongoDB': 1.0309278350515463, 'Redis': 1.0309278350515463, 'Istio,Linkerd': 1.0309278350515463, 'Spring, + Kubernetes': 1.0309278350515463, 'Bitbucket,Github': 1.0309278350515463, 'Ruby on Rails': 1.0309278350515463, 'NodeJS': 1.0309278350515463, 'Spring,,MySQL': 1.0309278350515463, 'Spring,Kubernetes': 1.0309278350515463, 'Flask + Celery,Docker,Kubernetes,Redis': 1.0309278350515463, 'Spring,, + NestJS': 1.0309278350515463, 'NodeJS,,Redis': 1.0309278350515463, 'Spring,Kubernetes, + Spring': 1.0309278350515463, 'NestJS,,MySQL': 1.0309278350515463, 'Celery': 1.0309278350515463, 'Spring,MySQL,Redis': 1.0309278350515463, 'FastAPI,Spring + Docker,Kubernetes,Redis': 1.0309278350515463, 'MySQL + Github': 1.0309278350515463, 'MongoDB,MySQL': 1.0309278350515463, 'RabbitMQ,CockroachDB,MongoDB': 1.0309278350515463, 'Laravel,MongoDB': 1.0309278350515463, 'MySQL + Spring,Docker,Kubernetes': 1.0309278350515463, 'Spring,MySQL + NodeJS,RabbitMQ,Docker,Kubernetes': 1.0309278350515463, 'MySQL + NestJS,Docker,Kubernetes,Redis': 1.0309278350515463, 'Spring,,MySQL + Redis': 1.0309278350515463, 'Ceph': 1.0309278350515463, 'Flask,Spring': 1.0309278350515463, 'Spring,SpringBoot,Github,Jenkins,MySQL + Docker': 1.0309278350515463, 'Celery,Flask': 1.0309278350515463, 'FastAPI,Flask,Spring': 1.0309278350515463, 'Spring,,MySQL,Redis + FastAPI,Spring': 1.0309278350515463, 'Swagger,Docker,MongoDB,PostgreSQL + Redis': 1.0309278350515463, 'Ruby on Rails,Docker': 1.0309278350515463, 'Spring, + Jenkins': 1.0309278350515463, 'Spring,,Redis': 1.0309278350515463, 'FastAPI,Flask,Docker,Github,Gitlab,Traefik,PostgreSQL': 1.0309278350515463, 'ElasticSearch,MySQL': 1.0309278350515463, 'FastAPI,,PostgreSQL': 1.0309278350515463, 'MSSQL,MySQL': 1.0309278350515463, 'Spring, + Docker': 1.0309278350515463, 'Spring,SpringBoot, + Jenkins': 1.0309278350515463, 'Flask,MongoDB + Docker': 1.0309278350515463, 'Istio,Kubernetes': 1.0309278350515463, 'FastAPI,MongoDB,Redis + Docker': 1.0309278350515463, 'Spring,,MSSQL,PostgreSQL': 1.0309278350515463, 'Ansible,Kubernetes + MongoDB,PostgreSQL': 1.0309278350515463, 'Spring,Github,MySQL,PostgreSQL + Flask,Spring': 1.0309278350515463, 'FastAPI,Flask,Kubernetes,MongoDB,Redis + Ansible': 1.0309278350515463, 'NestJS, + Redis': 1.0309278350515463, 'Jenkins': 1.0309278350515463, 'Spring, + Echo,Fiber,Redis': 1.0309278350515463, 'MongoDB': 1.0309278350515463, 'Celery,,PostgreSQL + Celery': 1.0309278350515463, 'MySQL + Kubernetes': 1.0309278350515463, 'Kubernetes,MySQL': 1.0309278350515463, 'Laravel, + FastAPI,Redis': 1.0309278350515463, 'Laravel,Spring,,MySQL,PostgreSQL': 1.0309278350515463, 'Kubernetes, + Ansible': 1.0309278350515463, 'Ansible': 1.0309278350515463, 'Rancher': 1.0309278350515463, 'MongoDB,PostgreSQL,Redis': 1.0309278350515463, 'Docker,PostgreSQL': 1.0309278350515463, 'Spring,SpringBoot,Docker,Kubernetes, + Spring': 1.0309278350515463, 'PostgreSQL + Memcached,Redis': 1.0309278350515463, 'FastAPI': 1.0309278350515463, 'Swagger': 1.0309278350515463, 'Fastify,NestJS,,MongoDB': 1.0309278350515463, 'Docker,Kubernetes, + Kubernetes': 1.0309278350515463, 'Netty,Spring': 1.0309278350515463, 'Falcon,Koa,Kubernetes + Ceph': 1.0309278350515463, 'Github': 1.0309278350515463, 'Spring,Docker,MongoDB + Flask,Gitlab': 1.0309278350515463, 'Spring, + MSSQL': 1.0309278350515463, 'PostgreSQL + Swagger': 1.0309278350515463, 'Spring,, + Spring': 1.0309278350515463, 'Flask': 1.0309278350515463, 'Gitlab,Jenkins': 1.0309278350515463, 'Ansible,Docker,Kubernetes,ElasticSearch': 1.0309278350515463, 'Laravel,,MongoDB,PostgreSQL': 1.0309278350515463}</p>
+                </div>
+            </div>
+
+        </section>
+        <section class="toggle-boxes">
+            <div class="">
+                <p>
+                    이 데이터는 백엔드 직무에서 요구되는 최소 경력을 나타낸 것으로, 각각의 경력 조건이 전체 데이터에서 몇 번 나타났는지를 보여줍니다. 분석 및 요약은 다음과 같습니다:
+
+                    주요 경력 요구 조건:
+                    
+                    가장 많은 공고가 요구하는 경력은 **3년(312회)**이며, 이는 백엔드 직무에서 중요한 중간 경력 수준을 반영합니다.
+                    이어서 **5년(200회)**과 **2년(99회)**의 경력 요구가 높은 비율로 나타나, 주로 초급에서 중급 개발자를 선호하는 경향을 보여줍니다.
+                    경력 없는 경우:
+                    
+                    경력 무관(0년, 81회) 조건도 높은 빈도로 나타나, 신입 개발자를 위한 기회가 여전히 존재함을 보여줍니다.
+                    경력 상한선:
+                    
+                    **15년(2회)**와 같은 고경력자 조건은 매우 드물게 나타나며, 대부분의 공고는 10년 이하의 경력을 요구합니다.
+                    중간 경력 강조:
+                    
+                    3년, 5년의 경력이 전체 데이터에서 높은 비중을 차지하여, 중간 경력자를 중심으로 한 채용 시장 트렌드가 두드러집니다.
+                    4년, 6~8년 경력 조건은 상대적으로 낮은 비율로 나타납니다.
+                    요약: 백엔드 개발 직무에서 초급중급 경력자(15년)를 주요 대상으로 하는 채용 공고가 많으며, 경력 무관 공고도 일정 비율을 차지합니다. 반면 고경력자(10년 이상)를 요구하는 공고는 극히 적습니다. 이는 해당 직군에서 경력을 기반으로 한 인재 수요가 중점적으로 이루어지고 있음을 보여줍니다.
+                </p>
+            </div>
+ 
+            <div class="toggle-box">
+                <button class="toggle-btn">경력분석데이터</button>
+                <div class="toggle-content">
+                    <p>{0: 81, 1: 60, 2: 99, 3: 312, 4: 45, 5: 200, 6: 27, 7: 54, 8: 14, 9: 2, 10: 22, 15: 2}  <img src="{{ graph_url }}" alt="경력 분석 그래프"></p>
+                </div>
+            </div>
+        </section> 
+        <section class="toggle-boxes">
+            <p>
+                이 데이터는 백엔드 직무 채용 공고에서 요구되는 학력을 분석한 결과로, 학력별로 요구되는 비율을 나타냅니다. 분석 및 요약은 다음과 같습니다:
+
+                1. **학사 학위의 압도적 요구**:
+                   - **학사 학위(901회)**는 거의 모든 공고에서 기본 요건으로 요구되며, 백엔드 개발 직무에서 사실상 표준 학력 요건으로 보입니다.
+                
+                2. **석사 학위의 소수 요구**:
+                   - **석사 학위(17회)**는 상대적으로 드물게 요구되며, 이는 특정 연구 기반 또는 고급 기술이 필요한 직무에서만 요구될 가능성을 나타냅니다.
+                
+                3. **박사 학위 요구 없음**:
+                   - **박사 학위(0회)**는 언급되지 않아, 백엔드 개발 직무에서 학문적 깊이가 중요한 역할을 하지 않는다는 것을 보여줍니다.
+                
+                **요약**: 백엔드 직무에서 학사 학위가 가장 일반적인 요구 조건으로, 대부분의 채용 공고가 이를 기본 학력으로 설정하고 있습니다.
+                 석사 학위는 일부 고급 직무에서 요구되지만, 박사 학위는 전혀 요구되지 않는 점에서 실용적인 기술과 경험이 학력보다 더 중요한 직군임을 반영합니다.
+            </p>
+            <div class="toggle-box">
+                <button class="toggle-btn">학력데이터</button>
+                <div class="toggle-content">
+                    <p>{'학사': 901, '석사': 17, '박사': 0}</p>
+                </div>
+            </div>
+        </section>
+        <section class="toggle-boxes">
+
+            <p>
+                이 데이터는 백엔드 직무 채용 공고에서 어학 조건의 유무를 분석한 결과로, 어학 능력의 요구 빈도를 보여줍니다. 분석 및 요약은 다음과 같습니다:
+
+        1. **어학 조건 없는 공고가 대다수**:
+   - **어학 조건 없음(854회)**이 대부분의 공고를 차지하여, 백엔드 개발 직무에서는 어학 능력이 핵심 요건으로 고려되지 않는 경우가 많습니다.
+
+2. **어학 조건 있는 공고는 소수**:
+   - **어학 조건 있음(64회)**은 상대적으로 적은 비율로 나타나며, 특정 글로벌 프로젝트나 해외 협업을 요구하는 직무에서 어학 능력을 강조할 가능성이 있습니다.
+
+**요약**: 백엔드 직무의 채용 공고에서 어학 능력을 요구하지 않는 경우가 대부분입니다. 이는 기술 능력과 경험이 어학 능력보다 중요하게 평가된다는 것을 보여줍니다.
+ 다만, 일부 공고에서 어학 조건이 언급되는 점은 특정 업무 환경에서 글로벌 의사소통 능력이 필요할 수 있음을 시사합니다.
+            </p>
+            <div class="toggle-box">
+                <button class="toggle-btn">어학데이터</button>
+                <div class="toggle-content">
+                    <p>{'어학 조건 X': 854, '어학 조건 O': 64}</p>
+                </div>
+            </div>
+
+        </section>
+    </div>
+    </main>
+
+
+</div>
+</body>
+</html>
