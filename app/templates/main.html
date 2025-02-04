@@ -67,7 +67,7 @@ $(document).ready(function () {
     
     //최초화면 로드시, 직업 카테고리 최초 선택처리
     displayTechList("job", techData);
-    // 토글 버튼 클릭 이벤트 바인딩
+    // 토글 버튼 클릭 이벤트 바인딩(사용중지)
     //$('.toggle-btn').on('click', handleToggleClick);
 
     // 드래그 후 마우스 놓기 이벤트 바인딩(잠시 사용중지)
@@ -289,7 +289,7 @@ function handleUserInputSubmission() {
     if (validateSelectedData(dataToSend)) {
         Swal.fire({
             title: '분석을 진행하시겠습니까?',
-            icon: 'warning',
+            icon: 'question',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -367,7 +367,7 @@ function handleToggleClick(event) {
     content.slideToggle(300); // 부드러운 토글 애니메이션
 }
 
-// 드래그 후 텍스트 선택 처리 함수
+// 드래그 후 텍스트 선택 처리 함수(사용중지)
 function handleMouseUp(event) {
     const selectedText = window.getSelection().toString().trim();
 

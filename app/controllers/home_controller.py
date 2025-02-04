@@ -50,7 +50,7 @@ async def process_user_data(user_data: UserInputData):
     devtools=  ", ".join(user_data.devtools) if user_data.devtools else "없음"
     jobs=  ", ".join(user_data.jobs) if user_data.jobs else "없음"
 
-
+    career_html = "\n".join(sql.career_graph_search(user_data))  # 리스트를 HTML로 변환
 
     report = f"""
     <h1>분석 결과</h1>
@@ -146,11 +146,9 @@ async def process_user_data(user_data: UserInputData):
         <li>Node.js 기반 Express.js 학습: 백엔드 개발에서 Node.js의 활용도를 높이기 위해 추천.</li>
         <li>FastAPI 학습 고려: Python 백엔드 개발에서 Flask보다 빠른 성능을 제공하며, 현대적인 API 개발에 적합.</li>
     </ul>
-
-
-
-    """
-    
+    <h2>경력</h2>
+    {career_html}  <!-- career 이미지가 삽입될 부분 -->
+    """ 
 
     # JSON 응답 생성
     return JSONResponse(content={"message": report})

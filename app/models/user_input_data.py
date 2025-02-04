@@ -8,13 +8,6 @@ class UserInputData(BaseModel):
     """
     languages: List[str]
     frameworks: List[str]
-    libraries: List[str]  # 기존 오타 수정 (librarys -> libraries)
+    libraries: List[str]  
     devtools: List[str]
     jobs: List[str]
-
-class SearchRequest(BaseModel):
-    '''
-    사용자 검색데이터
-    '''
-    category: str
-    keyword: str
