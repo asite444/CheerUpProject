@@ -87,7 +87,8 @@ $(document).ready(function () {
         $(this).addClass("active");
     });
     
-    
+    //최초화면 로드시, 직업 카테고리 최초 선택처리
+    displayTechList("job", techData);
     // 토글 버튼 클릭 이벤트 바인딩
     $('.toggle-btn').on('click', handleToggleClick);
 
@@ -117,7 +118,7 @@ function mapTechStackData() {
     $(".category-buttons button").on("click", function () {
         const category = $(this).attr("id").replace("-button", ""); // ID에서 카테고리 추출
     
-    
+        $("#search-bar").val("");
 
         displayTechList(category, techData);
     });
@@ -143,15 +144,7 @@ function mapTechStackData() {
     const activeCategory = $(".category-buttons button.active").attr("id")?.replace("-button", "");
 
     
-    if (!activeCategory) {
-        Swal.fire({
-            icon: "warning",
-            title: "먼저 카테고리를 선택해주세요",
-            
-        });
-        $("#search-bar").val("");
-        return;
-    }
+
 
     // 검색 키워드를 소문자로 변환하여 필터링
     const filteredData = techData[activeCategory].filter((tech) =>
@@ -169,6 +162,7 @@ function mapTechStackData() {
  * @param {Object} techData - 기술 데이터 매핑 객체
  */
  function displayTechList(category, techData) {
+   
     const techList = techData[category] || [];
     const techListContainer = $(".tech-list");
 
