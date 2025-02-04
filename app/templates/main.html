@@ -30,29 +30,7 @@ const maxRetries = 3; // 최대 재시도 횟수
 
 // 기술 데이터 매핑을 위한 초기 구조
 const techData = {
-    job: [
-        "개발PM",
-        "개발 매니저",
-        "프로덕트 매니저",
-        "DBA",
-        "데이터 엔지니어링",
-        "데이터 엔지니어",
-        "빅데이터 엔지니어",
-        "서버/백엔드",
-        "서버 개발자",
-        "웹 개발자",
-        "데브옵스",
-        "인터넷 보안",
-        "DevOps / 시스템 관리자",
-        "보안 엔지니어",
-        "네트워크 관리자",
-        "소프트웨어 엔지니어",
-        "iOS",
-        "안드로이드",
-        "안드로이드 개발자",
-        "iOS 개발자",
-        "크로스플랫폼 앱 개발자",
-    ],
+    job: [],
     language: [],
     framework: [],
     library: [],
@@ -90,10 +68,10 @@ $(document).ready(function () {
     //최초화면 로드시, 직업 카테고리 최초 선택처리
     displayTechList("job", techData);
     // 토글 버튼 클릭 이벤트 바인딩
-    $('.toggle-btn').on('click', handleToggleClick);
+    //$('.toggle-btn').on('click', handleToggleClick);
 
-    // 드래그 후 마우스 놓기 이벤트 바인딩
-    $(document).on('mouseup', handleMouseUp);
+    // 드래그 후 마우스 놓기 이벤트 바인딩(잠시 사용중지)
+    //$(document).on('mouseup', handleMouseUp);
 }); // end
 // techStackData를 기반으로 techData를 동적으로 채우는 함수
 function mapTechStackData() {
@@ -300,11 +278,11 @@ function hideStickyNote() {
 function handleUserInputSubmission() {
     // 선택된 항목 수집
     const dataToSend = {
-        languages: collectSelectedItems('.selected-item[data-category="language"]'),
-        frameworks: collectSelectedItems('.selected-item[data-category="framework"]'),
-        libraries: collectSelectedItems('.selected-item[data-category="library"]'), // 이름 수정
-        devtools: collectSelectedItems('.selected-item[data-category="tool"]'),
-        jobs: collectSelectedItems('.selected-item[data-category="job"]'),
+        languages: collectSelectedItems('.selected-item[data-category="language"]').sort((a, b) => a.localeCompare(b)),
+        frameworks: collectSelectedItems('.selected-item[data-category="framework"]').sort((a, b) => a.localeCompare(b)),
+        libraries: collectSelectedItems('.selected-item[data-category="library"]').sort((a, b) => a.localeCompare(b)),
+        devtools: collectSelectedItems('.selected-item[data-category="tool"]').sort((a, b) => a.localeCompare(b)),
+        jobs: collectSelectedItems('.selected-item[data-category="job"]').sort((a, b) => a.localeCompare(b)),
     };
 
     // 데이터 유효성 검사 및 서버로 전송
@@ -383,7 +361,7 @@ function submitDataToServer(data) {
 
 
 
-// 토글 애니메이션 처리 함수
+// 토글 애니메이션 처리 함수(사용중지)
 function handleToggleClick(event) {
     const content = $(event.currentTarget).next(".toggle-content");
     content.slideToggle(300); // 부드러운 토글 애니메이션

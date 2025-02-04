@@ -4,9 +4,9 @@ from fastapi.templating import Jinja2Templates
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 import app.services.sqliteService as sql
-from app.services.graph_service import  generate_pie_chart 
+import app.services.GPTAnalysisService as gpt
 from app.models.user_input_data import UserInputData
-from app.models.user_input_data import SearchRequest
+
 import os
 from typing import List, Optional
 router = APIRouter()
@@ -29,24 +29,19 @@ async def read_home(request: Request):
         )
 
 
-# @router.post("/search-category")
-# async def search_ajax(search_request: SearchRequest):
-#     '''
-#     카테고리별 검색
-#     '''
-#      # 요청 데이터 출력
-#     print("Category:", search_request.category)
-#     print("Keyword:", search_request.keyword)
-#     searched_data=sql.category_search(search_request)
-
-#     return JSONResponse(content={"searched_data": searched_data})
-
 
 
 @router.post("/user-input-data")
 async def process_user_data(user_data: UserInputData):
     # 데이터 수신 확인
-    print("Received Data:", user_data.dict())
+    #print("Received Data:", user_data.dict())
+
+    # 사용자가 이전에 선택한 기술선택이 존재하는지여부 판단(수정예정)
+    # report=sql.is_existing_tech_stack(user_data)
+    # if(report[0]):
+    #     print(report[1])
+    # else :
+    #     print("없음")
 
     # 데이터 처리 및 HTML 텍스트 생성
     languages = ", ".join(user_data.languages) if user_data.languages else "없음"
