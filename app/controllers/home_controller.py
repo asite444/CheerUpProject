@@ -43,8 +43,27 @@ async def process_user_data(user_data: UserInputData):
     # else :
     #     print("없음")
 
+    languages = ", ".join(user_data.languages) if user_data.languages else "없음"
+    frameworks = ", ".join(user_data.frameworks) if user_data.frameworks else "없음"
+    libraries=  ", ".join(user_data.libraries) if user_data.libraries else "없음"
+    devtools=  ", ".join(user_data.devtools) if user_data.devtools else "없음"
+    jobs=  ", ".join(user_data.jobs) if user_data.jobs else "없음"
 
-    report = gpt.analyze_user_stack(user_data)
+
+    report_select_user_tech=f"""
+
+                <p><strong>직업:</strong> {jobs}</p>
+                <p><strong>언어:</strong> {languages}</p>
+                <p><strong>프레임워크:</strong> {frameworks}</p>
+                <p><strong>라이브러리:</strong> {libraries}</p>
+                <p><strong>개발툴:</strong> {devtools}</p>
+            """
+    report_top5 = gpt.analyze_stack_top5(user_data)
+    report_user_tech = gpt.analyze_user_tech(user_data)
+    report_security = gpt.analyze_security(user_data)
+    report_conclusion = gpt.analyze_conclusion(user_data)
+
+
     report_graph_career = "\n".join(sql.career_graph_search(user_data))      # 경력 그래프
     report_graph_degree = "\n".join(sql.degree_graph_search(user_data))      # 학력 그래프
     report_graph_language =  "\n".join(sql.language_graph_search(user_data)) # 어학 그래프
@@ -53,7 +72,10 @@ async def process_user_data(user_data: UserInputData):
 
     # JSON 응답 생성
     return JSONResponse(content={
-        "report": report,
+        "report_top5": report_top5,
+        "report_user_tech": report_user_tech,
+        "report_security": report_security,
+        "report_conclusion": report_conclusion,
         "report_graph_career":report_graph_career,
         "report_graph_degree":report_graph_degree,
         "report_graph_language":report_graph_language

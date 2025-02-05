@@ -1,5 +1,9 @@
 /* 분석 결과 텍스트 스타일 (result-container) */
-.analysis-result #result-container {
+.analysis-result #result-top5, 
+.analysis-result #result-user-tech,
+.analysis-result #result-security,
+.analysis-result #result-conclusion
+{
     text-align: left;
     padding: 20px;
     background-color: #ffffff;
@@ -9,7 +13,11 @@
 }
 
 /* 중앙 정렬되는 h2 스타일 */
-.analysis-result #result-container h2 {
+.analysis-result #result-top5 h2,
+.analysis-result #result-user-tech h2,
+.analysis-result #result-security h2,
+.analysis-result #result-conclusion h2
+{
     text-align: center;
     font-size: 24px;
     font-weight: bold;
@@ -17,7 +25,11 @@
 }
 
 /* 왼쪽 정렬 및 강조되는 h3 스타일 */
-.analysis-result #result-container h3 {
+.analysis-result #result-top5 h3, 
+.analysis-result #result-user-tech h3, 
+.analysis-result #result-security h3, 
+.analysis-result #result-conclusion h3 
+{
     text-align: left;
     font-size: 20px;
     font-weight: bold;
@@ -26,26 +38,43 @@
 }
 
 /* 리스트 스타일 */
-.analysis-result #result-container ul {
+.analysis-result #result-top5 ul
+.analysis-result #result-user-tech ul
+.analysis-result #result-security ul
+.analysis-result #result-conclusion  ul
+ {
     list-style-type: disc;
     margin-left: 20px;
     padding-left: 20px;
 }
 
-.analysis-result #result-container li {
+.analysis-result #result-top5 li 
+.analysis-result #result-user-tech li 
+.analysis-result #result-security li 
+.analysis-result #result-conclusion li 
+
+{
     font-size: 16px;
     line-height: 1.6;
     margin-bottom: 8px;
 }
 
 /* 강조 텍스트 */
-.analysis-result #result-container strong {
+.analysis-result #result-top5 strong 
+.analysis-result #result-user-tech strong 
+.analysis-result #result-security strong 
+.analysis-result #result-conclusion strong 
+{
     font-weight: bold;
     color: #222;
 }
 
 /* 단락 스타일 */
-.analysis-result #result-container p {
+.analysis-result #result-top5 p
+.analysis-result #result-user-tech p
+.analysis-result #result-security p
+.analysis-result #result-conclusion p
+ {
     font-size: 16px;
     line-height: 1.8;
     color: #444;
@@ -53,7 +82,7 @@
 }
 
 /* 그래프 분석 결과 스타일 (result-graph) */
-.analysis-result #result-graph-career,  
+/* .analysis-result #result-graph-career,   */
 .analysis-result #result-graph-language,
 .analysis-result #result-graph-degree
 {
@@ -68,7 +97,7 @@
 }
 
 /* 개별 분석 카드 (제목 + 이미지 & 설명) */
-.analysis-result #result-graph-career  figure,
+/* .analysis-result #result-graph-career  figure, */
 .analysis-result #result-graph-language  figure ,
 .analysis-result #result-graph-degree  figure 
 {
@@ -86,7 +115,7 @@
 }
 
 /* 직무 제목 스타일 (상단, 왼쪽 정렬) */
-.analysis-result #result-graph-career  figure h3 ,
+/* .analysis-result #result-graph-career  figure h3 , */
 .analysis-result #result-graph-language  figure h3 ,
 .analysis-result #result-graph-degree  figure h3 
 {
@@ -101,7 +130,7 @@
 }
 
 /* 이미지와 설명을 같은 줄에 배치 */
-.analysis-result #result-graph-career  .content-wrapper,
+/* .analysis-result #result-graph-career  .content-wrapper, */
 .analysis-result #result-graph-language  .content-wrapper,
 .analysis-result #result-graph-degree  .content-wrapper
  
@@ -114,7 +143,7 @@
 }
 
 /* 이미지 스타일 (크기 확대, 꽉 차도록 설정) */
-.analysis-result #result-graph-career  figure img,
+/* .analysis-result #result-graph-career  figure img, */
 .analysis-result #result-graph-language figure img,
 .analysis-result #result-graph-degree figure img
 {
@@ -126,7 +155,7 @@
 }
 
 /* 설명 텍스트 스타일 */
-.analysis-result #result-graph-career  figure figcaption, 
+/* .analysis-result #result-graph-career  figure figcaption,  */
 .analysis-result #result-graph-language  figure figcaption ,
 .analysis-result #result-graph-degree  figure figcaption 
 {
@@ -163,6 +192,54 @@
 {
     transform: scale(1.05);
     box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+/* 경력 분석 그래프 개별 설정 */
+.analysis-result #result-graph-career figure {
+    display: flex;
+    flex-direction: column; /* 수직 정렬 (제목, 이미지, 설명글) */
+    align-items: center; /* 중앙 정렬 */
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease-in-out;
+    max-width: 100%;
+    margin: auto;
+    gap: 15px; /* 제목, 이미지, 설명 간격 추가 */
+}
+
+/* 제목 스타일 (상단 정렬, 중앙 배치) */
+.analysis-result #result-graph-career figure h3 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    padding-bottom: 10px;
+    width: 100%;
+    text-align: left; /* 제목 중앙 정렬 */
+    border-bottom: 2px solid #ddd;
+}
+
+/* 이미지 스타일 (중앙 정렬, 크기 조정) */
+.analysis-result #result-graph-career figure img {
+    width: 100%; /* 이미지가 전체 너비를 차지하도록 설정 */
+    max-width: 500px; /* 최대 너비 지정 */
+    height: auto;
+    object-fit: contain; /* 비율 유지 */
+    border-radius: 10px;
+    margin-bottom: 10px; /* 이미지 아래 간격 추가 */
+}
+
+/* 설명글 (이미지 아래 배치, 중앙 정렬) */
+.analysis-result #result-graph-career figure figcaption {
+    font-size: 16px;
+    color: #333;
+    text-align: left; /* 중앙 정렬 */
+    line-height: 1.6;
+    width: 100%;
+    flex-grow: 1;
 }
 
 /* 반응형 조정 */
