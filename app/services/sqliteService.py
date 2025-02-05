@@ -1,8 +1,8 @@
 from app.database.sqliteserver import get_connection
 from app.models.user_input_data import UserInputData 
 import ast
-
-
+import html
+import re 
 def fetch_tech_stack():
     """
     tech_stack 테이블에서 데이터를 조회하는 함수.
@@ -90,7 +90,7 @@ def career_graph_search(user_data: UserInputData):
         
         # SQL Query 실행
         query = """
-        SELECT duty,career FROM duty_analysis WHERE duty IN ({})
+        SELECT duty, career FROM duty_analysis WHERE duty IN ({})
         """.format(','.join(['?'] * len(user_data.jobs)))  # 다중 직무 검색을 위한 플레이스홀더
 
         cursor.execute(query, user_data.jobs)  # 사용자의 직무 리스트 바인딩
@@ -99,23 +99,33 @@ def career_graph_search(user_data: UserInputData):
         img_tags = []  # HTML <img> 태그 리스트
         for row in result:
             try:
-                # career 컬럼이 문자열 리스트로 저장되어 있으므로 변환
-                career_list = ast.literal_eval(row[1])  # 문자열을 실제 리스트로 변환
-                duty_list=row[0]
+                duty_list = row[0]
+                
+                # 데이터가 문자열 형태라면 변환
+                career_data = row[1].replace("\\", "/")  # 백슬래시 문제 해결
+                career_list = ast.literal_eval(career_data)  # 문자열을 리스트로 변환
+
                 if career_list and isinstance(career_list, list):
-                    img_path = career_list[0]  # career 리스트에서 첫 번째 요소(이미지 경로)
-                    graph_text=career_list[1]
+                    img_path = career_list[0]  # 첫 번째 요소(이미지 경로)
+                    graph_text = career_list[1]
+
+                    # 숫자 목록("1. ", "2. ")의 공백을 제거하여 줄바꿈 방지
+                    formatted_graph_text = re.sub(r"(\d+)\.\s+", r"\1.", graph_text)
+
+                    # HTML 태그 적용 (문장별 <div> 처리)
+                    formatted_graph_text = "<div>" + formatted_graph_text.replace(". ", ".</div><div>") + "</div>"
+
+                    # HTML 태그 생성
                     img_tag = f'''
-                                <figure>
-                    <h3>{duty_list}</h3>
-                    <div class="content-wrapper">
-                        <img class="fit-picture" src="..\\static\\image\\{img_path}" alt="경력 분석 이미지" />
-                        <figcaption>
-                            {graph_text}
-                        </figcaption>
-                    </div>
-                </figure>
-                   
+                    <figure>
+                        <h3>{html.escape(duty_list)}</h3>
+                        <div class="content-wrapper">
+                            <img class="fit-picture" src="..\\static\\image\\{html.escape(img_path)}" alt="경력 분석 이미지" />
+                            <figcaption class="analysis-text">
+                                {formatted_graph_text}
+                            </figcaption>
+                        </div>
+                    </figure>
                     '''
                     img_tags.append(img_tag)  # 생성된 <img> 태그 추가
             except (SyntaxError, ValueError) as e:
@@ -131,6 +141,7 @@ def career_graph_search(user_data: UserInputData):
         if connection:
             connection.close()  # DB 연결 종료
 
+
 def degree_graph_search(user_data: UserInputData):
     """
     사용자가 선택한 직무(jobs)에 해당하는 degree 데이터를 조회하여 HTML <img> 태그를 생성
@@ -141,7 +152,7 @@ def degree_graph_search(user_data: UserInputData):
         
         # SQL Query 실행
         query = """
-        SELECT duty,degree FROM duty_analysis WHERE duty IN ({})
+        SELECT duty, degree FROM duty_analysis WHERE duty IN ({})
         """.format(','.join(['?'] * len(user_data.jobs)))  # 다중 직무 검색을 위한 플레이스홀더
 
         cursor.execute(query, user_data.jobs)  # 사용자의 직무 리스트 바인딩
@@ -150,23 +161,33 @@ def degree_graph_search(user_data: UserInputData):
         img_tags = []  # HTML <img> 태그 리스트
         for row in result:
             try:
-                # degree 컬럼이 문자열 리스트로 저장되어 있으므로 변환
-                degree_list = ast.literal_eval(row[1])  # 문자열을 실제 리스트로 변환
-                duty_list=row[0]
+                duty_list = row[0]
+                
+                # 데이터가 문자열 형태라면 변환
+                degree_data = row[1].replace("\\", "/")  # 백슬래시 문제 해결
+                degree_list = ast.literal_eval(degree_data)  # 문자열을 리스트로 변환
+
                 if degree_list and isinstance(degree_list, list):
-                    img_path = degree_list[0]  # degree 리스트에서 첫 번째 요소(이미지 경로)
-                    graph_text=degree_list[1]
+                    img_path = degree_list[0]  # 첫 번째 요소(이미지 경로)
+                    graph_text = degree_list[1]
+
+                    # 숫자 목록("1. ", "2. ")의 공백을 제거하여 줄바꿈 방지
+                    formatted_graph_text = re.sub(r"(\d+)\.\s+", r"\1.", graph_text)
+
+                    # HTML 태그 적용 (문장별 <div> 처리)
+                    formatted_graph_text = "<div>" + formatted_graph_text.replace(". ", ".</div><div>") + "</div>"
+
+                    # HTML 태그 생성
                     img_tag = f'''
-                                <figure>
-                    <h3>{duty_list}</h3>
-                    <div class="content-wrapper">
-                        <img class="fit-picture" src="..\\static\\image\\{img_path}" alt="학력 분석 이미지" />
-                        <figcaption>
-                            {graph_text} 
-                        </figcaption>
-                    </div>
-                </figure>
-                   
+                    <figure>
+                        <h3>{html.escape(duty_list)}</h3>
+                        <div class="content-wrapper">
+                            <img class="fit-picture" src="..\\static\\image\\{html.escape(img_path)}" alt="학력 분석 이미지" />
+                            <figcaption class="analysis-text">
+                                {formatted_graph_text}
+                            </figcaption>
+                        </div>
+                    </figure>
                     '''
                     img_tags.append(img_tag)  # 생성된 <img> 태그 추가
             except (SyntaxError, ValueError) as e:
@@ -184,7 +205,6 @@ def degree_graph_search(user_data: UserInputData):
 
 
 
-
 def language_graph_search(user_data: UserInputData):
     """
     사용자가 선택한 직무(jobs)에 해당하는 language 데이터를 조회하여 HTML <img> 태그를 생성
@@ -195,32 +215,42 @@ def language_graph_search(user_data: UserInputData):
         
         # SQL Query 실행
         query = """
-        SELECT duty,language FROM duty_analysis WHERE duty IN ({})
+        SELECT duty, language FROM duty_analysis WHERE duty IN ({})
         """.format(','.join(['?'] * len(user_data.jobs)))  # 다중 직무 검색을 위한 플레이스홀더
 
         cursor.execute(query, user_data.jobs)  # 사용자의 직무 리스트 바인딩
-        result = cursor.fetchall()  # career 데이터 가져오기
+        result = cursor.fetchall()  # language 데이터 가져오기
         
         img_tags = []  # HTML <img> 태그 리스트
         for row in result:
             try:
-                # career 컬럼이 문자열 리스트로 저장되어 있으므로 변환
-                language_list = ast.literal_eval(row[1])  # 문자열을 실제 리스트로 변환
-                duty_list=row[0]
+                duty_list = row[0]
+                
+                # 데이터가 문자열 형태라면 변환
+                language_data = row[1].replace("\\", "/")  # 백슬래시 문제 해결
+                language_list = ast.literal_eval(language_data)  # 문자열을 리스트로 변환
+
                 if language_list and isinstance(language_list, list):
-                    img_path = language_list[0]  # language 리스트에서 첫 번째 요소(이미지 경로)
-                    graph_text=language_list[1]
+                    img_path = language_list[0]  # 첫 번째 요소(이미지 경로)
+                    graph_text = language_list[1]
+
+                    # 숫자 목록("1. ", "2. ")의 공백을 제거하여 줄바꿈 방지
+                    formatted_graph_text = re.sub(r"(\d+)\.\s+", r"\1.", graph_text)
+
+                    # HTML 태그 적용 (문장별 <div> 처리)
+                    formatted_graph_text = "<div>" + formatted_graph_text.replace(". ", ".</div><div>") + "</div>"
+
+                    # HTML 태그 생성
                     img_tag = f'''
-                                <figure>
-                    <h3>{duty_list}</h3>
-                    <div class="content-wrapper">
-                        <img class="fit-picture" src="..\\static\\image\\{img_path}" alt="어학 분석 이미지" />
-                        <figcaption>
-                            {graph_text}
-                        </figcaption>
-                    </div>
-                </figure>
-                   
+                    <figure>
+                        <h3>{html.escape(duty_list)}</h3>
+                        <div class="content-wrapper">
+                            <img class="fit-picture" src="..\\static\\image\\{html.escape(img_path)}" alt="어학 분석 이미지" />
+                            <figcaption class="analysis-text">
+                                {formatted_graph_text}
+                            </figcaption>
+                        </div>
+                    </figure>
                     '''
                     img_tags.append(img_tag)  # 생성된 <img> 태그 추가
             except (SyntaxError, ValueError) as e:
@@ -235,4 +265,3 @@ def language_graph_search(user_data: UserInputData):
     finally:
         if connection:
             connection.close()  # DB 연결 종료
-
