@@ -15,6 +15,7 @@ def fetch_tech_stack():
         SELECT category, name FROM technical_element 
         UNION ALL
         select 'job' as category,name FROM duty_element
+        where name !='언어별 개발자'
         ORDER BY name
         """
 
@@ -89,7 +90,7 @@ def career_graph_search(user_data: UserInputData):
         
         # SQL Query 실행
         query = """
-        SELECT career FROM duty_analysis WHERE duty IN ({})
+        SELECT duty,career FROM duty_analysis WHERE duty IN ({})
         """.format(','.join(['?'] * len(user_data.jobs)))  # 다중 직무 검색을 위한 플레이스홀더
 
         cursor.execute(query, user_data.jobs)  # 사용자의 직무 리스트 바인딩
@@ -99,18 +100,73 @@ def career_graph_search(user_data: UserInputData):
         for row in result:
             try:
                 # career 컬럼이 문자열 리스트로 저장되어 있으므로 변환
-                career_list = ast.literal_eval(row[0])  # 문자열을 실제 리스트로 변환
-                
+                career_list = ast.literal_eval(row[1])  # 문자열을 실제 리스트로 변환
+                duty_list=row[0]
                 if career_list and isinstance(career_list, list):
                     img_path = career_list[0]  # career 리스트에서 첫 번째 요소(이미지 경로)
                     graph_text=career_list[1]
                     img_tag = f'''
-                    <figure>
-                    <img class="fit-picture" src="..\\static\\image\\{img_path}" alt="경력 분석 이미지" />
+                                <figure>
+                    <h3>{duty_list}</h3>
+                    <div class="content-wrapper">
+                        <img class="fit-picture" src="..\\static\\image\\{img_path}" alt="경력 분석 이미지" />
                         <figcaption>
-                         {graph_text}
+                            {graph_text}
                         </figcaption>
-                    </figure>
+                    </div>
+                </figure>
+                   
+                    '''
+                    img_tags.append(img_tag)  # 생성된 <img> 태그 추가
+            except (SyntaxError, ValueError) as e:
+                print(f"Error converting career data: {row[0]}, Error: {str(e)}")
+
+        return img_tags  # HTML <img> 태그 리스트 반환
+
+    except Exception as e:
+        print("Error during SQL execution:", str(e))  # 에러 내용 출력
+        return {"error": str(e)}
+    
+    finally:
+        if connection:
+            connection.close()  # DB 연결 종료
+
+def language_graph_search(user_data: UserInputData):
+    """
+    사용자가 선택한 직무(jobs)에 해당하는 language 데이터를 조회하여 HTML <img> 태그를 생성
+    """
+    connection = get_connection()
+    try:
+        cursor = connection.cursor()
+        
+        # SQL Query 실행
+        query = """
+        SELECT duty,language FROM duty_analysis WHERE duty IN ({})
+        """.format(','.join(['?'] * len(user_data.jobs)))  # 다중 직무 검색을 위한 플레이스홀더
+
+        cursor.execute(query, user_data.jobs)  # 사용자의 직무 리스트 바인딩
+        result = cursor.fetchall()  # career 데이터 가져오기
+        
+        img_tags = []  # HTML <img> 태그 리스트
+        for row in result:
+            try:
+                # career 컬럼이 문자열 리스트로 저장되어 있으므로 변환
+                career_list = ast.literal_eval(row[1])  # 문자열을 실제 리스트로 변환
+                duty_list=row[0]
+                if career_list and isinstance(career_list, list):
+                    img_path = career_list[0]  # career 리스트에서 첫 번째 요소(이미지 경로)
+                    graph_text=career_list[1]
+                    img_tag = f'''
+                                <figure>
+                    <h3>{duty_list}</h3>
+                    <div class="content-wrapper">
+                        <img class="fit-picture" src="..\\static\\image\\{img_path}" alt="어학 분석 이미지" />
+                        <figcaption>
+                            {graph_text}
+                        </figcaption>
+                    </div>
+                </figure>
+                   
                     '''
                     img_tags.append(img_tag)  # 생성된 <img> 태그 추가
             except (SyntaxError, ValueError) as e:

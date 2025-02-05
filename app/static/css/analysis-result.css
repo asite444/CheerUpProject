@@ -1,0 +1,190 @@
+/* 분석 결과 텍스트 스타일 (result-container) */
+.analysis-result #result-container {
+    text-align: left;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px; /* 그래프 결과와 간격 조정 */
+}
+
+/* 중앙 정렬되는 h2 스타일 */
+.analysis-result #result-container h2 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* 왼쪽 정렬 및 강조되는 h3 스타일 */
+.analysis-result #result-container h3 {
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* 리스트 스타일 */
+.analysis-result #result-container ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    padding-left: 20px;
+}
+
+.analysis-result #result-container li {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+/* 강조 텍스트 */
+.analysis-result #result-container strong {
+    font-weight: bold;
+    color: #222;
+}
+
+/* 단락 스타일 */
+.analysis-result #result-container p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+/* 그래프 분석 결과 스타일 (result-graph) */
+.analysis-result #result-graph-career,  
+.analysis-result #result-graph-language
+{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(600px, 1fr)); /* 한 줄에 2개씩 정렬 */
+    gap: 50px 80px;  /* 요소 간 간격 */
+    padding: 30px;
+    justify-content: center;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 개별 분석 카드 (제목 + 이미지 & 설명) */
+.analysis-result #result-graph-career  figure,
+.analysis-result #result-graph-language  figure 
+{
+    display: flex;
+    flex-direction: column; /* 제목 상단 배치 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease-in-out;
+    max-width: 100%; /* 전체 너비 차지 */
+    margin: auto;
+    gap: 15px; /* 제목과 내용 간격 */
+}
+
+/* 직무 제목 스타일 (상단, 왼쪽 정렬) */
+.analysis-result #result-graph-career  figure h3 ,
+.analysis-result #result-graph-language  figure h3 
+{
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+    padding-bottom: 10px;
+    width: 100%;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+}
+
+/* 이미지와 설명을 같은 줄에 배치 */
+.analysis-result #result-graph-career  .content-wrapper,
+.analysis-result #result-graph-language  .content-wrapper
+ 
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 25px;
+}
+
+/* 이미지 스타일 (크기 확대, 꽉 차도록 설정) */
+.analysis-result #result-graph-career  figure img,
+.analysis-result #result-graph-language figure img
+{
+    width: 50%; /* 이미지가 충분히 차지하도록 설정 */
+    height: 100%;
+    object-fit: cover; /* 여백 없이 꽉 차도록 */
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+/* 설명 텍스트 스타일 */
+.analysis-result #result-graph-career  figure figcaption, 
+.analysis-result #result-graph-language  figure figcaption 
+{
+    font-size: 16px;
+    color: #333;
+    text-align: left;
+    line-height: 1.6;
+    flex-grow: 1;
+}
+
+/* 분석 결과 텍스트 스타일 */
+.analysis-text {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.8;
+    background-color: #f8f8f8;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    text-align: left;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 분석 결과 내부 각 항목 스타일 */
+.analysis-text div {
+    margin-bottom: 10px;
+}
+
+
+/* Hover 효과 */
+.analysis-result #result-graph-career  figure:hover ,
+.analysis-result #result-graph-language  figure:hover 
+{
+    transform: scale(1.05);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* 반응형 조정 */
+@media (max-width: 1024px) {
+    .analysis-result #result-graph-career ,
+    .analysis-result #result-graph-language 
+    
+    {
+        grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    }
+
+    .analysis-result #result-graph-career  .content-wrapper,
+    .analysis-result #result-graph-language  .content-wrapper
+    {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .analysis-result #result-graph-career  figure img ,
+    .analysis-result #result-graph-language  figure img 
+    {
+        width: 100%;
+        height: auto;
+    }
+
+    .analysis-result #result-graph-career  figure h3 ,
+    .analysis-result #result-graph-language  figure h3 
+    {
+        font-size: 20px;
+        text-align: center;
+    }
+}

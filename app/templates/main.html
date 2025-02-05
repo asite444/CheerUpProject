@@ -11,6 +11,7 @@
      <!-- <link rel="stylesheet" href="..\static\css\toggle.css">  -->
      <link rel="stylesheet" href="..\static\css\container.css"> 
      <link rel="stylesheet" href="..\static\css\sticky_note.css"> 
+     <link rel="stylesheet" href="..\static\css\analysis-result.css"> 
     <!--  jquery 사용하기 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- 디자인된 경고,확인창 사용하기-->
@@ -342,7 +343,9 @@ function submitDataToServer(data) {
         contentType: 'application/json',
         data: JSON.stringify(data),
         success: function (response) {
-            $('#result-container').html(response.message);
+            $('#result-container').html(response.report);
+            $('#result-graph-career').html(response.report_graph_career);
+            $('#result-graph-language').html(response.report_graph_language);
             Swal.fire({
                 title: '분석이 완료되었습니다',
                 icon: 'success',
@@ -448,6 +451,14 @@ function handleMouseUp(event) {
                         <div id="result-container">
                             <!-- Analysis result will appear here -->
                         </div>
+                        <h2>경력 분석 그래프</h2>
+                        <div id="result-graph-career">
+                           <!-- Analysis graph result will appear here -->
+                        </div>
+                        <h2>어학 분석 그래프</h2>
+                        <div id="result-graph-language">
+                            <!-- Analysis graph result will appear here -->
+                         </div>
                     </div>
                 </div>
             </section>
