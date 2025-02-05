@@ -112,6 +112,9 @@ def career_graph_search(user_data: UserInputData):
                     # 숫자 목록("1. ", "2. ")의 공백을 제거하여 줄바꿈 방지
                     formatted_graph_text = re.sub(r"(\d+)\.\s+", r"\1.", graph_text)
 
+                    # 목록 기호 `-` 앞에 줄바꿈 추가
+                    formatted_graph_text = re.sub(r"- ", "</div><div>- ", formatted_graph_text)
+
                     # HTML 태그 적용 (문장별 <div> 처리)
                     formatted_graph_text = "<div>" + formatted_graph_text.replace(". ", ".</div><div>") + "</div>"
 

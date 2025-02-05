@@ -163,10 +163,23 @@ function mapTechStackData() {
  * 기술 선택 및 중복 확인
  * @param {Event} event - 클릭 이벤트 객체
  */
-function handleItemClick(event) {
+ function handleItemClick(event) {
     const selectedCategory = $(event.currentTarget).data("category");
     const selectedValue = $(event.currentTarget).data("value");
 
+    // 직무(`job`) 선택의 경우 하나만 허용
+    if (selectedCategory === "job") {
+        if ($("#selected-tech-list .selected-item[data-category='job']").length > 0) {
+            Swal.fire({
+                icon: "warning",
+                title: "직무는 하나만 \n 선택할 수 있습니다.",
+                
+            });
+            return;
+        }
+
+        
+    } 
     // 중복 선택 방지
     if ($(`#selected-tech-list .selected-item[data-value='${selectedValue}']`).length > 0) {
         Swal.fire({
@@ -180,6 +193,7 @@ function handleItemClick(event) {
     // 선택된 기술 추가
     addSelectedItem(selectedCategory, selectedValue);
 }
+
 
 /**
  * 선택된 기술 추가
@@ -286,6 +300,16 @@ function handleUserInputSubmission() {
         jobs: collectSelectedItems('.selected-item[data-category="job"]').sort((a, b) => a.localeCompare(b)),
     };
 
+      // **직무 선택 필수 검사**
+      if (dataToSend.jobs.length === 0) {
+        Swal.fire({
+            icon: 'warning',
+            title: '직무를 선택하세요',
+            text: '분석을 진행하려면 반드시 하나의 직무를 선택해야 합니다.',
+        });
+        return; // 함수 종료 (서버 요청 방지)
+    }
+
     // 데이터 유효성 검사 및 서버로 전송
     if (validateSelectedData(dataToSend)) {
         Swal.fire({
@@ -301,13 +325,7 @@ function handleUserInputSubmission() {
                 submitDataToServer(dataToSend);
             }
         });
-    } else {
-        Swal.fire({
-            icon: 'error',
-            title: '데이터가 없습니다',
-            text: '적어도 하나의 기술을 선택해야 합니다.',
-        });
-    }
+    } 
 }
 
 /**
@@ -343,10 +361,15 @@ function submitDataToServer(data) {
         contentType: 'application/json',
         data: JSON.stringify(data),
         success: function (response) {
-            $('#result-container').html(response.report);
+            $('#result-top5').html(response.report_top5);
+            $('#result-user-tech').html(response.report_user_tech);
+            $('#result-security').html(response.report_security);
+            $('#result-conclusion').html(response.report_conclusion);
             $('#result-graph-career').html(response.report_graph_career);
             $('#result-graph-degree').html(response.report_graph_degree);
             $('#result-graph-language').html(response.report_graph_language);
+            // 분석 완료 후 분석 결과 영역 표시
+            $("#analysis-result-section").slideDown();
             Swal.fire({
                 title: '분석이 완료되었습니다',
                 icon: 'success',
@@ -398,14 +421,7 @@ function handleMouseUp(event) {
     <header>
         <nav class="navbar">
             <div class="logo">취얼업</div>
-            <ul class="nav-menu">
-                <li><a href="#report">기술레포트</a></li>
-                <li><a href="#backend">백엔드</a></li>
-                <li><a href="#frontend">프론트엔드</a></li>
-                <li><a href="#ai">AI개발자</a></li>
-                <li><a href="#data">데이터분석가</a></li>
-                <li><a href="#pm">PM</a></li>
-            </ul>
+
         </nav>
     </header>
 <div>
@@ -447,10 +463,26 @@ function handleMouseUp(event) {
                     </div>
         
                     <!-- Analysis result section -->
-                    <div class="analysis-result">
+                    <div class="analysis-result"  id="analysis-result-section" style="display: none;">
                         <h2>분석결과</h2>
-                        <div id="result-container">
-                            <!-- Analysis result will appear here -->
+                        <h2>TOP5</h2>
+                        <div id="result-top5">
+                            <!-- TOP5 분석 결과가 표시될 영역 -->
+                        </div>
+
+                        <h2>사용자의 기술 분석</h2>
+                        <div id="result-user-tech">
+                            <!-- 사용자의 기술 분석 결과가 표시될 영역 -->
+                        </div>
+
+                        <h2>보안사항</h2>
+                        <div id="result-security">
+                            <!-- 보안 관련 분석 결과가 표시될 영역 -->
+                        </div>
+
+                        <h2>결론</h2>
+                        <div id="result-conclusion">
+                            <!-- 결론이 표시될 영역 -->
                         </div>
                         <h2>경력 분석 그래프</h2>
                         <div id="result-graph-career">
