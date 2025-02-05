@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from app.controllers.home_controller import router as home_router
 from app.controllers.googleTrandController import router as googleTrand_router
-from app.controllers.data_controller import router as data_router  # 추가된 라우터
 from fastapi.templating import Jinja2Templates
 import os
 app = FastAPI()
@@ -22,11 +21,9 @@ templates = Jinja2Templates(directory=templates_dir)
 
 # 라우터 등록
 app.include_router(home_router)
-
-
 app.include_router(googleTrand_router)
 
-app.include_router(data_router)  # 데이터 라우터 등록
+
 
 if __name__ == "__main__":
     import uvicorn

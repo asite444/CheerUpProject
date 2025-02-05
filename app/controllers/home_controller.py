@@ -45,10 +45,16 @@ async def process_user_data(user_data: UserInputData):
 
 
     report = gpt.analyze_user_stack(user_data)
-    report_graph_career = "\n".join(sql.career_graph_search(user_data))  # 그래프 리스트
-    report_graph_language =  "\n".join(sql.language_graph_search(user_data)) 
+    report_graph_career = "\n".join(sql.career_graph_search(user_data))      # 경력 그래프
+    report_graph_degree = "\n".join(sql.degree_graph_search(user_data))      # 학력 그래프
+    report_graph_language =  "\n".join(sql.language_graph_search(user_data)) # 어학 그래프
 
     
 
     # JSON 응답 생성
-    return JSONResponse(content={"report": report,"report_graph_career":report_graph_career,"report_graph_language":report_graph_language})
+    return JSONResponse(content={
+        "report": report,
+        "report_graph_career":report_graph_career,
+        "report_graph_degree":report_graph_degree,
+        "report_graph_language":report_graph_language
+        })

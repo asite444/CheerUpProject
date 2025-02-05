@@ -54,7 +54,8 @@
 
 /* 그래프 분석 결과 스타일 (result-graph) */
 .analysis-result #result-graph-career,  
-.analysis-result #result-graph-language
+.analysis-result #result-graph-language,
+.analysis-result #result-graph-degree
 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(600px, 1fr)); /* 한 줄에 2개씩 정렬 */
@@ -68,7 +69,8 @@
 
 /* 개별 분석 카드 (제목 + 이미지 & 설명) */
 .analysis-result #result-graph-career  figure,
-.analysis-result #result-graph-language  figure 
+.analysis-result #result-graph-language  figure ,
+.analysis-result #result-graph-degree  figure 
 {
     display: flex;
     flex-direction: column; /* 제목 상단 배치 */
@@ -85,7 +87,8 @@
 
 /* 직무 제목 스타일 (상단, 왼쪽 정렬) */
 .analysis-result #result-graph-career  figure h3 ,
-.analysis-result #result-graph-language  figure h3 
+.analysis-result #result-graph-language  figure h3 ,
+.analysis-result #result-graph-degree  figure h3 
 {
     font-size: 22px;
     font-weight: bold;
@@ -99,7 +102,8 @@
 
 /* 이미지와 설명을 같은 줄에 배치 */
 .analysis-result #result-graph-career  .content-wrapper,
-.analysis-result #result-graph-language  .content-wrapper
+.analysis-result #result-graph-language  .content-wrapper,
+.analysis-result #result-graph-degree  .content-wrapper
  
 {
     display: flex;
@@ -111,7 +115,8 @@
 
 /* 이미지 스타일 (크기 확대, 꽉 차도록 설정) */
 .analysis-result #result-graph-career  figure img,
-.analysis-result #result-graph-language figure img
+.analysis-result #result-graph-language figure img,
+.analysis-result #result-graph-degree figure img
 {
     width: 50%; /* 이미지가 충분히 차지하도록 설정 */
     height: 100%;
@@ -122,7 +127,8 @@
 
 /* 설명 텍스트 스타일 */
 .analysis-result #result-graph-career  figure figcaption, 
-.analysis-result #result-graph-language  figure figcaption 
+.analysis-result #result-graph-language  figure figcaption ,
+.analysis-result #result-graph-degree  figure figcaption 
 {
     font-size: 16px;
     color: #333;
@@ -152,7 +158,8 @@
 
 /* Hover 효과 */
 .analysis-result #result-graph-career  figure:hover ,
-.analysis-result #result-graph-language  figure:hover 
+.analysis-result #result-graph-language  figure:hover ,
+.analysis-result #result-graph-degree  figure:hover 
 {
     transform: scale(1.05);
     box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
@@ -161,28 +168,32 @@
 /* 반응형 조정 */
 @media (max-width: 1024px) {
     .analysis-result #result-graph-career ,
-    .analysis-result #result-graph-language 
+    .analysis-result #result-graph-language, 
+    .analysis-result #result-graph-degree
     
     {
         grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
     }
 
     .analysis-result #result-graph-career  .content-wrapper,
-    .analysis-result #result-graph-language  .content-wrapper
+    .analysis-result #result-graph-language  .content-wrapper,
+    .analysis-result #result-graph-degree  .content-wrapper
     {
         flex-direction: column;
         text-align: center;
     }
 
     .analysis-result #result-graph-career  figure img ,
-    .analysis-result #result-graph-language  figure img 
+    .analysis-result #result-graph-language  figure img,
+    .analysis-result #result-graph-degree  figure img
     {
         width: 100%;
         height: auto;
     }
 
     .analysis-result #result-graph-career  figure h3 ,
-    .analysis-result #result-graph-language  figure h3 
+    .analysis-result #result-graph-language  figure h3, 
+    .analysis-result #result-graph-degree  figure h3 
     {
         font-size: 20px;
         text-align: center;
