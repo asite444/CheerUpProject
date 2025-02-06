@@ -134,11 +134,7 @@ def analyze_user_tech(user_data:UserInputData):
             # 데이터 처리 및 HTML 텍스트 생성
         """
                 GPT에게 사용자 스택을 분석 요청
-                languages=['java', 'python'] frameworks=['django', 'flask'] libraries=['pandas', 'recoil'] devtools=['docker', 'git', 'mysql'] jobs=['백엔드']
         """
-
-        print('analyze user tech-----------')
-        print(user_data)
 
         connection = get_connection()
 
@@ -162,7 +158,6 @@ def analyze_user_tech(user_data:UserInputData):
                 purchases = (duty, ', '.join(it_language), ', '.join(framework), ', '.join(library), ', '.join(tool), )
                 cursor.execute(query, purchases)
                 data = cursor.fetchone()
-                print(data)
 
                 if data is not None: # not null
                         return data[1]
