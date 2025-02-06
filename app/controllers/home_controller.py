@@ -46,7 +46,7 @@ async def process_user_data(user_data: UserInputData):
 
 
     report_top5 = sql.analyze_stack_top5(user_data)
-    report_user_tech = gpt.analyze_user_tech(user_data)
+    report_user_tech =gpt.analyze_user_tech(user_data)
     report_security = gpt.analyze_security(user_data)
     report_conclusion = gpt.analyze_conclusion(user_data)
 
