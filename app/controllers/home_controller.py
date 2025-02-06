@@ -43,22 +43,9 @@ async def process_user_data(user_data: UserInputData):
     # else :
     #     print("없음")
 
-    languages = ", ".join(user_data.languages) if user_data.languages else "없음"
-    frameworks = ", ".join(user_data.frameworks) if user_data.frameworks else "없음"
-    libraries=  ", ".join(user_data.libraries) if user_data.libraries else "없음"
-    devtools=  ", ".join(user_data.devtools) if user_data.devtools else "없음"
-    jobs=  ", ".join(user_data.jobs) if user_data.jobs else "없음"
 
 
-    report_select_user_tech=f"""
-
-                <p><strong>직업:</strong> {jobs}</p>
-                <p><strong>언어:</strong> {languages}</p>
-                <p><strong>프레임워크:</strong> {frameworks}</p>
-                <p><strong>라이브러리:</strong> {libraries}</p>
-                <p><strong>개발툴:</strong> {devtools}</p>
-            """
-    report_top5 = gpt.analyze_stack_top5(user_data)
+    report_top5 = sql.analyze_stack_top5(user_data)
     report_user_tech = gpt.analyze_user_tech(user_data)
     report_security = gpt.analyze_security(user_data)
     report_conclusion = gpt.analyze_conclusion(user_data)
