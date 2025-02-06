@@ -3,6 +3,7 @@ from app.models.user_input_data import UserInputData
 import ast
 import html
 import re 
+
 def fetch_tech_stack():
     """
     tech_stack 테이블에서 데이터를 조회하는 함수.
@@ -79,6 +80,73 @@ def is_existing_tech_stack(user_data: UserInputData):
         if connection:
             connection.close()
 
+
+def analyze_stack_top5(user_data: UserInputData):
+    """
+    top5 불러오기
+    """
+    connection = get_connection()
+    try:
+        cursor = connection.cursor()
+        
+        # SQL Query 실행
+        query = """ 
+        SELECT duty, it_language, framework, library, tool 
+        FROM duty_analysis 
+        WHERE duty IN ({})
+        """.format(','.join(['?'] * len(user_data.jobs)))  # 다중 직무 검색을 위한 플레이스홀더
+
+        cursor.execute(query, tuple(user_data.jobs))  # 사용자의 직무 리스트 바인딩
+        result = cursor.fetchall()  # career 데이터 가져오기
+        
+        sections = {"언어": [], "프레임워크": [], "라이브러리": [], "툴": []}
+        
+        for row in result:
+            try:
+                # 데이터 변환
+                it_lang_list = ast.literal_eval(row[1]) if isinstance(row[1], str) else row[1] or []
+                framework_list = ast.literal_eval(row[2]) if isinstance(row[2], str) else row[2] or []
+                library_list = ast.literal_eval(row[3]) if isinstance(row[3], str) else row[3] or []
+                tool_list = ast.literal_eval(row[4]) if isinstance(row[4], str) else row[4] or []
+
+                # 각 카테고리에 데이터 추가
+                sections["언어"].extend(it_lang_list)
+                sections["프레임워크"].extend(framework_list)
+                sections["라이브러리"].extend(library_list)
+                sections["툴"].extend(tool_list)
+            
+            except (SyntaxError, ValueError) as e:
+                print(f"Error converting career data: {row[0]}, Error: {str(e)}")
+
+        # HTML 변환
+        html_output = "".join(
+            f"""
+            <h2>{html.escape(category)}</h2>
+            <ol>
+                {''.join(
+                    f'''
+                    <li>
+                        <strong>{html.escape(item[0])}</strong>
+                        <p>{html.escape(item[1][0])}</p>
+                        <p>{html.escape(item[1][1])}</p>
+                    </li>
+                    ''' if isinstance(item, list) and len(item) == 2 and isinstance(item[1], list) and len(item[1]) == 2
+                    else f'<li>{html.escape(str(item))}</li>'
+                for item in items)}
+            </ol>
+            """ for category, items in sections.items() if items
+        )
+
+       
+        return html_output
+
+    except Exception as e:
+        print("Error during SQL execution:", str(e))  # 에러 내용 출력
+        return {"error": str(e)}
+    
+    finally:
+        if connection:
+            connection.close()  # DB 연결 종료
 
 def career_graph_search(user_data: UserInputData):
     """
