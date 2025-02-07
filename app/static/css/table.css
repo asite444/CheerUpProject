@@ -1,0 +1,111 @@
+/* 테이블 전체 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 테이블 헤더 스타일 */
+th {
+    background-color: #007BFF;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* 테이블 행 스타일 */
+tr {
+    border-bottom: 1px solid #ddd;
+}
+
+/* 테이블 셀 스타일 */
+td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+/* 홀수 줄 배경색 */
+tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+/* 짝수 줄 배경색 */
+tr:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+/* 마우스 오버 효과 */
+tr:hover {
+    background-color: #e0f7fa;
+}
+
+/* 제목 스타일 */
+h3 {
+    font-size: 20px;
+    color: #333;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* 테이블 스타일 */
+#analysis_top5 {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 테이블 헤더 스타일 */
+#analysis_top5 th {
+    background-color: #007BFF;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    white-space: nowrap;  /* 줄 바꿈 방지 */
+    min-width: 120px;     /* 최소 너비 설정 */
+    max-width: 250px;     /* 최대 너비 설정 */
+    overflow: hidden;
+    text-overflow: ellipsis; /* 너무 길면 ... 표시 */
+}
+
+/* 테이블 셀 스타일 */
+#analysis_top5 td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    vertical-align: top;
+    white-space: normal;  /* 내용이 긴 경우 자동 줄바꿈 */
+}
+
+/* 짝수 줄 배경색 */
+#analysis_top5 tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* 마우스 오버 효과 */
+#analysis_top5 tr:hover {
+    background-color: #e0f7fa;
+}
+
+/* 테이블 제목 스타일 */
+#analysis_top5 h3 {
+    font-size: 20px;
+    color: #333;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+}
