@@ -56,7 +56,7 @@ h3 {
 }
 
 /* 기본 테이블 스타일 */
-#analysis_top5 {
+.analysis_top5 {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
@@ -69,7 +69,7 @@ h3 {
 }
 
 /* 테이블 헤더 스타일 */
-#analysis_top5 th {
+.analysis_top5 th {
     background-color: #007BFF;
     color: white;
     padding: 12px;
@@ -83,7 +83,7 @@ h3 {
 }
 
 /* 테이블 셀 스타일 */
-#analysis_top5 td {
+.analysis_top5 td {
     padding: 12px;
     border-bottom: 1px solid #ddd;
     text-align: center;
@@ -91,33 +91,34 @@ h3 {
 }
 
 /* 자격 요건(%) 컬럼 - 파란색 */
-#analysis_top5 td.requirement {
+.analysis_top5 td.requirement {
     color: #0056b3; /* 기본 파란색 */
     font-weight: bold;
 }
 
 /* 우대 조건(%) 컬럼 - 초록색 */
-#analysis_top5 td.preference {
+.analysis_top5 td.preference {
     color: #008000; /* 기본 초록색 */
     font-weight: bold;
 }
 
 
-#analysis_top5 td.requirement.high,
-#analysis_top5 td.preference.high {
+.analysis_top5 td.requirement.high,
+.analysis_top5 td.preference.high {
     font-weight: bold;
     background-color: rgba(0, 86, 179, 0.2); /* 연한 파란색 배경 */
 }
 
 
-#analysis_top5 td.requirement.very-high,
-#analysis_top5 td.preference.very-high {
+.analysis_top5 td.requirement.very-high,
+.analysis_top5 td.preference.very-high {
     font-weight: bold;
     background-color: rgba(0, 86, 179, 0.4); /* 더 진한 파란색 배경 */
     color: rgb(142, 59, 59);
 }
 
 /* 마우스 오버 효과 */
-#analysis_top5 tr:hover {
+.analysis_top5 tr:hover {
     background-color: #e0f7fa;
 }
+
