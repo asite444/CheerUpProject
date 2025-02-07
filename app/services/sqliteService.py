@@ -34,18 +34,25 @@ def fetch_tech_stack():
 
 
 def extract_percentage(text):
-    """ 문자열에서 자격 조건(%)과 우대 조건(%)을 추출하는 함수 """
-    match = re.search(r'(\d+\.\d+)%.*?(\d+\.\d+)%', text)
+    """ 문자열에서 자격 요건(%)과 우대 조건(%)을 추출하는 함수 """
+    match = re.search(r'(\d+\.\d+|nan)%.*?(\d+\.\d+|nan)%', text)  # nan% 처리 포함
     if match:
-        return float(match.group(1)), float(match.group(2))
-    return 0.0, 0.0  # 기본값
+        qualification = match.group(1)  # 자격 요건(%)
+        preference = match.group(2)  # 우대 조건(%)
+
+        # 각 값이 'nan'이면 0.0으로 변환, 아니면 float으로 변환
+        qualification = 0.0 if qualification.lower() == "nan" else float(qualification)
+        preference = 0.0 if preference.lower() == "nan" else float(preference)
+
+        return qualification, preference  # 자격 요건과 우대 조건을 각각 처리
+    return 0.0, 0.0  # 기본값 반환
 
 def generate_html_table_from_analysis(data, title="언어"):
     col_headers = ["순위", "이름", "자격 조건(%)", "우대 조건(%)", "설명"]
 
     html_output = f"""
     <h3>{html.escape(title)}</h3>
-    <table id="analysis_top5">
+    <table class="analysis_top5">
         <tr>
     """
 
@@ -85,6 +92,7 @@ def analyze_stack_top5(user_data:UserInputData):
         """.format(','.join(['?'] * len(user_data.jobs)))
 
         #print(f"Executing SQL query: {query}")  # 🟢 SQL 쿼리 확인
+        
         cursor.execute(query, tuple(user_data.jobs))
         result = cursor.fetchall()
 
@@ -101,7 +109,7 @@ def analyze_stack_top5(user_data:UserInputData):
                 library_list = ast.literal_eval(row[3]) if isinstance(row[3], str) else row[3] or []
                 tool_list = ast.literal_eval(row[4]) if isinstance(row[4], str) else row[4] or []
 
-                #print(f"Parsed it_lang_list: {it_lang_list}")  # 🟢 데이터 변환 확인
+                #print(f"데이터 확인-Parsed it_lang_list: {it_lang_list}")  # 🟢 데이터 변환 확인
 
                 # 데이터 정리
                 def parse_stack_data(stack_list):
@@ -112,6 +120,7 @@ def analyze_stack_top5(user_data:UserInputData):
                             qualification, preference = extract_percentage(name_raw)  # 자격 조건과 우대 조건 추출
                             name = name_raw.split(" (자격 조건")[0]  # "Java" 부분만 추출
                             parsed_data.append((name, qualification, preference, description_list))
+                            
                     return parsed_data
 
                 sections["언어"].extend(parse_stack_data(it_lang_list))
