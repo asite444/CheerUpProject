@@ -55,7 +55,7 @@ h3 {
     font-weight: bold;
 }
 
-/* 테이블 스타일 */
+/* 기본 테이블 스타일 */
 #analysis_top5 {
     width: 100%;
     border-collapse: collapse;
@@ -75,37 +75,49 @@ h3 {
     padding: 12px;
     text-align: center;
     font-weight: bold;
-    white-space: nowrap;  /* 줄 바꿈 방지 */
-    min-width: 120px;     /* 최소 너비 설정 */
-    max-width: 250px;     /* 최대 너비 설정 */
+    white-space: nowrap;
+    min-width: 120px;
+    max-width: 250px;
     overflow: hidden;
-    text-overflow: ellipsis; /* 너무 길면 ... 표시 */
+    text-overflow: ellipsis;
 }
 
 /* 테이블 셀 스타일 */
 #analysis_top5 td {
     padding: 12px;
     border-bottom: 1px solid #ddd;
-    text-align: left;
-    vertical-align: top;
-    white-space: normal;  /* 내용이 긴 경우 자동 줄바꿈 */
+    text-align: center;
+    vertical-align: middle;
 }
 
-/* 짝수 줄 배경색 */
-#analysis_top5 tr:nth-child(even) {
-    background-color: #f9f9f9;
+/* 자격 요건(%) 컬럼 - 파란색 */
+#analysis_top5 td.requirement {
+    color: #0056b3; /* 기본 파란색 */
+    font-weight: bold;
+}
+
+/* 우대 조건(%) 컬럼 - 초록색 */
+#analysis_top5 td.preference {
+    color: #008000; /* 기본 초록색 */
+    font-weight: bold;
+}
+
+
+#analysis_top5 td.requirement.high,
+#analysis_top5 td.preference.high {
+    font-weight: bold;
+    background-color: rgba(0, 86, 179, 0.2); /* 연한 파란색 배경 */
+}
+
+
+#analysis_top5 td.requirement.very-high,
+#analysis_top5 td.preference.very-high {
+    font-weight: bold;
+    background-color: rgba(0, 86, 179, 0.4); /* 더 진한 파란색 배경 */
+    color: rgb(142, 59, 59);
 }
 
 /* 마우스 오버 효과 */
 #analysis_top5 tr:hover {
     background-color: #e0f7fa;
-}
-
-/* 테이블 제목 스타일 */
-#analysis_top5 h3 {
-    font-size: 20px;
-    color: #333;
-    margin-top: 20px;
-    text-align: center;
-    font-weight: bold;
 }

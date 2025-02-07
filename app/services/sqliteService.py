@@ -63,8 +63,8 @@ def generate_html_table_from_analysis(data, title="언어"):
         <tr>
             <td>{index}</td>
             <td>{name}</td>
-            <td>{qualification}</td>
-            <td>{preference}</td>
+            <td class="requirement high">{qualification}</td>
+            <td class="preference very-high">{preference}</td>
             <td>{description}</td>
         </tr>
         """
@@ -73,7 +73,7 @@ def generate_html_table_from_analysis(data, title="언어"):
     return html_output
 
 
-def analyze_stack_top5(user_data):
+def analyze_stack_top5(user_data:UserInputData):
     connection = get_connection()
     try:
         cursor = connection.cursor()
@@ -145,9 +145,6 @@ def analyze_stack_top5(user_data):
         if connection:
             connection.close()
 
-import re
-import ast
-import html
 
 def career_graph_search(user_data: UserInputData):
     """
