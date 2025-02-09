@@ -5,23 +5,25 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f9;
+html {
+    overflow-y: scroll; /* 항상 스크롤바가 존재하도록 설정 */
 }
 
 /* Navbar 스타일 */
 .navbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start; /* 왼쪽 정렬 */
     align-items: center;
     background-color: #333;
     color: #fff;
-    padding: 0.5rem 1rem;
+    padding: 0.3rem 1rem; /* 높이를 더 짧게 조정 */
     position: sticky;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
+    width: 100%;
+    box-shadow: none; /* 테두리 효과 제거 */
 }
 
 .logo {
@@ -29,44 +31,67 @@ body {
     font-weight: bold;
 }
 
-.nav-menu {
-    list-style: none;
+/* 상단 제목 스타일 */
+.topmenu-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+    padding: 10px 20px; /* 높이를 더 줄임 */
+    width: 100%;
+    background: linear-gradient(135deg, #333, #333);
+    animation: fadeIn 1s ease-in-out;
     display: flex;
-    gap: 1.5rem;
+    flex-direction: row; /* 한 줄에 정렬 */
+    align-items: center;
+    gap: 10px;
 }
 
-.nav-menu li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s ease;
+.topmenu-title .highlight {
+    color: #ff6347; /* 주황색 */
+    font-size: 22px;
+    font-weight: bold;
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
 }
 
-.nav-menu li a:hover {
-    color: #ff6347;
+.topmenu-title .highlight:hover {
+    transform: scale(1.1);
+    text-shadow: 2px 2px 5px rgba(255, 99, 71, 0.5);
+}
+
+.topmenu-title .subtitle {
+    font-size: 18px;
+    color: #ddd;
+    font-style: italic;
+    margin-top: 0;
+}
+
+
+/* 페이드인 효과 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* 반응형 설정 */
 @media (max-width: 768px) {
-    .nav-menu {
+    .topmenu-title {
+        padding: 8px;
         flex-direction: column;
-        display: none;
-        background-color: #333;
-        position: absolute;
-        top: 100%;
-        right: 0;
-        width: 100%;
+        align-items: flex-start;
     }
 
-    .nav-menu.active {
-        display: flex;
+    .topmenu-title .highlight {
+        font-size: 20px;
     }
 
-    .navbar {
-        flex-direction: column;
-    }
-
-    .logo {
-        margin-bottom: 1rem;
+    .topmenu-title .subtitle {
+        font-size: 16px;
     }
 }
