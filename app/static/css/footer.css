@@ -1,0 +1,39 @@
+.site-footer {
+    background: #222; /* 어두운 배경 */
+    color: #f8f9fa; /* 밝은 텍스트 */
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+    font-size: 14px;
+}
+
+.site-footer .footer-content {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.site-footer p {
+    margin: 5px 0;
+}
+
+.site-footer a {
+    color: #ff6347; /* 주황색 강조 */
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    text-decoration: underline;
+}
+
+.site-footer .footer-links {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.site-footer .footer-links li {
+    display: inline;
+}
