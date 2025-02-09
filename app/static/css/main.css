@@ -17,7 +17,7 @@ body.swal2-shown {
 .site-intro {
     text-align: center;
     padding: 40px 20px;
-    background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* 부드러운 블루-그레이 계열 */
+    background: linear-gradient(135deg, rgba(245, 247, 250, 0.95), rgba(195, 207, 226, 0.95)); /* 투명도 추가 */
     color: #333;
     border-radius: 10px;
     margin: 20px auto;
