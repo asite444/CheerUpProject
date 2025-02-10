@@ -150,18 +150,18 @@ def analyze_user_tech(user_data:UserInputData):
                         
                         report += '''</ul>'''
 
-                        cursor.execute('SELECT MAX(seq) FROM customized_analysis ')
-                        data = cursor.fetchone()[0]
-                        seq = data + 1 if data is not None else 0
+                        # cursor.execute('SELECT MAX(seq) FROM customized_analysis ')
+                        # data = cursor.fetchone()[0]
+                        # seq = data + 1 if data is not None else 0
 
-                        query = """
-                                INSERT INTO
-                                customized_analysis
-                                VALUES
-                                (?, ?, ?, ?, ?, ?, ?, ?)
-                        """
-                        purchases = (seq, ', '.join(it_language), ', '.join(framework), ', '.join(library), ', '.join(tool), report, '2025.02.06', duty, )
-                        cursor.execute(query, purchases)
+                        # query = """
+                        #         INSERT INTO
+                        #         customized_analysis
+                        #         VALUES
+                        #         (?, ?, ?, ?, ?, ?, ?, ?)
+                        # """
+                        # purchases = (seq, ', '.join(it_language), ', '.join(framework), ', '.join(library), ', '.join(tool), report, '2025.02.06', duty, )
+                        # cursor.execute(query, purchases)
                         return report
         except Exception as e:
                return e
@@ -261,6 +261,7 @@ def get_openai_response(prompt):
             {"role": "user", "content": prompt}
         ]
     )
+    print(response.choices[0].message.content, end='\n\n')
     return response.choices[0].message.content.strip()
 
 def analyze_security(user_data:UserInputData):
@@ -278,6 +279,9 @@ def analyze_security(user_data:UserInputData):
 
         report = '''<ul>'''
         category = {'it_language': ['언어'], 'framework': ['프레임워크'], 'library': ['라이브러리'], 'tool': ['툴']}
+
+        print(prompt)
+        print(response)
 
         test = response.split('\n\n')
         temp = test[0].split('**')
@@ -297,15 +301,15 @@ def analyze_security(user_data:UserInputData):
                         report += f"""
                         <li>{j[0][0]}"""
 
-                report += f"""
-                        <li>{j[0][1]}"""
-                for k in j[1:]:
                         report += f"""
-                        <li>{k[0]}
-                        <li>{k[1]}</li>
+                                <li>{j[0][1]}"""
+                        for k in j[1:]:
+                                report += f"""
+                                <li>{k[0]}
+                                <li>{k[1]}</li>
+                                </li>"""
+                        report += """
                         </li>"""
-                report += """
-                </li>"""
         report += """</ul>"""
         
         return report
