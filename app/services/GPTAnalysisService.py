@@ -264,9 +264,9 @@ def get_openai_response(prompt):
     print(response.choices[0].message.content, end='\n\n')
     return response.choices[0].message.content.strip()
 
-def analyze_security(user_data:UserInputData):
+def analyze_improvement(user_data:UserInputData):
             # 데이터 처리 및 HTML 텍스트 생성
-        """보안사항"""
+        """보완완사항"""
         duty = user_data.jobs[0]
         it_language = sorted(user_data.languages)
         framework = sorted(user_data.frameworks)
