@@ -8,7 +8,138 @@ import pandas as pd
 from openai import OpenAI
 from dotenv import load_dotenv
 
-def make_message(category, skill):
+def get_api_key():
+    # 프로젝트 루트의 .env 파일을 로드 (web/.env)
+    dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), ".env")
+    load_dotenv(dotenv_path)
+
+    # 환경 변수에서 API_KEY 가져오기
+    API_KEY = os.getenv("CHATGPT_API_KEY")
+    return API_KEY
+
+def get_openai_response(prompt, model='gpt-3.5-turbo', temperature=0.5):
+    # ChatGPT API를 이용용
+    client = OpenAI(api_key=get_api_key())
+    response = client.chat.completions.create(
+        model=model,
+        temperature=temperature,
+        messages=[
+            {"role": "system", "content": "당신은 IT 전문가입니다. 주어진 질문에 모두 답하세요."},
+            {"role": "user", "content": prompt}
+        ]
+    )
+    return response.choices[0].message.content
+
+def analyze_customize(user_data:UserInputData):
+    duty = user_data.jobs[0]
+    it_language = sorted(user_data.languages)
+    framework = sorted(user_data.frameworks)
+    library = sorted(user_data.libraries)
+    tool = sorted(user_data.devtools)
+    categories = {'it_language': ['언어', it_language], 'framework': ['프레임워크', framework], 'library': ['라이브러리', library], 'tool': ['툴', tool]}
+
+    data = get_customized_analysis(duty, it_language, framework, library, tool)
+    if data is not None:
+        # DB에 분석 결과가 있음
+        return data
+    else:
+        # DB에 분석 결과가 없음
+        report_user_tech = user_tech(duty, categories)
+        report_improvement = improvement(duty, categories)
+
+    return report_user_tech, report_improvement, analyze_conclusion()
+
+
+def get_customized_analysis(duty, it_language, framework, library, tool):
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+        query = '''
+                SELECT
+                        seq, text
+                FROM
+                        customized_analysis
+                WHERE
+                        duty = ? AND it_language = ? AND framework = ? AND library = ? AND tool = ?
+        '''
+        purchases = (duty, ', '.join(it_language), ', '.join(framework), ', '.join(library), ', '.join(tool), )
+        cursor.execute(query, purchases)
+        return cursor.fetchone()
+    except Exception as e:
+        return 'get customized analysis error: ' + e
+    finally:
+        if connection:
+            connection.close()
+
+def insert_customized_analysis(duty, it_language, framework, library, tool):
+    connection = get_connection()
+    
+    try:
+        cursor = connection.cursor()
+        cursor.execute('SELECT MAX(seq) FROM customized_analysis ')
+        data = cursor.fetchone()[0]
+        seq = data + 1 if data is not None else 0
+        
+        query = """
+                INSERT INTO
+                customized_analysis
+                VALUES
+                (?, ?, ?, ?, ?, ?, ?, ?)
+        """
+        purchases = (seq, ', '.join(it_language), ', '.join(framework), ', '.join(library), ', '.join(tool), report, '2025.02.06', duty, )
+        cursor.execute(query, purchases)
+        return cursor.fetchone()
+    except Exception as e:
+        return 'insert_customized analysis error: ' + e
+    finally:
+        if connection:
+            connection.close()
+
+def user_tech(duty, categories):
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+
+        result = list()
+        for category in categories.keys():
+            query = f'''
+                    WITH Ranked AS (
+                        SELECT 
+                                skill, 
+                                probability, 
+                                pre_probability,
+                                RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC) AS rank
+                        FROM skill_prob_unit
+                        WHERE category = ? AND duty = ?
+                    )
+                    SELECT skill, rank, probability, pre_probability
+                    FROM Ranked
+                    WHERE skill IN ({", ".join(["?"] * len(categories[category][1]))})
+                    ORDER BY rank
+            '''
+            purchases = (category, duty, *categories[category][1], )
+            cursor.execute(query, purchases)
+            skill_probability = cursor.fetchall() # [('nodejs', 2, 28.16, 17.28), ('django', 7, 11.18, 14.62), ('flask', 11, 3.82, 3.65)]
+
+            temp = [categories[category][0]]
+            for i in skill_probability:
+                    prompt = make_user_tech_prompt(category, i[0])
+                    response = get_openai_response(prompt)
+
+                    temp.append(list(i) + response.replace('\"', '').replace('.', '').split('/'))
+            
+            result.append(temp)
+
+        return get_user_tech_html(result)
+    except Exception as e:
+        return 'user_tech ' + e
+    finally:
+        if connection:
+            connection.close()
+
+def make_user_tech_prompt(category, skill):
     if category == 'it_language':
         return f'{skill}에 대한 강점을 15자 "주요 특징" 형식으로 요약해줘. 예시: "객체지향적이고 이식성 높은 언어"'
     elif category == 'framework':
@@ -16,305 +147,173 @@ def make_message(category, skill):
     elif category == 'library':
         return f'{skill}에 대한 강점을 "언어/주요 기능(20자 이내)" 형식으로 요약해줘. 예시: "Python/데이터 처리 및 분석에 특화된 라이브러리리"'
     elif category == 'tool':
-        return f'{skill}에 대한 설명을 "사용 분야/주요 특징" 형식으로 요약해줘. 예시: "컨테이너 가상화/애플리케이션 배포 및 관리"'
+        return f'{skill}에 대한 설명을 "사용 분야/주요 특징(20자 이내)" 형식으로 요약해줘. 예시: "컨테이너 가상화/애플리케이션 배포 및 관리"'
 
-def get_api_key():
-        # 프로젝트 루트의 .env 파일을 로드 (web/.env)
-        dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), ".env")
-        load_dotenv(dotenv_path)
+def get_user_tech_html(data):
+    columns = {'언어': ['언어', '순위', '자격 조건(%)', '우대 조건(%)', '설명'],
+            '프레임워크': ['프레임워크', '순위', '자격 조건(%)', '우대 조건(%)', '기반 언어', '설명'],
+            '라이브러리': ['라이브러리', '순위', '자격 조건(%)', '우대 조건(%)', '기반 언어', '설명'],
+            '툴': ['언어', '순위', '자격 조건(%)', '우대 조건(%)', '분야', '설명']}
 
-        # 환경 변수에서 API_KEY 가져오기
-        API_KEY = os.getenv("CHATGPT_API_KEY")
-        return API_KEY
-
-def customize(duty, category, stack):
-        connection = get_connection()
-
-        try:
-                cursor = connection.cursor()
-
-                query = '''
-                        WITH Ranked AS (
-                        SELECT 
-                                skill, 
-                                probability, 
-                                pre_probability,
-                                RANK() OVER (PARTITION BY category ORDER BY probability DESC, pre_probability DESC, skill) AS rank
-                        FROM skill_prob_unit
-                        WHERE category = ? AND duty = ?
-                        )
-                        SELECT skill, rank, probability, pre_probability
-                        FROM Ranked
-                        WHERE skill IN ({})
-                        ORDER BY rank
-                '''
-
-                stack_placeholder = ", ".join(["?"] * len(stack))
-                query = query.format(stack_placeholder)
-
-                cursor.execute(query, (category, duty, *stack))
-                skill_probability = cursor.fetchall() # [('nodejs', 2, 28.16, 17.28), ('django', 7, 11.18, 14.62), ('flask', 11, 3.82, 3.65)]
-
-                result = list()
-                client = OpenAI(api_key=get_api_key())
-                for i in skill_probability:
-                        message = make_message(category, i[0])
-                        response = client.chat.completions.create(
-                        model='gpt-3.5-turbo',
-                        temperature=0.7,
-                        messages=[
-                                {'role': 'system', 'content': 'You are a reporter specializing in IT.'},
-                                {'role': 'user', 'content': message}
-                        ]
-                        )
-
-                        result.append(list(i) + response.choices[0].message.content.replace('\"', '').split('/'))
-                return result
-
-        except Exception as e:
-                return 'customize error ' + e
-        finally:
-                if connection:
-                        connection.close()
-
-def generate_html_table(data, title="언어"):
-        col = {'언어': ['언어', '순위', '자격 조건(%)', '우대 조건(%)', '설명'],
-                '프레임워크': ['프레임워크', '순위', '자격 조건(%)', '우대 조건(%)', '기반 언어', '설명'],
-                '라이브러리': ['라이브러리', '순위', '자격 조건(%)', '우대 조건(%)', '기반 언어', '설명'],
-                '툴': ['언어', '순위', '자격 조건(%)', '우대 조건(%)', '분야', '설명']}
-
-        # HTML 테이블 시작
-        html = f'''<h3>{title}</h3>
+    report = """<ul>"""
+    for i in data:
+        report += f'''<h3>{i[0]}</h3>
         <table>
-                <tr>
+            <tr>
         '''
-        
         # 테이블 헤더 추가
-        for col in col[title]:
-                html += f'<th scope="col">{col}</th>'
-        html += '</tr>'
+        for col in columns[i[0]]:
+            report += f'<th scope="col">{col}</th>'
+        report += '</tr>'
 
         # 테이블 데이터 추가
-        for row in data:
-                html += '<tr>'
-                for cell in row:
-                        html += f'<td>{cell}</td>'
-                        html += '</tr>'
+        for row in i[1:]:
+            report += '<tr>'
+            for cell in row:
+                report += f'<td>{cell}</td>'
+            report += '</tr>'
         
-        html += '</table>'
-        return html
+        report += '</table>'
+    report += '''</ul>'''
+    return report
 
-def analyze_user_tech(user_data:UserInputData):
-            # 데이터 처리 및 HTML 텍스트 생성
-        """
-                GPT에게 사용자 스택을 분석 요청
-        """
+def improvement(duty, categories, rank=2):
+    # 보완사항
+    connection = get_connection()
 
-        connection = get_connection()
+    try:
+        cursor = connection.cursor()
 
-        try:
-                duty = user_data.jobs[0]
-                it_language = sorted(user_data.languages)
-                framework = sorted(user_data.frameworks)
-                library = sorted(user_data.libraries)
-                tool = sorted(user_data.devtools)
-
-                cursor = connection.cursor()
-
-                query = '''
-                        SELECT
-                                seq, text
-                        FROM
-                                customized_analysis
-                        WHERE
-                                duty = ? AND it_language = ? AND framework = ? AND library = ? AND tool = ?
-                '''
-                purchases = (duty, ', '.join(it_language), ', '.join(framework), ', '.join(library), ', '.join(tool), )
-                cursor.execute(query, purchases)
-                data = cursor.fetchone()
-
-                if data is not None: # not null
-                        return data[1]
-                else:   # seq == None
-                        report = """
-                        <ul>
-                        """
-                        result = []
-                        category = {'it_language': ['언어', it_language], 'framework': ['프레임워크', framework], 'library': ['라이브러리', library], 'tool': ['툴', tool]}
-                        for c in ['it_language', 'framework', 'library', 'tool']:
-                                result = customize(duty, c, category[c][1])  # [['java', 1, 47.02, 8.4, '"객체지향적이며 플랫폼 독립적인 언어"'], ['python', 5, 21.3, 8.47, '"간결하고 읽기 쉬운 문법"']]
-                                if result == []:
-                                        continue
-
-                                report += generate_html_table(result, category[c][0])
-                        
-                        report += '''</ul>'''
-
-                        # cursor.execute('SELECT MAX(seq) FROM customized_analysis ')
-                        # data = cursor.fetchone()[0]
-                        # seq = data + 1 if data is not None else 0
-
-                        # query = """
-                        #         INSERT INTO
-                        #         customized_analysis
-                        #         VALUES
-                        #         (?, ?, ?, ?, ?, ?, ?, ?)
-                        # """
-                        # purchases = (seq, ', '.join(it_language), ', '.join(framework), ', '.join(library), ', '.join(tool), report, '2025.02.06', duty, )
-                        # cursor.execute(query, purchases)
-                        return report
-        except Exception as e:
-               return e
-        finally:
-               connection.commit()
-               if connection:
-                      connection.close()
-
-# SQLite 데이터베이스에서 상위 2개 기술 스택 가져오기
-def skill_top():
-        connection = get_connection()
-
-        try:
-                # cursor = connection.cursor()
-                query = """
-                        WITH Ranked AS (
-                        SELECT
-                                seq, duty, category, skill, probability, pre_probability,
-                                RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC) AS rank
-                        FROM skill_prob_unit
-                        )
-                        SELECT * FROM Ranked WHERE rank <= 2;
-                """
-                return pd.read_sql_query(query, connection)
-        except Exception as e:
-              return 'skill_top error' + e
-        finally:
-              if connection:
-                    connection.close()
-
-# 특정 기술의 조합을 가져오기
-def skill_combination(duty, skill_keyword, category):
-        connection = get_connection()
-
-        try:
-                query = """
-                WITH Filtered AS (
-                        SELECT seq, duty, category, skill, probability, pre_probability
-                        FROM skill_probability
-                        WHERE probability >= 1
-                        AND duty = ? AND category = ? AND skill LIKE '%' || ? || '%'
-                        AND LENGTH(skill) - LENGTH(REPLACE(skill, ',', '')) >= 1
-                ),
-                Ranked AS (
-                        SELECT *, RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC) AS rank
-                        FROM Filtered
+        result = list()
+        for category in categories.keys():
+            query = f"""
+                WITH Ranked AS (
+                    SELECT
+                            skill,
+                            probability,
+                            RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC) AS rank
+                    FROM skill_prob_unit
+                    WHERE category = ? AND duty = ?
                 )
-                SELECT * FROM Ranked WHERE rank <= 2;
-                """
-                return pd.read_sql_query(query, connection, params=(duty, category, skill_keyword))
-        except Exception as e:
-                return 'skill_combination error ' + e
-        finally:
-              if connection:
-                    connection.close()
+                SELECT skill, probability
+                FROM Ranked
+                WHERE rank <= ? AND skill NOT IN ({", ".join(["?"] * len(categories[category][1]))})
+                ORDER BY rank
+            """
+            purchases = (category, duty, rank, *categories[category][1], )
+            cursor.execute(query, purchases)
+            skill_probability = cursor.fetchall()
 
-def generate_prompt(df, duty, language = [], framework = [], library = [], tool = []):
-    """ 특정 직무(duty)에 대한 기술 스택 설명을 생성하는 프롬프트 작성 """
-    categories = ["it_language", "framework", "library", "tool"]
-    prompt = f"다음은 '{duty}' 직무에서 가장 많이 요구되는 기술 스택입니다. 각 기술에 대한 설명을 반드시 다음 주어진 리스트 형식에 맞춰 그대로 출력하세요.:\n"
-    for category in categories:
-        subset = df[(df["duty"] == duty) & (df["category"] == category)]
-        if subset.empty:
-            continue
-        prompt += f"{category}**\n"
-        prompt += "["
-        if category == 'it_language':
-            category_list = language
-        elif category == 'framework':
-            category_list = framework
-        elif category == 'library':
-            category_list = library
-        elif category == 'tool':
-            category_list = tool
-        for _, row in subset.iterrows():
-            skill = row["skill"]
-            if skill not in category_list:
-                if category != 'it_language':
-                    prompt += '['
-                prompt += f"['{skill.title()} (자격 조건: {row['probability']}%)',"
-                prompt += f"'이 기술을 {duty} 직무에서 왜 배워야하고 어떻게 활용되는지 설명'],"
-                if category != 'it_language':
-                    for _, skill_c in skill_combination(duty, skill, category).iterrows():
-                        prompt += f"['{skill_c['skill']} (자격 조건: {skill_c['probability']}%)', '이 조합이 어떻게 활용되는지 설명'],"
-                    prompt += '],'
-        prompt += "]\n\n"
+            if skill_probability is None:   # df가 비어있는 경우
+                continue
+
+            temp = [categories[category][0]]
+            for i in skill_probability:
+                prompt = make_improvement_prompt(duty, i[0])
+                combination = get_skill_combination(duty, category, i[0])
+                response = get_openai_response(prompt).replace('-', '').split('\n')
+
+                temp.append([i[0], response, combination])
+
+            result.append(temp)
+
+        return get_improvement_html(result)
+    except Exception as e:
+        return 'get_skill_prob_rank error' + e
+    finally:
+        if connection:
+            connection.close()
+
+def get_skill_combination(duty, category, skill_keyword, probability=1, rank=2):
+    connection = get_connection()
+
+    try:
+        cursor = connection.cursor()
+        query = f"""
+            WITH Filtered AS (
+                    SELECT
+                        skill,
+                        probability
+                    FROM skill_probability
+                    WHERE probability >= ? AND duty = ? AND category = ?
+                    AND skill LIKE '%' || ? || '%'
+                    AND LENGTH(skill) - LENGTH(REPLACE(skill, ',', '')) >= 1
+            ),
+            Ranked AS (
+                    SELECT *, RANK() OVER (ORDER BY probability DESC) AS rank
+                    FROM Filtered
+            )
+            SELECT skill, probability
+            FROM Ranked
+            WHERE rank <= ?
+            ORDER BY rank
+        """
+        purchases = (probability, duty, category, skill_keyword, rank, )
+        cursor.execute(query, purchases)    # [('javascript, typescript', 4.757185332011893, 1), ('css, html, javascript, typescript', 4.558969276511397, 2)]
+        return cursor.fetchall()
+    except Exception as e:
+        return 'skill_combination error ' + e
+    finally:
+        if connection:
+            connection.close()
+
+def make_improvement_prompt(duty, skill, combination=None):
+    """ 보완사항에 대한 프롬프트 작성 """
+    # prompt = f"다음은 '{duty}' 직무에서 가장 많이 요구되는 기술 스택입니다. 기술에 대한 설명을 반드시 다음 주어진 리스트 형식에 맞춰서 출력하세요.:"
+    # prompt = f'''다음 형식에 맞춰 개조식(itemization)으로 존댓말로 출력해줘:'''
+    # prompt = f'''공통 요구사항
+    # - 문장은 "- "로 시작하며, 독립적으로 작성할 것. 말투는 존댓말로 통일.
+    # - 직무명({duty})과 기술명({skill})은 반드시 언급하지 말 것.
+    # - 설명형 어투를 유지하되 불필요한 서술어 없이 간결하게 직접적인 기능 설명.'''
+
+    # prompt += f'''
+    # - {skill}을/를 {duty} 직무에서 왜 배워야하고 어떻게 활용되는지 필요성을 설명해줘(80자 이내).'''
+
+    # if combination:
+    #     for com in combination:
+    #         prompt += f'''
+    # - {com[0]}이/가 {duty} 직무에서 어떻게 활용되는지를 설명해줘(50자 이내).'''
+
+    prompt = f'''"{skill}"의 "{duty}" 직무에서의 필요성을 개조식(itemization)으로 본론만 출력해주세요.  
+        - 문장은 "- "로 시작하며, 각 문장은 독립적으로 작성할 것.  
+        - "~을 높여줌.", "~을 가능하게 함.", "~을 최적화함." 같은 동작 중심 표현 사용.  
+        - 150자 이내로 두 문장 출력.  
+        - 설명형 어투를 유지하되 간결하게 표현할 것.  
+        - "백엔드", "TypeScript" 같은 기술명이나 직무명을 반복하지 말 것.'''
+    
     return prompt
 
-def get_openai_response(prompt):
-    """ OpenAI API를 사용하여 기술 스택 설명을 생성 """
-    client = OpenAI(api_key=get_api_key())
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        temperature=0.5,
-        messages=[
-            {"role": "system", "content": "당신은 IT 전문가입니다. 주어진 질문에 모두 답하세요."},
-            {"role": "user", "content": prompt}
-        ]
-    )
-    print(response.choices[0].message.content, end='\n\n')
-    return response.choices[0].message.content.strip()
+def get_improvement_html(data):
+    report = """<ul>"""
 
-def analyze_improvement(user_data:UserInputData):
-            # 데이터 처리 및 HTML 텍스트 생성
-        """보완완사항"""
-        duty = user_data.jobs[0]
-        it_language = sorted(user_data.languages)
-        framework = sorted(user_data.frameworks)
-        library = sorted(user_data.libraries)
-        tool = sorted(user_data.devtools)
+    for i in data:
+        category = i[0]
+        report += f"<h3>{category}</h3>"
 
-        df = skill_top()
-        prompt = generate_prompt(df, duty, it_language, framework, library, tool)
-        response = get_openai_response(prompt)
+        for tech in i[1:]:  # 각 기술 항목
+            tech_name = tech[0]
+            descriptions = tech[1]
+            combinations = tech[2]
 
-        report = '''<ul>'''
-        category = {'it_language': ['언어'], 'framework': ['프레임워크'], 'library': ['라이브러리'], 'tool': ['툴']}
+            report += f"<li><strong>{tech_name}</strong><ul>"
 
-        print(prompt)
-        print(response)
+            # 필요성 설명 추가
+            for desc in descriptions:
+                report += f"<li>{desc}</li>"
 
-        test = response.split('\n\n')
-        temp = test[0].split('**')
-        pro = ast.literal_eval(temp[1])
-        report += f"""
-                <h3>{category[temp[0]][0]}</h3>
-                <li>{pro[0][0]}
-                        <li>{pro[0][1]}</li>
-                </li>"""
-        for i in test[1:]:
-                # print(i)
-                temp = i.split('**')
-                pro = ast.literal_eval(temp[1])
-                report += f"""
-                <h3>{category[temp[0]][0]}</h3>"""
-                for j in pro:
-                        report += f"""
-                        <li>{j[0][0]}"""
+            # 기술 조합 설명 추가
+            if combinations and category != '언어':
+                report += "<li><strong>조합 추천</strong><ul>"
+                for comb in combinations:
+                    report += f"<li>{comb[0]}(자격 조건: {round(comb[1], 2)}%)</li>"
+                report += "</ul></li>"
 
-                        report += f"""
-                                <li>{j[0][1]}"""
-                        for k in j[1:]:
-                                report += f"""
-                                <li>{k[0]}
-                                <li>{k[1]}</li>
-                                </li>"""
-                        report += """
-                        </li>"""
-        report += """</ul>"""
-        
-        return report
+            report += "</ul></li>"
 
-def analyze_conclusion(user_data:UserInputData):
+    report += "</ul>"
+    return report
+
+def analyze_conclusion():
             # 데이터 처리 및 HTML 텍스트 생성
         """결론"""
         report=f"""
