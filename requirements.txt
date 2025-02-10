@@ -5,3 +5,4 @@ numpy
 openai
 python-dotenv
 jinja2
+pytrends
