@@ -3,4 +3,8 @@ uvicorn
 pandas
 numpy
 openai
-dotenv
+python-dotenv
+jinja2
+pytrends
+matplotlib
+python-multipart
