@@ -3,5 +3,4 @@ uvicorn
 pandas
 numpy
 openai
-dotenv
 python-dotenv
