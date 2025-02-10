@@ -11,6 +11,9 @@
      <!-- <link rel="stylesheet" href="..\static\css\toggle.css">  -->
      <link rel="stylesheet" href="..\static\css\container.css"> 
      <link rel="stylesheet" href="..\static\css\sticky_note.css"> 
+     <link rel="stylesheet" href="..\static\css\table.css"> 
+     <link rel="stylesheet" href="..\static\css\footer.css"> 
+     <link rel="stylesheet" href="..\static\css\main.css"> 
      <link rel="stylesheet" href="..\static\css\analysis-result.css"> 
     <!--  jquery 사용하기 -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -394,6 +397,8 @@ function handleToggleClick(event) {
     content.slideToggle(300); // 부드러운 토글 애니메이션
 }
 
+
+
 // 드래그 후 텍스트 선택 처리 함수(사용중지)
 function handleMouseUp(event) {
     const selectedText = window.getSelection().toString().trim();
@@ -420,8 +425,10 @@ function handleMouseUp(event) {
 <body>
     <header>
         <nav class="navbar">
-            <div class="logo">취얼업</div>
-
+            <div class="topmenu-title">
+                <span class="highlight">취얼업</span>
+                <span class="subtitle">AI 기반 IT 구직 분석</span>
+            </div>
         </nav>
     </header>
 <div>
@@ -431,6 +438,12 @@ function handleMouseUp(event) {
         <div id="sticky-note"></div>
         <div class="">
 
+            <section class="site-intro">
+                <h1>IT 구직자를 위한 AI 기반 분석 사이트</h1>
+                <p>이 사이트는 최신 IT 구직 정보를 분석하여, 당신에게 적합한 기술과 트렌드를 제공합니다.</p>
+                <p>원하는 기술을 선택하면, 관련 기술 트렌드를 분석하여 추천해 줍니다.</p>
+            </section>
+            
             <section class="toggle-boxes-top">
                 <div class="main-container">
                     <!-- Horizontal buttons for categories -->
@@ -475,7 +488,7 @@ function handleMouseUp(event) {
                             <!-- 사용자의 기술 분석 결과가 표시될 영역 -->
                         </div>
 
-                        <h2>보안사항</h2>
+                        <h2>보완사항</h2>
                         <div id="result-security">
                             <!-- 보안 관련 분석 결과가 표시될 영역 -->
                         </div>
@@ -509,7 +522,20 @@ function handleMouseUp(event) {
     </div>
     </main>
 
-
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>&copy; 2025 취얼업. 모든 권리 보유.</p>
+            <p>문의: <a href="mailto:asiaproject257@gmail.com">asiaproject257@gmail.com</a></p>
+            <ul class="footer-links">
+                <li><a href="#">이용약관</a></li>
+                <li><a href="#">개인정보 처리방침</a></li>
+                <li><a href="#">고객센터</a></li>
+            </ul>
+        </div>
+    </footer>
 </div>
+
+
+
 </body>
 </html>

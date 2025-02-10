@@ -1,0 +1,53 @@
+body {
+    background-image: url('../image/backgroundimg2.jpg'); /* 배경 이미지 설정 */
+    background-size: cover; /* 화면 전체를 덮도록 설정 */
+    background-position: center; /* 중앙 정렬 */
+    background-repeat: no-repeat; /* 반복 없음 */
+    background-attachment: fixed; /* 스크롤해도 배경 고정 */
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f9;
+}
+
+/* Swal.fire 경고창 배경 확대 문제 해결 */
+body.swal2-shown {
+    overflow: hidden !important; /* 배경 확대 방지 */
+    padding-right: 0 !important; /* 스크롤 제거 시 너비 변경 방지 */
+}
+.site-intro {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, rgba(245, 247, 250, 0.95), rgba(195, 207, 226, 0.95)); /* 투명도 추가 */
+    color: #333;
+    border-radius: 10px;
+    margin: 20px auto;
+    width: 80%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    animation: fadeInDown 1s ease-in-out;
+}
+
+.site-intro h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #222; /* 보다 어두운 색상으로 변경 */
+}
+
+.site-intro p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #444;
+}
+
+
+/* 페이드인 효과 */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

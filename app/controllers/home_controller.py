@@ -36,17 +36,11 @@ async def process_user_data(user_data: UserInputData):
     # 데이터 수신 확인
     #print("Received Data:", user_data.dict())
 
-    # 사용자가 이전에 선택한 기술선택이 존재하는지여부 판단(수정예정)
-    # report=sql.is_existing_tech_stack(user_data)
-    # if(report[0]):
-    #     print(report[1])
-    # else :
-    #     print("없음")
 
 
 
     report_top5 = sql.analyze_stack_top5(user_data)
-    report_user_tech =gpt.analyze_user_tech(user_data)
+    report_user_tech ="현재 임시 차단"#gpt.analyze_user_tech(user_data)
     report_security = gpt.analyze_security(user_data)
     report_conclusion = gpt.analyze_conclusion(user_data)
 

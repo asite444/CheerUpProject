@@ -230,6 +230,9 @@
     object-fit: contain; /* 비율 유지 */
     border-radius: 10px;
     margin-bottom: 10px; /* 이미지 아래 간격 추가 */
+   
+    margin: 0 auto; /* 중앙 정렬 */
+    display: block;
 }
 
 /* 설명글 (이미지 아래 배치, 중앙 정렬) */
