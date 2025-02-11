@@ -223,7 +223,7 @@ def improvement(duty, categories, rank=2):
                     response = get_openai_response(prompt).replace('-', '').strip().split('\n')
                     temp[-1].append(response)
 
-        result.append(temp)
+            result.append(temp)
 
         return result
     except Exception as e:
