@@ -59,7 +59,7 @@ def get_customized_analysis(duty, it_language, framework, library, tool):
         cursor = connection.cursor()
         query = '''
                 SELECT
-                        seq, text
+                        user_tech, improvement, conclusion
                 FROM
                         customized_analysis
                 WHERE
@@ -214,13 +214,16 @@ def improvement(duty, categories, rank=2):
 
             temp = [categories[category][0]]
             for i in skill_probability:
-                prompt = make_improvement_prompt(duty, i[0])
                 combination = get_skill_combination(duty, category, i[0])
-                response = get_openai_response(prompt).replace('-', '').split('\n')
 
-                temp.append([i[0], response, combination])
+                prompts = make_improvement_prompt(duty, i[0], combination if category != 'it_language' else None)
+                temp.append([i[0], combination])
 
-            result.append(temp)
+                for prompt in prompts:
+                    response = get_openai_response(prompt).replace('-', '').strip().split('\n')
+                    temp[-1].append(response)
+
+        result.append(temp)
 
         return result
     except Exception as e:
@@ -264,70 +267,74 @@ def get_skill_combination(duty, category, skill_keyword, probability=1, rank=2):
 
 def make_improvement_prompt(duty, skill, combination=None):
     """ 보완사항에 대한 프롬프트 작성 """
-    # prompt = f"다음은 '{duty}' 직무에서 가장 많이 요구되는 기술 스택입니다. 기술에 대한 설명을 반드시 다음 주어진 리스트 형식에 맞춰서 출력하세요.:"
-    # prompt = f'''다음 형식에 맞춰 개조식(itemization)으로 존댓말로 출력해줘:'''
-    # prompt = f'''공통 요구사항
-    # - 문장은 "- "로 시작하며, 독립적으로 작성할 것. 말투는 존댓말로 통일.
-    # - 직무명({duty})과 기술명({skill})은 반드시 언급하지 말 것.
-    # - 설명형 어투를 유지하되 불필요한 서술어 없이 간결하게 직접적인 기능 설명.'''
-
-    # prompt += f'''
-    # - {skill}을/를 {duty} 직무에서 왜 배워야하고 어떻게 활용되는지 필요성을 설명해줘(80자 이내).'''
-
-    # if combination:
-    #     for com in combination:
-    #         prompt += f'''
-    # - {com[0]}이/가 {duty} 직무에서 어떻게 활용되는지를 설명해줘(50자 이내).'''
-
-    prompt = f'''"{skill}"의 "{duty}" 직무에서의 필요성을 개조식(itemization)으로 본론만 출력해주세요.  
+    prompt = [f'''"{skill}"의 "{duty}" 직무에서의 필요성을 개조식(itemization)으로 본론만 출력해주세요.  
         - 문장은 "- "로 시작하며, 각 문장은 독립적으로 작성할 것.  
         - "~을 높여줍니다.", "~을 가능하게 합니다.", "~을 최적화합니다." 같은 동작 중심 표현 사용.  
         - 150자 이내로 두 문장 출력.  
         - 설명형 어투를 유지하되 간결하게 표현할 것.  
-        - "백엔드", "TypeScript" 같은 기술명이나 직무명을 반복하지 말 것.'''
+        - "백엔드", "TypeScript" 같은 기술명이나 직무명을 반복하지 말 것.''']
 
-    # if combination:
-    #     for com in combination:
-    #         prompt += f'''
-    # - {com[0]}이/가 {duty} 직무에서 어떻게 활용되는지를 설명해줘(50자 이내).'''
-    # prompt = f'''"{skill}"의 "{duty}" 직무에서의 필요성을 개조식(itemization)으로 본론만 출력해주세요.  
-    # - 문장은 "- "로 시작하며, 각 문장은 독립적으로 작성할 것.  
-    # - "~을 높여줌.", "~을 가능하게 함.", "~을 최적화함." 같은 동작 중심 표현 사용.  
-    # - 150자 이내로 두 문장 출력.  
-    # - 설명형 어투를 유지하되 간결하게 표현할 것.  
-    # - "백엔드", "TypeScript" 같은 기술명이나 직무명을 반복하지 말 것.'''
+    if combination:
+        for com in combination:
+            prompt.append(f'''"{com[0]}"의 "{duty}" 직무에서의 기술 조합의 역할을 개조식(itemization)으로 본론만 출력해주세요.  
+    - 문장은 "- "로 시작하며, 각 문장은 독립적으로 작성할 것.  
+    - "~로 관리하고 ~로 구현합니다." 같은 조합의 효과를 설명.  
+    - 50자 이내로 한 문장 출력.  
+    - 설명형 어투를 유지하되 간결하게 표현할 것.  
+    - "백엔드", "TypeScript" 같은 기술명이나 직무명을 반복하지 말 것.''')
     
     return prompt
 
 def get_improvement_html(data):
     report = """<ul>"""
 
-    for i in data:
-        category = i[0]
-        report += f"<h3>{category}</h3>"
+    for category in data:
+        category_name = category[0]  # 예: '언어', '프레임워크', '라이브러리', '툴'
+        report += f"<h3>{category_name}</h3>"
 
-        for tech in i[1:]:  # 각 기술 항목
-            tech_name = tech[0]
-            descriptions = tech[1]
-            combinations = tech[2]
+        for tech in category[1:]:  # 각 기술 항목
+            tech_name = tech[0]  # 기술명
+            combinations = tech[1] if len(tech) > 1 else []  # 기술 조합 리스트 (최대 2개)
+            descriptions = tech[2] if len(tech) > 2 else []  # 필요성 설명 리스트
+            comb1_details = tech[3] if len(tech) > 3 else []  # 기술조합 1에 대한 설명
+            comb2_details = tech[4] if len(tech) > 4 else []  # 기술조합 2에 대한 설명
 
-            report += f"<li><strong>{tech_name}</strong><ul>"
+            report += f"<ul><li><strong>{tech_name}</strong><ul>"
 
             # 필요성 설명 추가
-            for desc in descriptions:
-                report += f"<li>{desc}</li>"
-
-            # 기술 조합 설명 추가
-            if combinations and category != '언어':
-                report += f"<li><strong>{tech_name}와/과 함께 많이 사용되는 기술</strong><ul>"
-                for comb in combinations:
-                    report += f"<li>{comb[0]}(자격 조건: {round(comb[1], 2)}%)</li>"
+            if descriptions:
+                report += "<li><strong>📌 필요성</strong><ul>"
+                for desc in descriptions:
+                    report += f"<li>{desc}</li>"
                 report += "</ul></li>"
 
-            report += "</ul></li>"
+            # 함께 많이 사용하는 조합 추가 (최대 2개)
+            if combinations:
+                report += "<li><strong>🔗 함께 많이 사용하는 조합</strong><ul>"
+                for i, comb in enumerate(combinations):
+                    report += f"<li>{comb[0]} (자격 조건: {round(comb[1], 2)}%)</li>"
+                    
+                    # 조합 1에 대한 설명 추가
+                    if i == 0 and comb1_details:
+                        report += "<ul>"
+                        for detail in comb1_details:
+                            report += f"<li>{detail}</li>"
+                        report += "</ul>"
+
+                    # 조합 2에 대한 설명 추가
+                    if i == 1 and comb2_details:
+                        report += "<ul>"
+                        for detail in comb2_details:
+                            report += f"<li>{detail}</li>"
+                        report += "</ul>"
+
+                report += "</ul></li>"
+
+            report += "</ul></li></ul>"
 
     report += "</ul>"
     return report
+
 
 def analyze_conclusion(duty, data):
     """결론"""
