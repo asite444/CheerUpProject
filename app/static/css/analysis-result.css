@@ -186,13 +186,14 @@
 
 
 /* Hover 효과 */
+/* 
 .analysis-result #result-graph-career  figure:hover ,
 .analysis-result #result-graph-language  figure:hover ,
 .analysis-result #result-graph-degree  figure:hover 
 {
     transform: scale(1.05);
     box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
-}
+} */
 
 
 /* 경력 분석 그래프 개별 설정 */
@@ -246,7 +247,7 @@
 }
 
 /* 반응형 조정 */
-@media (max-width: 1024px) {
+ @media (max-width: 1024px) {
     .analysis-result #result-graph-career ,
     .analysis-result #result-graph-language, 
     .analysis-result #result-graph-degree
@@ -278,4 +279,4 @@
         font-size: 20px;
         text-align: center;
     }
-}
+} 
