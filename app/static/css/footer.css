@@ -17,7 +17,7 @@
 }
 
 .site-footer a {
-    color: #ff6347; /* 주황색 강조 */
+    color: hsl(184, 100%, 50%); /* 파란색 강조 */
     text-decoration: none;
 }
 
