@@ -40,10 +40,11 @@ async def process_user_data(user_data: UserInputData):
 
 
     report_top5 = sql.analyze_stack_top5(user_data)
-    report_user_tech ="현재 임시 차단"#gpt.analyze_user_tech(user_data)
-    report_security = gpt.analyze_security(user_data)
-    report_conclusion = gpt.analyze_conclusion(user_data)
+    # report_user_tech ="현재 임시 차단"#gpt.analyze_user_tech(user_data)
+    # report_improvement = gpt.analyze_improvement(user_data)
+    # report_conclusion = gpt.analyze_conclusion(user_data)
 
+    report_user_tech, report_improvement, report_conclusion = gpt.analyze_customize(user_data)
 
     report_graph_career = "\n".join(sql.career_graph_search(user_data))      # 경력 그래프
     report_graph_degree = "\n".join(sql.degree_graph_search(user_data))      # 학력 그래프
@@ -55,7 +56,7 @@ async def process_user_data(user_data: UserInputData):
     return JSONResponse(content={
         "report_top5": report_top5,
         "report_user_tech": report_user_tech,
-        "report_security": report_security,
+        "report_improvement": report_improvement,
         "report_conclusion": report_conclusion,
         "report_graph_career":report_graph_career,
         "report_graph_degree":report_graph_degree,
