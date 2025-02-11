@@ -325,6 +325,17 @@ function handleUserInputSubmission() {
             cancelButtonText: '취소',
         }).then((result) => {
             if (result.isConfirmed) {
+                  // 로딩 메시지 표시
+                Swal.fire({
+                    title: '분석 중입니다...',
+                    text: '잠시만 기다려 주세요.',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+
                 submitDataToServer(dataToSend);
             }
         });
@@ -373,6 +384,8 @@ function submitDataToServer(data) {
             $('#result-graph-language').html(response.report_graph_language);
             // 분석 완료 후 분석 결과 영역 표시
             $("#analysis-result-section").slideDown();
+
+            Swal.close();
             Swal.fire({
                 title: '분석이 완료되었습니다',
                 icon: 'success',
@@ -380,6 +393,7 @@ function submitDataToServer(data) {
         },
         error: function (xhr, status, error) {
             console.error('오류 발생:', error);
+            Swal.close(); // 로딩 메시지 닫기
             Swal.fire({
                 icon: 'error',
                 title: '오류 발생',
