@@ -113,8 +113,8 @@ def user_tech(duty, categories):
                                 probability, 
                                 pre_probability,
                                 RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC) AS rank
-                        FROM skill_prob_unit
-                        WHERE category = ? AND duty = ?
+                        FROM skill_probability
+                        WHERE category = ? AND duty = ? AND unit = 1
                     )
                     SELECT skill, rank, probability, pre_probability
                     FROM Ranked
@@ -197,8 +197,8 @@ def improvement(duty, categories, rank=2):
                             skill,
                             probability,
                             RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC) AS rank
-                    FROM skill_prob_unit
-                    WHERE category = ? AND duty = ?
+                    FROM skill_probability
+                    WHERE category = ? AND duty = ? AND unit = 1
                 )
                 SELECT skill, probability
                 FROM Ranked
@@ -242,7 +242,7 @@ def get_skill_combination(duty, category, skill_keyword, probability=1, rank=2):
                     FROM skill_probability
                     WHERE probability >= ? AND duty = ? AND category = ?
                     AND skill LIKE '%' || ? || '%'
-                    AND LENGTH(skill) - LENGTH(REPLACE(skill, ',', '')) >= 1
+                    AND unit >= 1
             ),
             Ranked AS (
                     SELECT *, RANK() OVER (ORDER BY probability DESC) AS rank
