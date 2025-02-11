@@ -245,7 +245,7 @@ def get_skill_combination(duty, category, skill_keyword, probability=1, rank=2):
                     FROM skill_probability
                     WHERE probability >= ? AND duty = ? AND category = ?
                     AND skill LIKE '%' || ? || '%'
-                    AND unit >= 1
+                    AND unit > 1
             ),
             Ranked AS (
                     SELECT *, RANK() OVER (ORDER BY probability DESC) AS rank
