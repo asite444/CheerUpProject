@@ -171,8 +171,11 @@ def get_user_tech_html(data):
         # 테이블 데이터 추가
         for row in i[1:]:
             report += '<tr>'
-            for cell in row:
-                report += f'<td>{cell}</td>'
+            for idx, cell in enumerate(row):
+                if idx == 1:
+                    report += f'<td>{cell} 위</td>'
+                else:
+                    report += f'<td>{cell}</td>'
             report += '</tr>'
         
         report += '</table>'
@@ -278,10 +281,21 @@ def make_improvement_prompt(duty, skill, combination=None):
 
     prompt = f'''"{skill}"의 "{duty}" 직무에서의 필요성을 개조식(itemization)으로 본론만 출력해주세요.  
         - 문장은 "- "로 시작하며, 각 문장은 독립적으로 작성할 것.  
-        - "~을 높여줌.", "~을 가능하게 함.", "~을 최적화함." 같은 동작 중심 표현 사용.  
+        - "~을 높여줍니다.", "~을 가능하게 합니다.", "~을 최적화합니다." 같은 동작 중심 표현 사용.  
         - 150자 이내로 두 문장 출력.  
         - 설명형 어투를 유지하되 간결하게 표현할 것.  
         - "백엔드", "TypeScript" 같은 기술명이나 직무명을 반복하지 말 것.'''
+
+    # if combination:
+    #     for com in combination:
+    #         prompt += f'''
+    # - {com[0]}이/가 {duty} 직무에서 어떻게 활용되는지를 설명해줘(50자 이내).'''
+    # prompt = f'''"{skill}"의 "{duty}" 직무에서의 필요성을 개조식(itemization)으로 본론만 출력해주세요.  
+    # - 문장은 "- "로 시작하며, 각 문장은 독립적으로 작성할 것.  
+    # - "~을 높여줌.", "~을 가능하게 함.", "~을 최적화함." 같은 동작 중심 표현 사용.  
+    # - 150자 이내로 두 문장 출력.  
+    # - 설명형 어투를 유지하되 간결하게 표현할 것.  
+    # - "백엔드", "TypeScript" 같은 기술명이나 직무명을 반복하지 말 것.'''
     
     return prompt
 
@@ -305,7 +319,7 @@ def get_improvement_html(data):
 
             # 기술 조합 설명 추가
             if combinations and category != '언어':
-                report += "<li><strong>조합 추천</strong><ul>"
+                report += f"<li><strong>{tech_name}와/과 함께 많이 사용되는 기술</strong><ul>"
                 for comb in combinations:
                     report += f"<li>{comb[0]}(자격 조건: {round(comb[1], 2)}%)</li>"
                 report += "</ul></li>"
