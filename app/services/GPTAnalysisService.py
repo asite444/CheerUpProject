@@ -39,15 +39,17 @@ def analyze_customize(user_data:UserInputData):
     categories = {'it_language': ['언어', it_language], 'framework': ['프레임워크', framework], 'library': ['라이브러리', library], 'tool': ['툴', tool]}
 
     data = get_customized_analysis(duty, it_language, framework, library, tool)
-    if data is not None:
-        # DB에 분석 결과가 있음
-        return data
-    else:
+    print(data)
+    if data is None:
         # DB에 분석 결과가 없음
-        report_user_tech = user_tech(duty, categories)
-        report_improvement = improvement(duty, categories)
+        data = [user_tech(duty, categories), improvement(duty, categories)]
+        report_conclusion = analyze_conclusion(duty, data)
 
-    return report_user_tech, report_improvement, analyze_conclusion()
+    report_user_tech = get_user_tech_html(data[0])
+    report_improvement = get_improvement_html(data[1])
+    # report_conclusion = data[2]
+
+    return report_user_tech, report_improvement, report_conclusion
 
 
 def get_customized_analysis(duty, it_language, framework, library, tool):
@@ -132,7 +134,7 @@ def user_tech(duty, categories):
             
             result.append(temp)
 
-        return get_user_tech_html(result)
+        return result
     except Exception as e:
         return 'user_tech ' + e
     finally:
@@ -217,7 +219,7 @@ def improvement(duty, categories, rank=2):
 
             result.append(temp)
 
-        return get_improvement_html(result)
+        return result
     except Exception as e:
         return 'get_skill_prob_rank error' + e
     finally:
@@ -313,15 +315,30 @@ def get_improvement_html(data):
     report += "</ul>"
     return report
 
-def analyze_conclusion():
-            # 데이터 처리 및 HTML 텍스트 생성
-        """결론"""
-        report=f"""
-                <ul>
-                        <li>Top 5 기술 중에서 1, 2위의 기술이 사용자의 기술 스택에 없다면 공부할 것을 권장 (확률과 함께 제공)</li>
-                        <li>사용자가 입력한 프레임워크에 대해 확률이 높은 3개의 기술 조합 추천</li>
-                </ul>
+def analyze_conclusion(duty, data):
+    """결론"""
+    prompt = f'''기술 스택을 기반으로 {duty} 직무에 대한 최종 결론을 350자 이내로 출력해주세요.
+    - 설명형 어투로 구체적으로 작성할 것
+    - 보유 기술이 {duty} 직무에서 어떻게 활용되는지 설명할 것.
+    - 부족한 기술이 실무에서 왜 중요한지, 이를 학습하면 어떤 장점이 있는지 설명할 것.
+    - 마지막에는 응원하는 메시지를 포함할 것.  
+    - 기술 스택의 순위는 {duty} 직무 공고에서 기술 스택이 나온 순위임.
+    기술스택: ['''
+    for i in data[0]:
+        prompt += f'{i[0]}:['
+        for j in i[1:]:
+            prompt += f'''{j[0]}({j[1]}위),'''
+        prompt += '],'
 
-        """
+    prompt += f''']
+    부족한 기술: ['''
+    for i in data[1]:
+        prompt += f'{i[0]}:['
+        for j in i[1:]:
+            prompt += f'''{j[0]},'''
+        prompt += '],'
+    prompt += ']'
+
+    response = get_openai_response(prompt)
         
-        return report
+    return response
