@@ -1,0 +1,31 @@
+# 환경 변수 파일
+.env
+
+# Python 캐시 파일 및 컴파일된 파일
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 가상 환경 (venv) 폴더
+venv/
+.venv/
+
+# IDE 설정 파일
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 로그 파일
+logs/
+*.log
+
+# Jupyter Notebook 체크포인트
+.ipynb_checkpoints/
+
+# MacOS 파일
+.DS_Store

@@ -325,6 +325,17 @@ function handleUserInputSubmission() {
             cancelButtonText: '취소',
         }).then((result) => {
             if (result.isConfirmed) {
+                  // 로딩 메시지 표시
+                Swal.fire({
+                    title: '분석 중입니다...',
+                    text: '잠시만 기다려 주세요.',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+
                 submitDataToServer(dataToSend);
             }
         });
@@ -366,13 +377,15 @@ function submitDataToServer(data) {
         success: function (response) {
             $('#result-top5').html(response.report_top5);
             $('#result-user-tech').html(response.report_user_tech);
-            $('#result-security').html(response.report_improvement);
+            $('#report_improvement').html(response.report_improvement);
             $('#result-conclusion').html(response.report_conclusion);
             $('#result-graph-career').html(response.report_graph_career);
             $('#result-graph-degree').html(response.report_graph_degree);
             $('#result-graph-language').html(response.report_graph_language);
             // 분석 완료 후 분석 결과 영역 표시
             $("#analysis-result-section").slideDown();
+
+            Swal.close();
             Swal.fire({
                 title: '분석이 완료되었습니다',
                 icon: 'success',
@@ -380,6 +393,7 @@ function submitDataToServer(data) {
         },
         error: function (xhr, status, error) {
             console.error('오류 발생:', error);
+            Swal.close(); // 로딩 메시지 닫기
             Swal.fire({
                 icon: 'error',
                 title: '오류 발생',
@@ -477,6 +491,14 @@ function handleMouseUp(event) {
         
                     <!-- Analysis result section -->
                     <div class="analysis-result"  id="analysis-result-section" style="display: none;">
+                        <section class="analysis-menu">
+                            <button class="analysis-tab active">언어</button>
+                            <button class="analysis-tab">프레임워크</button>
+                            <button class="analysis-tab">라이브러리</button>
+                            <button class="analysis-tab">툴</button>
+                            <button class="analysis-tab">보완사항</button>
+                            <button class="analysis-tab">기타 공통분석</button>
+                        </section>
                         <h2>분석결과</h2>
                         <h2>TOP5</h2>
                         <div id="result-top5">
@@ -489,7 +511,7 @@ function handleMouseUp(event) {
                         </div>
 
                         <h2>보완사항</h2>
-                        <div id="result-security">
+                        <div id="report_improvement">
                             <!-- 보안 관련 분석 결과가 표시될 영역 -->
                         </div>
 
