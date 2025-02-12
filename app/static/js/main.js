@@ -39,6 +39,8 @@ $(document).ready(function () {
 
     // 드래그 후 마우스 놓기 이벤트 바인딩(잠시 사용중지)
     //$(document).on('mouseup', handleMouseUp);
+
+    highlightUserSelectedRows();
 }); // end
 // techStackData를 기반으로 techData를 동적으로 채우는 함수
 function mapTechStackData() {
@@ -444,4 +446,15 @@ function handleMouseUp(event) {
     } else {
         hideStickyNote();
     }
+}
+/**
+ * 사용자가 선택한 기술 강조 애니메이션 함수
+ */
+function highlightUserSelectedRows() {
+    $(".analysis_top5 tr.user-selected").each(function () {
+        let row = $(this);
+        setInterval(() => {
+            row.fadeOut(500).fadeIn(500);
+        }, 1500);
+    });
 }
