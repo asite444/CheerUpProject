@@ -47,7 +47,7 @@ html {
 }
 
 .topmenu-title .highlight {
-    color: #00fbff; /* 주황색 */
+    color: #00fbff;
     font-size: 22px;
     font-weight: bold;
     transition: transform 0.3s ease-in-out;
