@@ -29,7 +29,9 @@
 }
 
 /* Category buttons styling */
-.toggle-boxes-top .category-buttons {
+.toggle-boxes-top .category-buttons,
+.toggle-boxes-top .analysis-menu
+ {
     display: flex;
     justify-content: start;
     width: 100%;
@@ -37,7 +39,9 @@
     border: 1px solid #ccc;
     border-radius: 0;
 }
-.toggle-boxes-top .category-buttons button {
+.toggle-boxes-top .category-buttons button ,
+.toggle-boxes-top .analysis-menu button 
+{
     flex: 1;
     padding: 10px 20px;
     font-size: 16px;
@@ -49,13 +53,19 @@
     transition: background-color 0.3s ease;
     text-align: center;
 }
-.toggle-boxes-top .category-buttons button:last-child {
+.toggle-boxes-top .category-buttons button:last-child,
+.toggle-boxes-top .analysis-menu button:last-child
+{
     border-right: 1px solid #ccc;
 }
-.toggle-boxes-top .category-buttons button:hover {
+.toggle-boxes-top .category-buttons button:hover,
+.toggle-boxes-top .analysis-menu button:hover
+{
     background-color: #e9ecef;
 }
-.toggle-boxes-top .category-buttons button.active { /*카테고리 버튼 클릭시 적용되는 디자인*/
+.toggle-boxes-top .category-buttons button.active,
+.toggle-boxes-top .analysis-menu button.active
+ { /*카테고리 버튼 클릭시 적용되는 디자인*/
     background-color: #007bff;
     color: white;
     border-color: #0056b3;

@@ -377,7 +377,7 @@ function submitDataToServer(data) {
         success: function (response) {
             $('#result-top5').html(response.report_top5);
             $('#result-user-tech').html(response.report_user_tech);
-            $('#result-security').html(response.report_improvement);
+            $('#report_improvement').html(response.report_improvement);
             $('#result-conclusion').html(response.report_conclusion);
             $('#result-graph-career').html(response.report_graph_career);
             $('#result-graph-degree').html(response.report_graph_degree);
@@ -491,6 +491,14 @@ function handleMouseUp(event) {
         
                     <!-- Analysis result section -->
                     <div class="analysis-result"  id="analysis-result-section" style="display: none;">
+                        <section class="analysis-menu">
+                            <button class="analysis-tab active">언어</button>
+                            <button class="analysis-tab">프레임워크</button>
+                            <button class="analysis-tab">라이브러리</button>
+                            <button class="analysis-tab">툴</button>
+                            <button class="analysis-tab">보완사항</button>
+                            <button class="analysis-tab">기타 공통분석</button>
+                        </section>
                         <h2>분석결과</h2>
                         <h2>TOP5</h2>
                         <div id="result-top5">
@@ -503,7 +511,7 @@ function handleMouseUp(event) {
                         </div>
 
                         <h2>보완사항</h2>
-                        <div id="result-security">
+                        <div id="report_improvement">
                             <!-- 보안 관련 분석 결과가 표시될 영역 -->
                         </div>
 

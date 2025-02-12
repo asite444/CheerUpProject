@@ -1,7 +1,7 @@
 /* 분석 결과 텍스트 스타일 (result-container) */
 .analysis-result #result-top5, 
 .analysis-result #result-user-tech,
-.analysis-result #result-security,
+.analysis-result #report_improvement,
 .analysis-result #result-conclusion
 {
     text-align: left;
@@ -15,7 +15,7 @@
 /* 중앙 정렬되는 h2 스타일 */
 .analysis-result #result-top5 h2,
 .analysis-result #result-user-tech h2,
-.analysis-result #result-security h2,
+.analysis-result #report_improvement h2,
 .analysis-result #result-conclusion h2
 {
     text-align: center;
@@ -27,7 +27,7 @@
 /* 왼쪽 정렬 및 강조되는 h3 스타일 */
 .analysis-result #result-top5 h3, 
 .analysis-result #result-user-tech h3, 
-.analysis-result #result-security h3, 
+.analysis-result #report_improvement h3, 
 .analysis-result #result-conclusion h3 
 {
     text-align: left;
@@ -40,7 +40,7 @@
 /* 리스트 스타일 */
 .analysis-result #result-top5 ul
 .analysis-result #result-user-tech ul
-.analysis-result #result-security ul
+.analysis-result #report_improvement ul
 .analysis-result #result-conclusion  ul
  {
     list-style-type: disc;
@@ -50,7 +50,7 @@
 
 .analysis-result #result-top5 li 
 .analysis-result #result-user-tech li 
-.analysis-result #result-security li 
+.analysis-result #report_improvement li 
 .analysis-result #result-conclusion li 
 
 {
@@ -62,7 +62,7 @@
 /* 강조 텍스트 */
 .analysis-result #result-top5 strong 
 .analysis-result #result-user-tech strong 
-.analysis-result #result-security strong 
+.analysis-result #report_improvement strong 
 .analysis-result #result-conclusion strong 
 {
     font-weight: bold;
@@ -72,7 +72,7 @@
 /* 단락 스타일 */
 .analysis-result #result-top5 p
 .analysis-result #result-user-tech p
-.analysis-result #result-security p
+.analysis-result #report_improvement p
 .analysis-result #result-conclusion p
  {
     font-size: 16px;
