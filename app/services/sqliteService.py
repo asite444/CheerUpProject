@@ -39,7 +39,7 @@ def analyze_stack_top5(user_data: UserInputData):
     try:
         cursor = connection.cursor()
 
-        # 카테고리 매핑
+        # 카테고리 매핑 (SQL 쿼리에서 사용할 기술 카테고리를 설정)
         categories = {
             "언어": ("it_language", user_data.languages),
             "프레임워크": ("framework", user_data.frameworks),
@@ -47,6 +47,7 @@ def analyze_stack_top5(user_data: UserInputData):
             "툴": ("tool", user_data.devtools),
         }
 
+        # 기본적으로 '내용 없음'으로 초기화
         html_outputs = {
             "언어": "내용 없음",
             "프레임워크": "내용 없음",
@@ -54,11 +55,16 @@ def analyze_stack_top5(user_data: UserInputData):
             "툴": "내용 없음",
         }
 
-        def generate_html_table(title, top5_data, extra_selected_data, has_skipped_data):
-            """ HTML 테이블을 생성하는 함수 (상위 5개 + 사용자가 선택한 기술 강조) """
+        def generate_html_table(title, top5_data, extra_selected_data):
+            """
+            HTML 테이블을 생성하는 함수
+            - top5_data: 상위 5개 기술 데이터
+            - extra_selected_data: 사용자가 선택한 기술 중 5위 밖인 기술
+            """
             if not top5_data and not extra_selected_data:
                 return f"<h3>{title}</h3><p>데이터 없음</p>"
 
+            # ⭐ 범례 추가
             html_output = f"""
             <p class="legend-right">⭐  사용자 선택 기술</p>
             <table class="analysis_top5">
@@ -72,7 +78,10 @@ def analyze_stack_top5(user_data: UserInputData):
 
             # 상위 5개 기술 출력 (사용자가 선택한 경우 강조)
             for skill, rank, probability, pre_probability in top5_data:
-                highlight_class = "user-selected" if skill in user_data.languages + user_data.frameworks + user_data.libraries + user_data.devtools else "ranked"
+                highlight_class = "user-selected" if skill in (
+                    user_data.languages + user_data.frameworks + user_data.libraries + user_data.devtools
+                ) else "ranked"
+
                 html_output += f"""
                 <tr class="{highlight_class}">
                     <td>{rank}</td>
@@ -82,8 +91,12 @@ def analyze_stack_top5(user_data: UserInputData):
                 </tr>
                 """
 
-            # 중간 생략 표시 (사용자 선택한 기술이 5순위 밖이면)
-            if extra_selected_data and has_skipped_data:
+            # 사용자가 선택한 기술 중 최상위 순위를 가져옴
+            extra_selected_data.sort(key=lambda x: x[1])  # 순위 기준 정렬
+            first_selected_rank = extra_selected_data[0][1] if extra_selected_data else None
+
+            # 중간 생략 문구 추가 (사용자가 선택한 기술이 7위 이상일 때만)
+            if extra_selected_data and first_selected_rank and first_selected_rank >= 7:
                 html_output += """
                 <tr class="skipped">
                     <td colspan="4" style="text-align:center;">(중간 생략)</td>
@@ -104,6 +117,7 @@ def analyze_stack_top5(user_data: UserInputData):
             html_output += "</table>"
             return html_output
 
+        # 각 카테고리에 대해 SQL 실행 및 결과 처리
         for display_name, (category, selected_skills) in categories.items():
             query = f"""
             WITH Ranked AS (
@@ -129,11 +143,8 @@ def analyze_stack_top5(user_data: UserInputData):
             # 사용자가 선택한 기술 중 5순위 밖인 기술 필터링
             extra_selected_data = [row for row in result if row[0] in selected_skills and row not in top5_data]
 
-            # 5순위 이후에도 데이터가 있는 경우 (중간 생략 여부 판단)
-            has_skipped_data = len(result) > 5 and len(extra_selected_data) > 0
-
             # HTML 테이블 생성
-            html_outputs[display_name] = generate_html_table(display_name, top5_data, extra_selected_data, has_skipped_data)
+            html_outputs[display_name] = generate_html_table(display_name, top5_data, extra_selected_data)
 
         return html_outputs
 
@@ -144,6 +155,8 @@ def analyze_stack_top5(user_data: UserInputData):
     finally:
         if connection:
             connection.close()
+
+
 def career_graph_search(user_data:UserInputData):
     """
     사용자가 선택한 직무(jobs)에 해당하는 career 데이터를 조회하여 HTML <img> 태그를 생성
