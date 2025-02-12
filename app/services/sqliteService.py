@@ -34,62 +34,106 @@ def fetch_tech_stack():
 
 
 
-
 def analyze_stack_top5(user_data: UserInputData):
     connection = get_connection()
     try:
         cursor = connection.cursor()
-        
-        query = """ 
-        SELECT skill, probability, pre_probability
-        FROM skill_probability 
-        WHERE duty IN ({})
-        """.format(','.join(['?'] * len(user_data.jobs)))
 
-        cursor.execute(query, tuple(user_data.jobs))
-        result = cursor.fetchall()
-
-        sections = {
-            "언어": [],
-            "프레임워크": [],
-            "라이브러리": [],
-            "툴": []
+        # 카테고리 매핑
+        categories = {
+            "언어": ("it_language", user_data.languages),
+            "프레임워크": ("framework", user_data.frameworks),
+            "라이브러리": ("library", user_data.libraries),
+            "툴": ("tool", user_data.devtools),
         }
 
-        for row in result:
-            try:
-                skill, probability, pre_probability = row
-                sections["언어"].append((skill, probability, pre_probability))  # 임시로 '언어' 카테고리에 추가
-            except (SyntaxError, ValueError, IndexError) as e:
-                print(f"Error converting career data: {row[0]}, Error: {str(e)}")
+        html_outputs = {
+            "언어": "내용 없음",
+            "프레임워크": "내용 없음",
+            "라이브러리": "내용 없음",
+            "툴": "내용 없음",
+        }
 
-        def generate_html_table(title, data):
+        def generate_html_table(title, top5_data, extra_selected_data, has_skipped_data):
+            """ HTML 테이블을 생성하는 함수 (상위 5개 + 사용자가 선택한 기술 강조) """
+            if not top5_data and not extra_selected_data:
+                return f"<h3>{title}</h3><p>데이터 없음</p>"
+
             html_output = f"""
-            <h3>{title}</h3>
-            <table border="1">
+            <p class="legend-right">⭐  사용자 선택 기술</p>
+            <table class="analysis_top5">
                 <tr>
+                    <th>순위</th>
                     <th>기술명</th>
                     <th>자격 요건(%)</th>
                     <th>우대 사항(%)</th>
                 </tr>
             """
-            for skill, probability, pre_probability in data:
+
+            # 상위 5개 기술 출력 (사용자가 선택한 경우 강조)
+            for skill, rank, probability, pre_probability in top5_data:
+                highlight_class = "user-selected" if skill in user_data.languages + user_data.frameworks + user_data.libraries + user_data.devtools else "ranked"
                 html_output += f"""
-                <tr>
-                    <td>{skill}</td>
+                <tr class="{highlight_class}">
+                    <td>{rank}</td>
+                    <td>{skill} {"⭐" if highlight_class == "user-selected" else ""}</td>
                     <td>{probability:.2f}%</td>
                     <td>{pre_probability:.2f}%</td>
                 </tr>
                 """
+
+            # 중간 생략 표시 (사용자 선택한 기술이 5순위 밖이면)
+            if extra_selected_data and has_skipped_data:
+                html_output += """
+                <tr class="skipped">
+                    <td colspan="4" style="text-align:center;">(중간 생략)</td>
+                </tr>
+                """
+
+            # 사용자가 선택한 기술 중 5순위 밖인 경우 출력 (강조)
+            for skill, rank, probability, pre_probability in extra_selected_data:
+                html_output += f"""
+                <tr class="user-selected">
+                    <td>{rank}</td>
+                    <td>{skill} ⭐</td>
+                    <td>{probability:.2f}%</td>
+                    <td>{pre_probability:.2f}%</td>
+                </tr>
+                """
+
             html_output += "</table>"
             return html_output
 
-        html_outputs = {
-            "언어": generate_html_table("언어", sections["언어"]),
-            "프레임워크": generate_html_table("프레임워크", sections["프레임워크"]),
-            "라이브러리": generate_html_table("라이브러리", sections["라이브러리"]),
-            "툴": generate_html_table("툴", sections["툴"]),
-        }
+        for display_name, (category, selected_skills) in categories.items():
+            query = f"""
+            WITH Ranked AS (
+                SELECT
+                    skill,
+                    probability,
+                    pre_probability,
+                    RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC) AS rank
+                FROM skill_probability
+                WHERE category = ? AND duty IN ({','.join(['?'] * len(user_data.jobs))}) AND unit = 1
+            )
+            SELECT skill, rank, probability, pre_probability
+            FROM Ranked
+            ORDER BY rank
+            """
+
+            cursor.execute(query, (category, *user_data.jobs))
+            result = cursor.fetchall()
+
+            # 상위 5개 기술 추출
+            top5_data = result[:5]
+
+            # 사용자가 선택한 기술 중 5순위 밖인 기술 필터링
+            extra_selected_data = [row for row in result if row[0] in selected_skills and row not in top5_data]
+
+            # 5순위 이후에도 데이터가 있는 경우 (중간 생략 여부 판단)
+            has_skipped_data = len(result) > 5 and len(extra_selected_data) > 0
+
+            # HTML 테이블 생성
+            html_outputs[display_name] = generate_html_table(display_name, top5_data, extra_selected_data, has_skipped_data)
 
         return html_outputs
 
@@ -100,9 +144,6 @@ def analyze_stack_top5(user_data: UserInputData):
     finally:
         if connection:
             connection.close()
-
-
-
 def career_graph_search(user_data:UserInputData):
     """
     사용자가 선택한 직무(jobs)에 해당하는 career 데이터를 조회하여 HTML <img> 태그를 생성
