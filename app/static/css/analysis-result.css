@@ -1,5 +1,8 @@
 /* 분석 결과 텍스트 스타일 (result-container) */
-.analysis-result #result-top5, 
+.analysis-result #report_top5_it_language, 
+.analysis-result #report_top5_framework, 
+.analysis-result #report_top5_library, 
+.analysis-result #report_top5_tool, 
 .analysis-result #result-user-tech,
 .analysis-result #report_improvement,
 .analysis-result #result-conclusion
@@ -13,7 +16,10 @@
 }
 
 /* 중앙 정렬되는 h2 스타일 */
-.analysis-result #result-top5 h2,
+.analysis-result #report_top5_it_language h2,
+.analysis-result #report_top5_framework h2,
+.analysis-result #report_top5_library h2,
+.analysis-result #report_top5_tool h2,
 .analysis-result #result-user-tech h2,
 .analysis-result #report_improvement h2,
 .analysis-result #result-conclusion h2
@@ -25,7 +31,10 @@
 }
 
 /* 왼쪽 정렬 및 강조되는 h3 스타일 */
-.analysis-result #result-top5 h3, 
+.analysis-result #report_top5_it_language h3, 
+.analysis-result #report_top5_framework h3, 
+.analysis-result #report_top5_library h3, 
+.analysis-result #report_top5_tool h3, 
 .analysis-result #result-user-tech h3, 
 .analysis-result #report_improvement h3, 
 .analysis-result #result-conclusion h3 
@@ -38,9 +47,12 @@
 }
 
 /* 리스트 스타일 */
-.analysis-result #result-top5 ul
-.analysis-result #result-user-tech ul
-.analysis-result #report_improvement ul
+.analysis-result #report_top5_it_language ul,
+.analysis-result #report_top5_framework ul,
+.analysis-result #report_top5_library ul,
+.analysis-result #report_top5_tool ul,
+.analysis-result #result-user-tech ul,
+.analysis-result #report_improvement ul,
 .analysis-result #result-conclusion  ul
  {
     list-style-type: disc;
@@ -48,9 +60,12 @@
     padding-left: 20px;
 }
 
-.analysis-result #result-top5 li 
-.analysis-result #result-user-tech li 
-.analysis-result #report_improvement li 
+.analysis-result #report_top5_it_language li, 
+.analysis-result #report_top5_framework li, 
+.analysis-result #report_top5_library li, 
+.analysis-result #report_top5_tool li, 
+.analysis-result #result-user-tech li, 
+.analysis-result #report_improvement li, 
 .analysis-result #result-conclusion li 
 
 {
@@ -60,9 +75,12 @@
 }
 
 /* 강조 텍스트 */
-.analysis-result #result-top5 strong 
-.analysis-result #result-user-tech strong 
-.analysis-result #report_improvement strong 
+.analysis-result #report_top5_it_language strong ,
+.analysis-result #report_top5_framework strong ,
+.analysis-result #report_top5_library strong ,
+.analysis-result #report_top5_tool strong ,
+.analysis-result #result-user-tech strong ,
+.analysis-result #report_improvement strong ,
 .analysis-result #result-conclusion strong 
 {
     font-weight: bold;
@@ -70,9 +88,12 @@
 }
 
 /* 단락 스타일 */
-.analysis-result #result-top5 p
-.analysis-result #result-user-tech p
-.analysis-result #report_improvement p
+.analysis-result #report_top5_it_language p,
+.analysis-result #report_top5_framework p,
+.analysis-result #report_top5_library p,
+.analysis-result #report_top5_tool p,
+.analysis-result #result-user-tech p,
+.analysis-result #report_improvement p,
 .analysis-result #result-conclusion p
  {
     font-size: 16px;

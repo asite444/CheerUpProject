@@ -59,16 +59,7 @@ $(document).ready(function () {
         handleSearch(searchKeyword); // 검색 처리 함수 호출
     });
     
-     // 기술분야 버튼 클릭 이벤트
-     
-     $(".category-buttons button").on("click", function () {
-        // 모든 버튼에서 active 클래스 제거
-        $(".category-buttons button").removeClass("active");
-        
-        // 클릭한 버튼에 active 클래스 추가
-        $(this).addClass("active");
-    });
-    
+   
     //최초화면 로드시, 직업 카테고리 최초 선택처리
     displayTechList("job", techData);
     // 토글 버튼 클릭 이벤트 바인딩(사용중지)
@@ -98,11 +89,53 @@ function mapTechStackData() {
  function initializeEvents(techData) {
     // 버튼 클릭 이벤트 등록
     $(".category-buttons button").on("click", function () {
+        $(".category-buttons button").removeClass("active");
+        
+        // 클릭한 버튼에 active 클래스 추가
+        $(this).addClass("active");
         const category = $(this).attr("id").replace("-button", ""); // ID에서 카테고리 추출
     
         $("#search-bar").val("");
 
         displayTechList(category, techData);
+    });
+
+     // 분석된, 기술분야 버튼 클릭 이벤트 
+     $(".analysis-btn").on("click", function () {
+        // 모든 버튼에서 active 클래스 제거
+        $(".analysis-btn").removeClass("active");
+        // 클릭한 버튼에 active 클래스 추가
+        $(this).addClass("active");
+
+        
+        let targetSection = $(this).data("target");
+
+        // 모든 분석 결과 영역 숨기기
+        $(".analysis-content").hide();
+
+        // 해당하는 분석 결과 영역만 보이게 설정
+
+        $("#" + targetSection).show();
+        if(targetSection=="tech-results"){
+            let selectedCategory = $(this).attr("id").replace("-analysis", "");
+            $(".analysis-top5").hide();
+            $("#report_top5_" + selectedCategory).show();
+            if(selectedCategory=="it_language"){
+                $("#analysis_top5_h2").text("TOP5(언어)");
+                $("#user_tech_h2").text("사용자의 기술 분석(언어)");
+            } else if(selectedCategory=="framework"){
+                $("#analysis_top5_h2").text("TOP5(프레임워크)");
+                $("#user_tech_h2").text("사용자의 기술 분석(프레임워크)");
+            }  else if(selectedCategory=="library"){
+                $("#analysis_top5_h2").text("TOP5(라이브러리리)");
+                $("#user_tech_h2").text("사용자의 기술 분석(라이브러리리)");
+            }  else if(selectedCategory=="tool"){
+                $("#analysis_top5_h2").text("TOP5(개발툴)");
+                $("#user_tech_h2").text("사용자의 기술 분석(개발툴)");
+            } 
+
+            console.log("선택된 버튼 ID:", selectedCategory);
+        }
     });
 
     // 기술 선택 이벤트 등록
@@ -375,7 +408,14 @@ function submitDataToServer(data) {
         contentType: 'application/json',
         data: JSON.stringify(data),
         success: function (response) {
-            $('#result-top5').html(response.report_top5);
+
+            // 언어, 프레임워크, 라이브러리, 툴 각각의 결과를 표시
+            $('#report_top5_it_language').html(response.report_top5_language);
+            $('#report_top5_framework').html(response.report_top5_framework);
+            $('#report_top5_library').html(response.report_top5_library);
+            $('#report_top5_tool').html(response.report_top5_tool);
+
+            //$('#result-top5').html(response.report_top5);
             $('#result-user-tech').html(response.report_user_tech);
             $('#report_improvement').html(response.report_improvement);
             $('#result-conclusion').html(response.report_conclusion);
@@ -492,47 +532,62 @@ function handleMouseUp(event) {
                     <!-- Analysis result section -->
                     <div class="analysis-result"  id="analysis-result-section" style="display: none;">
                         <section class="analysis-menu">
-                            <button class="analysis-tab active">언어</button>
-                            <button class="analysis-tab">프레임워크</button>
-                            <button class="analysis-tab">라이브러리</button>
-                            <button class="analysis-tab">툴</button>
-                            <button class="analysis-tab">보완사항</button>
-                            <button class="analysis-tab">기타 공통분석</button>
+                            <button id="it_language-analysis" class="analysis-btn active" data-target="tech-results">언어</button>
+                            <button id="framework-analysis" class="analysis-btn" data-target="tech-results">프레임워크</button>
+                            <button id="library-analysis" class="analysis-btn" data-target="tech-results">라이브러리</button>
+                            <button id="tool-analysis" class="analysis-btn" data-target="tech-results">툴</button>
+                            <button id="improvement-analysis" class="analysis-btn" data-target="improvement-section">보완사항</button>
+                            <button id="career-edu-lang-analysis" class="analysis-btn" data-target="common-analysis">기타 공통분석</button>
                         </section>
                         <h2>분석결과</h2>
-                        <h2>TOP5</h2>
-                        <div id="result-top5">
-                            <!-- TOP5 분석 결과가 표시될 영역 -->
+                        <div id="tech-results" class="analysis-content">
+                            <h2 id="analysis_top5_h2">TOP5(언어)</h2>
+                            <div id="report_top5_it_language" class="analysis-top5">
+                                <!-- TOP5 분석 결과가 표시될 영역 -->
+                            </div>
+                            <div id="report_top5_framework" class="analysis-top5" style="display: none;">
+                                <!-- TOP5 분석 결과가 표시될 영역 -->
+                            </div>
+                            <div id="report_top5_library" class="analysis-top5" style="display: none;">
+                                <!-- TOP5 분석 결과가 표시될 영역 -->
+                            </div>
+                            <div id="report_top5_tool" class="analysis-top5" style="display: none;">
+                                <!-- TOP5 분석 결과가 표시될 영역 -->
+                            </div>
+                            <h2 id="user_tech_h2">사용자의 기술 분석(언어어)</h2>
+                            <div id="result-user-tech">
+                                <!-- 사용자의 기술 분석 결과가 표시될 영역 -->
+                            </div>
                         </div>
-
-                        <h2>사용자의 기술 분석</h2>
-                        <div id="result-user-tech">
-                            <!-- 사용자의 기술 분석 결과가 표시될 영역 -->
+                    
+                        <div id="improvement-section" class="analysis-content" style="display: none;">
+                            <h2>보완사항</h2>
+                            <div id="report_improvement">
+                                <!-- 보완사항 관련 분석 결과가 표시될 영역 -->
+                            </div>
                         </div>
-
-                        <h2>보완사항</h2>
-                        <div id="report_improvement">
-                            <!-- 보안 관련 분석 결과가 표시될 영역 -->
+                    
+                        <div id="common-analysis" class="analysis-content" style="display: none;">
+                            <h2>결론</h2>
+                            <div id="result-conclusion">
+                                <!-- 결론이 표시될 영역 -->
+                            </div>
+                    
+                            <h2>경력 분석 그래프</h2>
+                            <div id="result-graph-career">
+                                <!-- Analysis graph result will appear here -->
+                            </div>
+                    
+                            <h2>학력 분석 그래프</h2>
+                            <div id="result-graph-degree">
+                                <!-- Analysis graph result will appear here -->
+                            </div>
+                    
+                            <h2>어학 분석 그래프</h2>
+                            <div id="result-graph-language">
+                                <!-- Analysis graph result will appear here -->
+                            </div>
                         </div>
-
-                        <h2>결론</h2>
-                        <div id="result-conclusion">
-                            <!-- 결론이 표시될 영역 -->
-                        </div>
-                        <h2>경력 분석 그래프</h2>
-                        <div id="result-graph-career">
-                           <!-- Analysis graph result will appear here -->
-                        </div>
-                        <br>
-                        <h2>학력 분석 그래프</h2>
-                        <div id="result-graph-degree">
-                           <!-- Analysis graph result will appear here -->
-                        </div>
-                        <br>
-                        <h2>어학 분석 그래프</h2>
-                        <div id="result-graph-language">
-                            <!-- Analysis graph result will appear here -->
-                         </div>
                     </div>
                 </div>
             </section>
@@ -548,11 +603,7 @@ function handleMouseUp(event) {
         <div class="footer-content">
             <p>&copy; 2025 취얼업. 모든 권리 보유.</p>
             <p>문의: <a href="mailto:asiaproject257@gmail.com">asiaproject257@gmail.com</a></p>
-            <ul class="footer-links">
-                <li><a href="#">이용약관</a></li>
-                <li><a href="#">개인정보 처리방침</a></li>
-                <li><a href="#">고객센터</a></li>
-            </ul>
+
         </div>
     </footer>
 </div>
