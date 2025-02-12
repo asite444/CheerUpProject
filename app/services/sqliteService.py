@@ -61,10 +61,10 @@ def analyze_stack_top5(user_data:UserInputData):
 
 
         html_outputs = {
-            "언어":  "언어",
-            "프레임워크":"프레임워크",
-            "라이브러리": "라이브러리",
-            "툴": "툴",
+            "언어":  "언어 내용",
+            "프레임워크":"프레임워크 내용",
+            "라이브러리": "라이브러리 내용",
+            "툴": "툴 내용",
         }
 
         return html_outputs
