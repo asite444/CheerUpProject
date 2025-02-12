@@ -35,36 +35,60 @@ def fetch_tech_stack():
 
 
 
-def analyze_stack_top5(user_data:UserInputData):
+def analyze_stack_top5(user_data: UserInputData):
     connection = get_connection()
     try:
         cursor = connection.cursor()
         
         query = """ 
-        SELECT *
+        SELECT skill, probability, pre_probability
         FROM skill_probability 
         WHERE duty IN ({})
         """.format(','.join(['?'] * len(user_data.jobs)))
 
-   
         cursor.execute(query, tuple(user_data.jobs))
         result = cursor.fetchall()
 
+        sections = {
+            "언어": [],
+            "프레임워크": [],
+            "라이브러리": [],
+            "툴": []
+        }
 
-      
         for row in result:
             try:
-               print()
-
+                skill, probability, pre_probability = row
+                sections["언어"].append((skill, probability, pre_probability))  # 임시로 '언어' 카테고리에 추가
             except (SyntaxError, ValueError, IndexError) as e:
                 print(f"Error converting career data: {row[0]}, Error: {str(e)}")
 
+        def generate_html_table(title, data):
+            html_output = f"""
+            <h3>{title}</h3>
+            <table border="1">
+                <tr>
+                    <th>기술명</th>
+                    <th>자격 요건(%)</th>
+                    <th>우대 사항(%)</th>
+                </tr>
+            """
+            for skill, probability, pre_probability in data:
+                html_output += f"""
+                <tr>
+                    <td>{skill}</td>
+                    <td>{probability:.2f}%</td>
+                    <td>{pre_probability:.2f}%</td>
+                </tr>
+                """
+            html_output += "</table>"
+            return html_output
 
         html_outputs = {
-            "언어":  "언어 내용",
-            "프레임워크":"프레임워크 내용",
-            "라이브러리": "라이브러리 내용",
-            "툴": "툴 내용",
+            "언어": generate_html_table("언어", sections["언어"]),
+            "프레임워크": generate_html_table("프레임워크", sections["프레임워크"]),
+            "라이브러리": generate_html_table("라이브러리", sections["라이브러리"]),
+            "툴": generate_html_table("툴", sections["툴"]),
         }
 
         return html_outputs
@@ -76,6 +100,7 @@ def analyze_stack_top5(user_data:UserInputData):
     finally:
         if connection:
             connection.close()
+
 
 
 def career_graph_search(user_data:UserInputData):
