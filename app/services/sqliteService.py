@@ -33,51 +33,6 @@ def fetch_tech_stack():
 
 
 
-def extract_percentage(text):
-    """ 문자열에서 자격 요건(%)과 우대 조건(%)을 추출하는 함수 """
-    match = re.search(r'(\d+\.\d+|nan)%.*?(\d+\.\d+|nan)%', text)  # nan% 처리 포함
-    if match:
-        qualification = match.group(1)  # 자격 요건(%)
-        preference = match.group(2)  # 우대 조건(%)
-
-        # 각 값이 'nan'이면 0.0으로 변환, 아니면 float으로 변환
-        qualification = 0.0 if qualification.lower() == "nan" else float(qualification)
-        preference = 0.0 if preference.lower() == "nan" else float(preference)
-
-        return qualification, preference  # 자격 요건과 우대 조건을 각각 처리
-    return 0.0, 0.0  # 기본값 반환
-
-def generate_html_table_from_analysis(data, title="언어"):
-    col_headers = ["순위", "이름", "자격 조건(%)", "우대 조건(%)", "설명"]
-
-    html_output = f"""
-    <h3>{html.escape(title)}</h3>
-    <table class="analysis_top5">
-        <tr>
-    """
-
-    for header in col_headers:
-        html_output += f'<th scope="col">{html.escape(header)}</th>'
-    html_output += '</tr>\n'
-
-    for index, row in enumerate(data, start=1):
-        name = html.escape(row[0])
-        qualification = f"{row[1]:.2f}%" if isinstance(row[1], (int, float)) else "N/A"
-        preference = f"{row[2]:.2f}%" if isinstance(row[2], (int, float)) else "N/A"
-        description = html.escape("\n".join(row[3])) if len(row) > 3 else "설명 없음"
-
-        html_output += f"""
-        <tr>
-            <td>{index}</td>
-            <td>{name}</td>
-            <td class="requirement high">{qualification}</td>
-            <td class="preference very-high">{preference}</td>
-            <td>{description}</td>
-        </tr>
-        """
-
-    html_output += '</table>'
-    return html_output
 
 
 def analyze_stack_top5(user_data:UserInputData):
@@ -86,65 +41,33 @@ def analyze_stack_top5(user_data:UserInputData):
         cursor = connection.cursor()
         
         query = """ 
-        SELECT duty, it_language, framework, library, tool 
-        FROM duty_analysis 
+        SELECT *
+        FROM skill_probability 
         WHERE duty IN ({})
         """.format(','.join(['?'] * len(user_data.jobs)))
 
-        #print(f"Executing SQL query: {query}")  # 🟢 SQL 쿼리 확인
-        
+   
         cursor.execute(query, tuple(user_data.jobs))
         result = cursor.fetchall()
 
-        #print(f"SQL Result Count: {len(result)}")  # 🟢 SQL 결과 개수 확인
 
-        sections = {"언어": [], "프레임워크": [], "라이브러리": [], "툴": []}
-
+      
         for row in result:
             try:
-                #print(f"Processing row: {row}")  # 🟢 SQL 행 데이터 출력
-
-                it_lang_list = ast.literal_eval(row[1]) if isinstance(row[1], str) else row[1] or []
-                framework_list = ast.literal_eval(row[2]) if isinstance(row[2], str) else row[2] or []
-                library_list = ast.literal_eval(row[3]) if isinstance(row[3], str) else row[3] or []
-                tool_list = ast.literal_eval(row[4]) if isinstance(row[4], str) else row[4] or []
-
-                #print(f"데이터 확인-Parsed it_lang_list: {it_lang_list}")  # 🟢 데이터 변환 확인
-
-                # 데이터 정리
-                def parse_stack_data(stack_list):
-                    parsed_data = []
-                    for item in stack_list:
-                        if isinstance(item, list) and len(item) == 2:  # 데이터가 ['Java (자격 조건: 47.02%, 우대 조건: 8.4%)', ['설명1', '설명2']] 형태인지 확인
-                            name_raw, description_list = item
-                            qualification, preference = extract_percentage(name_raw)  # 자격 조건과 우대 조건 추출
-                            name = name_raw.split(" (자격 조건")[0]  # "Java" 부분만 추출
-                            parsed_data.append((name, qualification, preference, description_list))
-                            
-                    return parsed_data
-
-                sections["언어"].extend(parse_stack_data(it_lang_list))
-                sections["프레임워크"].extend(parse_stack_data(framework_list))
-                sections["라이브러리"].extend(parse_stack_data(library_list))
-                sections["툴"].extend(parse_stack_data(tool_list))
+               print()
 
             except (SyntaxError, ValueError, IndexError) as e:
                 print(f"Error converting career data: {row[0]}, Error: {str(e)}")
 
-        # print(f"Sections filled: {sections}")  # 🟢 섹션에 데이터 추가 여부 확인
 
-        top5_sections = {
-            category: sorted(items, key=lambda x: x[1], reverse=True)[:5]
-            for category, items in sections.items() if items
+        html_outputs = {
+            "언어":  "언어 내용",
+            "프레임워크":"프레임워크 내용",
+            "라이브러리": "라이브러리 내용",
+            "툴": "툴 내용",
         }
 
-        # print(f"Top 5 Sections: {top5_sections}")  # 🟢 최종 상위 5개 데이터 확인
-
-        html_output = "".join(
-            generate_html_table_from_analysis(items, category) for category, items in top5_sections.items()
-        )
-
-        return html_output
+        return html_outputs
 
     except Exception as e:
         print("Error during SQL execution:", str(e))
