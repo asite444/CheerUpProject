@@ -110,7 +110,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(600px, 1fr)); /* 한 줄에 2개씩 정렬 */
     gap: 50px 80px;  /* 요소 간 간격 */
-    padding: 30px;
+    /* padding: 30px; */ /*그래프 카드 박스의 뒷배경에 다른 박스 생기는 것.. 현재는 제거*/
     justify-content: center;
     background-color: #f9f9f9;
     border-radius: 12px;
