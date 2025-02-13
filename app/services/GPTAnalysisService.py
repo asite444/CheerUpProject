@@ -42,14 +42,13 @@ def analyze_customize(user_data:UserInputData):
     print(data)
     if data is None:
         # DB에 분석 결과가 없음
-        data = [user_tech(duty, categories), improvement(duty, categories)]
+        report_improvement = get_improvement_html(improvement(duty, categories))
         report_conclusion = analyze_conclusion(duty, data)
 
-    report_user_tech = get_user_tech_html(data[0])
     report_improvement = get_improvement_html(data[1])
     # report_conclusion = data[2]
 
-    return report_user_tech, report_improvement, report_conclusion
+    return report_improvement, report_conclusion
 
 
 def get_customized_analysis(duty, it_language, framework, library, tool):
@@ -97,90 +96,6 @@ def insert_customized_analysis(duty, it_language, framework, library, tool):
     finally:
         if connection:
             connection.close()
-
-def user_tech(duty, categories):
-    connection = get_connection()
-
-    try:
-        cursor = connection.cursor()
-
-        result = list()
-        for category in categories.keys():
-            query = f'''
-                    WITH Ranked AS (
-                        SELECT 
-                                skill, 
-                                probability, 
-                                pre_probability,
-                                RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC) AS rank
-                        FROM skill_probability
-                        WHERE category = ? AND duty = ? AND unit = 1
-                    )
-                    SELECT skill, rank, probability, pre_probability
-                    FROM Ranked
-                    WHERE skill IN ({", ".join(["?"] * len(categories[category][1]))})
-                    ORDER BY rank
-            '''
-            purchases = (category, duty, *categories[category][1], )
-            cursor.execute(query, purchases)
-            skill_probability = cursor.fetchall() # [('nodejs', 2, 28.16, 17.28), ('django', 7, 11.18, 14.62), ('flask', 11, 3.82, 3.65)]
-
-            temp = [categories[category][0]]
-            for i in skill_probability:
-                    prompt = make_user_tech_prompt(category, i[0])
-                    response = get_openai_response(prompt)
-
-                    temp.append(list(i) + response.replace('\"', '').replace('.', '').split('/'))
-            
-            result.append(temp)
-
-        return result
-    except Exception as e:
-        return 'user_tech ' + e
-    finally:
-        if connection:
-            connection.close()
-
-def make_user_tech_prompt(category, skill):
-    if category == 'it_language':
-        return f'{skill}에 대한 강점을 15자 "주요 특징" 형식으로 요약해줘. 예시: "객체지향적이고 이식성 높은 언어"'
-    elif category == 'framework':
-        return f'{skill}에 대한 강점을 "언어/주요 기능(20자 이내)" 형식으로 요약해줘. 예시: "Python/빠른 개발이 가능하며 확장성이 좋은 프레임워크"'
-    elif category == 'library':
-        return f'{skill}에 대한 강점을 "언어/주요 기능(20자 이내)" 형식으로 요약해줘. 예시: "Python/데이터 처리 및 분석에 특화된 라이브러리리"'
-    elif category == 'tool':
-        return f'{skill}에 대한 설명을 "사용 분야/주요 특징(20자 이내)" 형식으로 요약해줘. 예시: "컨테이너 가상화/애플리케이션 배포 및 관리"'
-
-def get_user_tech_html(data):
-    columns = {'언어': ['언어', '순위', '자격 조건(%)', '우대 조건(%)', '설명'],
-            '프레임워크': ['프레임워크', '순위', '자격 조건(%)', '우대 조건(%)', '기반 언어', '설명'],
-            '라이브러리': ['라이브러리', '순위', '자격 조건(%)', '우대 조건(%)', '기반 언어', '설명'],
-            '툴': ['언어', '순위', '자격 조건(%)', '우대 조건(%)', '분야', '설명']}
-
-    report = """<ul>"""
-    for i in data:
-        report += f'''<h3>{i[0]}</h3>
-        <table>
-            <tr>
-        '''
-        # 테이블 헤더 추가
-        for col in columns[i[0]]:
-            report += f'<th scope="col">{col}</th>'
-        report += '</tr>'
-
-        # 테이블 데이터 추가
-        for row in i[1:]:
-            report += '<tr>'
-            for idx, cell in enumerate(row):
-                if idx == 1:
-                    report += f'<td>{cell} 위</td>'
-                else:
-                    report += f'<td>{cell}</td>'
-            report += '</tr>'
-        
-        report += '</table>'
-    report += '''</ul>'''
-    return report
 
 def improvement(duty, categories, rank=2):
     # 보완사항
