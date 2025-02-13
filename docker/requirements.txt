@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+pandas
+numpy
+openai
+python-dotenv
+jinja2
+pytrends
+matplotlib
+python-multipart
