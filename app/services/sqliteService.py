@@ -73,14 +73,21 @@ def analyze_stack_top5(user_data: UserInputData):
                     <th>기술명</th>
                     <th>자격 요건(%)</th>
                     <th>우대 사항(%)</th>
+                    <th>설명</th>
+                    <th>설명</th>
                 </tr>
             """
 
             # 상위 5개 기술 출력 (사용자가 선택한 경우 강조)
-            for skill, rank, probability, pre_probability in top5_data:
+            for skill, rank, probability, pre_probability, description in top5_data:
                 highlight_class = "user-selected" if skill in (
                     user_data.languages + user_data.frameworks + user_data.libraries + user_data.devtools
                 ) else "ranked"
+
+                # 기술 설명이 리스트 형태이므로 두 개의 항목을 분리하여 가져옴
+                description_list = eval(description) if description else []
+                desc1 = description_list[0] if len(description_list) > 0 else ""
+                desc2 = description_list[1] if len(description_list) > 1 else ""
 
                 html_output += f"""
                 <tr class="{highlight_class}">
@@ -88,6 +95,8 @@ def analyze_stack_top5(user_data: UserInputData):
                     <td>{skill} {"⭐" if highlight_class == "user-selected" else ""}</td>
                     <td>{probability:.2f}%</td>
                     <td>{pre_probability:.2f}%</td>
+                    <td>{desc1}</td>
+                    <td>{desc2}</td>
                 </tr>
                 """
 
@@ -99,18 +108,25 @@ def analyze_stack_top5(user_data: UserInputData):
             if extra_selected_data and first_selected_rank and first_selected_rank >= 7:
                 html_output += """
                 <tr class="skipped">
-                    <td colspan="4" style="text-align:center;">(중간 생략)</td>
+                    <td colspan="6" style="text-align:center;">(중간 생략)</td>
                 </tr>
                 """
 
             # 사용자가 선택한 기술 중 5순위 밖인 경우 출력 (강조)
-            for skill, rank, probability, pre_probability in extra_selected_data:
+            for skill, rank, probability, pre_probability, description in extra_selected_data:
+                # 기술 설명이 리스트 형태이므로 두 개의 항목을 분리하여 가져옴
+                description_list = eval(description) if description else []
+                desc1 = description_list[0] if len(description_list) > 0 else ""
+                desc2 = description_list[1] if len(description_list) > 1 else ""
+
                 html_output += f"""
                 <tr class="user-selected">
                     <td>{rank}</td>
                     <td>{skill} ⭐</td>
                     <td>{probability:.2f}%</td>
                     <td>{pre_probability:.2f}%</td>
+                    <td>{desc1}</td>
+                    <td>{desc2}</td>
                 </tr>
                 """
 
@@ -125,11 +141,12 @@ def analyze_stack_top5(user_data: UserInputData):
                     skill,
                     probability,
                     pre_probability,
+                    description,
                     RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC) AS rank
                 FROM skill_probability
                 WHERE category = ? AND duty IN ({','.join(['?'] * len(user_data.jobs))}) AND unit = 1
             )
-            SELECT skill, rank, probability, pre_probability
+            SELECT skill, rank, probability, pre_probability, description
             FROM Ranked
             ORDER BY rank
             """
