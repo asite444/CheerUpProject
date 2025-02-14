@@ -4,6 +4,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
 import app.services.sqliteService as sql
+import app.services.GPTtest as sqltest
 import app.services.GPTAnalysisService as gpt
 from app.models.user_input_data import UserInputData
 
@@ -44,7 +45,7 @@ async def process_user_data(user_data: UserInputData):
     # report_improvement = gpt.analyze_improvement(user_data)
     # report_conclusion = gpt.analyze_conclusion(user_data)
 
-    report_user_tech, report_improvement, report_conclusion = gpt.analyze_customize(user_data)
+    report_user_tech, report_improvement, report_conclusion = "sqltest","sqltest",sqltest.get_openai_response("java가 뭐지?")#gpt.analyze_customize(user_data)
 
     report_graph_career = "\n".join(sql.career_graph_search(user_data))      # 경력 그래프
     report_graph_degree = "\n".join(sql.degree_graph_search(user_data))      # 학력 그래프
