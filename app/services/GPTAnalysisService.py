@@ -195,7 +195,7 @@ def make_improvement_prompt(duty, combination):
     skills = list(combination['skill'])  # Pandas Series가 아닐 경우 to_list() 필요 없음
     skill_str = ', '.join(f'"{item}"' for item in skills)
     
-    prompt += f'{{{skill_str}}}'
+    prompt += f'{skill_str}'
     
     return prompt
 
