@@ -32,14 +32,10 @@ def fetch_tech_stack():
         if connection:
             connection.close()
 
-
-
-
 def analyze_stack_top5(user_data: UserInputData):
     connection = get_connection()
-    try:
-        cursor = connection.cursor()
 
+    try:
         # 카테고리 매핑 (SQL 쿼리에서 사용할 기술 카테고리를 설정)
         categories = {
             "언어": ("it_language", user_data.languages),
@@ -55,84 +51,6 @@ def analyze_stack_top5(user_data: UserInputData):
             "라이브러리": "내용 없음",
             "툴": "내용 없음",
         }
-
-        def generate_html_table(title, top5_data, extra_selected_data):
-            """
-            HTML 테이블을 생성하는 함수
-            - top5_data: 상위 5개 기술 데이터
-            - extra_selected_data: 사용자가 선택한 기술 중 5위 밖인 기술
-            """
-            if not top5_data and not extra_selected_data:
-                return f"<h3>{title}</h3><p>데이터 없음</p>"
-
-            # ⭐ 범례 추가
-            html_output = f"""
-            <p class="legend-right">⭐  사용자 선택 기술</p>
-            <table class="analysis_top5">
-                <tr>
-                    <th>순위</th>
-                    <th>기술명</th>
-                    <th>자격 요건(%)</th>
-                    <th>우대 사항(%)</th>
-                    <th>설명</th>
-                    <th>설명</th>
-                </tr>
-            """
-
-            # 상위 5개 기술 출력 (사용자가 선택한 경우 강조)
-            for skill, rank, probability, pre_probability, description in top5_data:
-                highlight_class = "user-selected" if skill in (
-                    user_data.languages + user_data.frameworks + user_data.libraries + user_data.devtools
-                ) else "ranked"
-
-                # 기술 설명이 리스트 형태이므로 두 개의 항목을 분리하여 가져옴
-                description_list = eval(description) if description else []
-                desc1 = description_list[0] if len(description_list) > 0 else ""
-                desc2 = description_list[1] if len(description_list) > 1 else ""
-
-                html_output += f"""
-                <tr class="{highlight_class}">
-                    <td>{rank}</td>
-                    <td>{skill} {"⭐" if highlight_class == "user-selected" else ""}</td>
-                    <td>{probability:.2f}%</td>
-                    <td>{pre_probability:.2f}%</td>
-                    <td>{desc1}</td>
-                    <td>{desc2}</td>
-                </tr>
-                """
-
-            # 사용자가 선택한 기술 중 최상위 순위를 가져옴
-            extra_selected_data.sort(key=lambda x: x[1])  # 순위 기준 정렬
-            first_selected_rank = extra_selected_data[0][1] if extra_selected_data else None
-
-            # 중간 생략 문구 추가 (사용자가 선택한 기술이 7위 이상일 때만)
-            if extra_selected_data and first_selected_rank and first_selected_rank >= 7:
-                html_output += """
-                <tr class="skipped">
-                    <td colspan="6" style="text-align:center;">(중간 생략)</td>
-                </tr>
-                """
-
-            # 사용자가 선택한 기술 중 5순위 밖인 경우 출력 (강조)
-            for skill, rank, probability, pre_probability, description in extra_selected_data:
-                # 기술 설명이 리스트 형태이므로 두 개의 항목을 분리하여 가져옴
-                description_list = eval(description) if description else []
-                desc1 = description_list[0] if len(description_list) > 0 else ""
-                desc2 = description_list[1] if len(description_list) > 1 else ""
-
-                html_output += f"""
-                <tr class="user-selected">
-                    <td>{rank}</td>
-                    <td>{skill} ⭐</td>
-                    <td>{probability:.2f}%</td>
-                    <td>{pre_probability:.2f}%</td>
-                    <td>{desc1}</td>
-                    <td>{desc2}</td>
-                </tr>
-                """
-
-            html_output += "</table>"
-            return html_output
 
         # 각 카테고리에 대해 SQL 실행 및 결과 처리
         for display_name, (category, selected_skills) in categories.items():
@@ -151,27 +69,12 @@ def analyze_stack_top5(user_data: UserInputData):
             FROM Ranked
             ORDER BY rank
             """
-
-
-            cursor.execute(query, (category, *user_data.jobs))
-            result = cursor.fetchall()
-
             df = pd.read_sql_query(query, connection, params=(category, *user_data.jobs))
 
-            # 상위 5개 기술 추출
-            top5_data = result[:5]
-            print(top5_data)
-            print(f'df: {list(df[df['rank'] <= 5].itertuples(index=False, name=None))}', end='\n\n')
-
-            extra_selected_data = [row for row in result if row[0] in selected_skills and row not in top5_data]
-            print(extra_selected_data)
-
             temp_ranked = set(list(range(1, 6)) + [x for i in df.loc[df["skill"].isin(selected_skills), 'rank'].to_list() for x in range(i-3, i+1)])
-            print(list(df[df['rank'].isin(temp_ranked)].itertuples(index=False, name=None)))
-
-
+            extra_selected_data = list(df[df['rank'].isin(temp_ranked)].itertuples(index=False, name=None))
             # HTML 테이블 생성
-            html_outputs[display_name] = temp(display_name, list(df[df['rank'].isin(temp_ranked)].itertuples(index=False, name=None)), selected_skills)# generate_html_table(display_name, top5_data, extra_selected_data)
+            html_outputs[display_name] = generate_html_table(display_name, extra_selected_data, selected_skills)
 
         return html_outputs
 
@@ -183,7 +86,7 @@ def analyze_stack_top5(user_data: UserInputData):
         if connection:
             connection.close()
 
-def temp(title, data, user_selected_skills):
+def generate_html_table(title, data, user_selected_skills):
     """
     HTML 테이블을 생성하는 함수
     - data: 기술 데이터 리스트 (순위가 비연속적인 경우 중간 생략 추가)
