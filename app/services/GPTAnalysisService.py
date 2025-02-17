@@ -5,6 +5,7 @@ import os
 import ast
 import pandas as pd
 import numpy as np
+from datetime import datetime
 
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -33,24 +34,27 @@ def get_openai_response(prompt, model='gpt-3.5-turbo', temperature=0.5):
 
 def analyze_customize(user_data:UserInputData):
     duty = user_data.jobs[0]
-    it_language = sorted(user_data.languages)
-    framework = sorted(user_data.frameworks)
-    library = sorted(user_data.libraries)
-    tool = sorted(user_data.devtools)
-    categories = {'it_language': ['언어', it_language], 'framework': ['프레임워크', framework], 'library': ['라이브러리', library], 'tool': ['툴', tool]}
+    categories = {'it_language': ['언어', sorted(user_data.languages)],
+                  'framework': ['프레임워크', sorted(user_data.frameworks)],
+                  'library': ['라이브러리', sorted(user_data.libraries)],
+                  'tool': ['툴', sorted(user_data.devtools)]}
 
-    data = get_customized_analysis(duty, it_language, framework, library, tool)
+    data = get_customized_analysis(duty, categories)
     print(data)
-    # if data is None:
+    if data is None:
         # DB에 분석 결과가 없음
-        # improvement_reulst = analyze_improvement(duty, categories)
+        improvement_reulst = analyze_improvement(duty, categories)
+        report_conclusion = analyze_conclusion(user_data)
+        set_customized_analysis(duty, categories, improvement_reulst, report_conclusion)
+    else:
+        improvement_reulst = ast.literal_eval(data[0])
+        report_conclusion = data[1]
 
-    report_improvement = "임시 차단" # get_improvement_html(improvement_reulst)
+    report_improvement = get_improvement_html(improvement_reulst)
 
-    return report_improvement
+    return report_improvement, report_conclusion
 
-
-def get_customized_analysis(duty, it_language, framework, library, tool):
+def get_customized_analysis(duty, categories):
     connection = get_connection()
 
     try:
@@ -63,7 +67,7 @@ def get_customized_analysis(duty, it_language, framework, library, tool):
                 WHERE
                         duty = ? AND it_language = ? AND framework = ? AND library = ? AND tool = ?
         '''
-        purchases = (duty, ', '.join(it_language), ', '.join(framework), ', '.join(library), ', '.join(tool), )
+        purchases = (duty, ', '.join(categories['it_language'][1]), ', '.join(categories['framework'][1]), ', '.join(categories['library'][1]), ', '.join(categories['tool'][1]), )
         cursor.execute(query, purchases)
         return cursor.fetchone()
     except Exception as e:
@@ -72,28 +76,30 @@ def get_customized_analysis(duty, it_language, framework, library, tool):
         if connection:
             connection.close()
 
-def insert_customized_analysis(duty, it_language, framework, library, tool):
+def set_customized_analysis(duty, categories, improvement, conclusion):
     connection = get_connection()
     
     try:
         cursor = connection.cursor()
-        cursor.execute('SELECT MAX(seq) FROM customized_analysis ')
+        cursor.execute('SELECT MAX(seq) FROM customized_analysis')
         data = cursor.fetchone()[0]
         seq = data + 1 if data is not None else 0
         
         query = """
                 INSERT INTO
                 customized_analysis
+                (seq, duty, it_language, framework, library, tool, improvement, conclusion, an_dt)
                 VALUES
-                (?, ?, ?, ?, ?, ?, ?, ?)
+                (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
-        purchases = (seq, ', '.join(it_language), ', '.join(framework), ', '.join(library), ', '.join(tool), report, '2025.02.06', duty, )
+        purchases = (seq, duty, ', '.join(categories['it_language'][1]), ', '.join(categories['framework'][1]), ', '.join(categories['library'][1]), ', '.join(categories['tool'][1]), str(improvement), str(conclusion), str(datetime.now()))
         cursor.execute(query, purchases)
-        return cursor.fetchone()
+        return True
     except Exception as e:
-        return 'insert_customized analysis error: ' + e
+        return 'insert_customized analysis error: ' + str(e)
     finally:
         if connection:
+            connection.commit()
             connection.close()
 
 def find_matching_text(skill_value, res_eval):
@@ -236,7 +242,6 @@ def get_improvement_html(data_dict):
 
 def analyze_conclusion(user_data:UserInputData):
     # 보완사항
-
     duty = user_data.jobs[0]
     data = user_data.languages + user_data.frameworks + user_data.libraries + user_data.devtools
 
@@ -312,7 +317,7 @@ def make_conclusion_prompt(duty, skills, score):
     양식:
     사용자의 기술 스택을 기반으로 직무별 점수를 계산한 결과, <b>{duty} 직무의 점수는 ?점</b>입니다. 보다 높은 점수를 받기 위해 "사용자 기술 분석"과 "보완 사항"을 참고하여 부족한 기술을 보완하는 것을 추천합니다.<br>
     또한, 사용자의 기술 스택을 고려했을 때 가장 적합한 상위 3개 직무는 다음과 같습니다.<br><br>
-    <ol><li><b>score.key (score.val점)</b>: 어떤 직무이며 어떤 기술 스택 때문에 적합한지 설명(30자 이내)</li></ol><br><br>
+    <ol><li><b>score.key (score.val점)</b>: 어떤 직무이며 어떤 기술 스택 때문에 적합한지 설명(30자 이내)</li></ol><br>
     현재 점수는 성장 가능성을 보여줄 뿐, 실력을 증명하는 절대적인 기준이 아닙니다. 꾸준한 학습과 실전 경험을 쌓으면 목표하는 직무에 도달할 수 있습니다. 포기하지 말고 나아가세요! 🚀 여러분의 도전을 응원합니다.
     """
     return prompt
