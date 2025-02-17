@@ -4,6 +4,8 @@ from app.database.sqliteserver import get_connection
 import os
 import ast
 import pandas as pd
+import numpy as np
+from datetime import datetime
 
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -32,26 +34,26 @@ def get_openai_response(prompt, model='gpt-3.5-turbo', temperature=0.5):
 
 def analyze_customize(user_data:UserInputData):
     duty = user_data.jobs[0]
-    it_language = sorted(user_data.languages)
-    framework = sorted(user_data.frameworks)
-    library = sorted(user_data.libraries)
-    tool = sorted(user_data.devtools)
-    categories = {'it_language': ['언어', it_language], 'framework': ['프레임워크', framework], 'library': ['라이브러리', library], 'tool': ['툴', tool]}
+    categories = {'it_language': ['언어', sorted(user_data.languages)],
+                  'framework': ['프레임워크', sorted(user_data.frameworks)],
+                  'library': ['라이브러리', sorted(user_data.libraries)],
+                  'tool': ['툴', sorted(user_data.devtools)]}
 
-    data = get_customized_analysis(duty, it_language, framework, library, tool)
-    print(data)
+    data = get_customized_analysis(duty, categories)
     if data is None:
         # DB에 분석 결과가 없음
-        improvement_reulst = improvement(duty, categories)
-        # report_conclusion = analyze_conclusion(duty, data)
+        improvement_reulst = analyze_improvement(duty, categories)
+        report_conclusion = analyze_conclusion(user_data)
+        set_customized_analysis(duty, categories, improvement_reulst, report_conclusion)
+    else:
+        improvement_reulst = ast.literal_eval(data[0])
+        report_conclusion = data[1]
 
-    report_improvement = get_improvement_html(improvement_reulst) # get_improvement_html(improvement_reulst)
-    # report_conclusion = data[2]
+    report_improvement = get_improvement_html(improvement_reulst)
 
-    return report_improvement
+    return report_improvement, report_conclusion
 
-
-def get_customized_analysis(duty, it_language, framework, library, tool):
+def get_customized_analysis(duty, categories):
     connection = get_connection()
 
     try:
@@ -64,37 +66,41 @@ def get_customized_analysis(duty, it_language, framework, library, tool):
                 WHERE
                         duty = ? AND it_language = ? AND framework = ? AND library = ? AND tool = ?
         '''
-        purchases = (duty, ', '.join(it_language), ', '.join(framework), ', '.join(library), ', '.join(tool), )
+        purchases = (duty, ', '.join(categories['it_language'][1]), ', '.join(categories['framework'][1]), ', '.join(categories['library'][1]), ', '.join(categories['tool'][1]), )
         cursor.execute(query, purchases)
         return cursor.fetchone()
     except Exception as e:
-        return 'get customized analysis error: ' + e
+        print("Error during SQL execution:", str(e))
+        return {"error": str(e)}
     finally:
         if connection:
             connection.close()
 
-def insert_customized_analysis(duty, it_language, framework, library, tool):
+def set_customized_analysis(duty, categories, improvement, conclusion):
     connection = get_connection()
     
     try:
         cursor = connection.cursor()
-        cursor.execute('SELECT MAX(seq) FROM customized_analysis ')
+        cursor.execute('SELECT MAX(seq) FROM customized_analysis')
         data = cursor.fetchone()[0]
         seq = data + 1 if data is not None else 0
         
         query = """
                 INSERT INTO
                 customized_analysis
+                (seq, duty, it_language, framework, library, tool, improvement, conclusion, an_dt)
                 VALUES
-                (?, ?, ?, ?, ?, ?, ?, ?)
+                (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
-        purchases = (seq, ', '.join(it_language), ', '.join(framework), ', '.join(library), ', '.join(tool), report, '2025.02.06', duty, )
+        purchases = (seq, duty, ', '.join(categories['it_language'][1]), ', '.join(categories['framework'][1]), ', '.join(categories['library'][1]), ', '.join(categories['tool'][1]), str(improvement), str(conclusion), str(datetime.now()))
         cursor.execute(query, purchases)
-        return cursor.fetchone()
+        return True
     except Exception as e:
-        return 'insert_customized analysis error: ' + e
+        print("Error during SQL execution:", str(e))
+        return {"error": str(e)}
     finally:
         if connection:
+            connection.commit()
             connection.close()
 
 def find_matching_text(skill_value, res_eval):
@@ -103,7 +109,7 @@ def find_matching_text(skill_value, res_eval):
             return text
     return ""  # 매칭되는 키가 없으면 빈 문자열 반환
 
-def improvement(duty, categories):
+def analyze_improvement(duty, categories):
     # 보완사항
     connection = get_connection()
 
@@ -117,19 +123,20 @@ def improvement(duty, categories):
             response = get_openai_response(prompt)
             try:
                 res_eval = ast.literal_eval(response)
-                print(res_eval)
                 combination_df["text"] = combination_df["skill"].apply(find_matching_text, args=(res_eval, ))
             except SyntaxError as e:
-                return print('literal_eval error: ' + str(e))
+                print("Error during openai api response change eval:", str(e))
+                return {"error": str(e)}
             except Exception as e:
-                print(e)
+                print("Error during openai api response change eval:", str(e))
+                return {"error": str(e)}
 
             result[categories[category][0]] = combination_df.to_dict()
-        print(result)
 
         return result
     except Exception as e:
-        return 'get_skill_prob_rank error' + e
+        print("Error during SQL execution:", str(e))
+        return {"error": str(e)}
     finally:
         if connection:
             connection.close()
@@ -179,7 +186,8 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05)
         data = pd.read_sql_query(query, connection, params=purchases)
         return data
     except Exception as e:
-        return 'skill_combination error ' + str(e)
+        print("Error during SQL execution:", str(e))
+        return {"error": str(e)}
     finally:
         if connection:
             connection.close()
@@ -194,7 +202,6 @@ def make_improvement_prompt(duty, combination):
     # 중괄호 이슈 해결 및 리스트 변환
     skills = list(combination['skill'])  # Pandas Series가 아닐 경우 to_list() 필요 없음
     skill_str = ', '.join(f'"{item}"' for item in skills)
-    print("skill_str:"+f'{{{skill_str}}}')
     prompt += f'{{{skill_str}}}'
     
     return prompt
@@ -256,31 +263,77 @@ def get_improvement_html(data_dict):
 
     return html_content
 
+def analyze_conclusion(user_data:UserInputData):
+    # 보완사항
+    duty = user_data.jobs[0]
+    data = user_data.languages + user_data.frameworks + user_data.libraries + user_data.devtools
 
-def analyze_conclusion(duty, data):
-    """결론"""
-    prompt = f'''기술 스택을 기반으로 {duty} 직무에 대한 최종 결론을 350자 이내로 출력해주세요.
-    - 설명형 어투로 구체적으로 작성할 것
-    - 보유 기술이 {duty} 직무에서 어떻게 활용되는지 설명할 것.
-    - 부족한 기술이 실무에서 왜 중요한지, 이를 학습하면 어떤 장점이 있는지 설명할 것.
-    - 마지막에는 응원하는 메시지를 포함할 것.  
-    - 기술 스택의 순위는 {duty} 직무 공고에서 기술 스택이 나온 순위임.
-    기술스택: ['''
-    for i in data[0]:
-        prompt += f'{i[0]}:['
-        for j in i[1:]:
-            prompt += f'''{j[0]}({j[1]}위),'''
-        prompt += '],'
+    score = get_duty_scores(data)
 
-    prompt += f''']
-    부족한 기술: ['''
-    for i in data[1]:
-        prompt += f'{i[0]}:['
-        for j in i[1:]:
-            prompt += f'''{j[0]},'''
-        prompt += '],'
-    prompt += ']'
+    prompt = make_conclusion_prompt(duty, data, score)
 
     response = get_openai_response(prompt)
-        
     return response
+
+def get_duty_scores(skills, duty_num=3):
+    connection = get_connection()
+
+    try:
+        query = """
+            SELECT skill, category, duty,
+                RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC, skill ASC) AS rank 
+            FROM skill_probability
+            WHERE unit = 1
+            AND duty NOT IN ('언어별 개발자')
+            ORDER BY duty, category
+        """
+        data = pd.read_sql_query(query, connection)
+
+        score_series = data.groupby(by='duty', group_keys=False).apply(lambda x: calculate_score(x.drop(columns=['duty']), skills))
+        score_series.sort_values(ascending=False)
+
+        return score_series[:duty_num].to_dict()
+    except Exception as e:
+        print("Error during SQL execution:", str(e))
+        return {"error": str(e)}
+    finally:
+        if connection:
+            connection.close()
+
+def calculate_score(df, user_skills):
+    # 카테고리 가중치
+    category_weights = {
+        'it_language': 0.3,
+        'framework': 0.3,
+        'library': 0.2,
+        'tool': 0.2
+    }
+
+    # 사용자 스킬 필터링
+    user_skills_df = df[df['skill'].isin(user_skills)].copy()
+
+    if user_skills_df.empty:
+        return 0  # 일치하는 기술이 없으면 0점 반환
+
+    # 지수 가중치 계산 (rank가 낮을수록 가중치 높음)
+    user_skills_df['weight'] = np.exp(-user_skills_df['rank'])
+
+    # 카테고리 가중치 적용
+    user_skills_df['category_weight'] = user_skills_df['category'].map(category_weights)
+    user_skills_df['final_weight'] = user_skills_df['weight'] * user_skills_df['category_weight']
+
+    # 최종 점수 계산 (100점 만점)
+    total_score = round(user_skills_df['final_weight'].sum() * 100, 2)
+    return total_score
+
+def make_conclusion_prompt(duty, skills, score):
+    prompt = f"""다음 양식에 맞춰서 작성해줘
+    사용자의 기술 스택: {','.join(skills)}
+    score: {score}
+    양식:
+    사용자의 기술 스택을 기반으로 직무별 점수를 계산한 결과, <b>{duty} 직무의 점수는 ?점</b>입니다. 보다 높은 점수를 받기 위해 "사용자 기술 분석"과 "보완 사항"을 참고하여 부족한 기술을 보완하는 것을 추천합니다.<br>
+    또한, 사용자의 기술 스택을 고려했을 때 가장 적합한 상위 3개 직무는 다음과 같습니다.<br><br>
+    <ol><li><b>score.key (score.val점)</b>: 어떤 직무이며 어떤 기술 스택 때문에 적합한지 설명(30자 이내)</li></ol><br>
+    현재 점수는 성장 가능성을 보여줄 뿐, 실력을 증명하는 절대적인 기준이 아닙니다. 꾸준한 학습과 실전 경험을 쌓으면 목표하는 직무에 도달할 수 있습니다. 포기하지 말고 나아가세요! 🚀 여러분의 도전을 응원합니다.
+    """
+    return prompt
