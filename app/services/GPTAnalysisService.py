@@ -4,6 +4,7 @@ from app.database.sqliteserver import get_connection
 import os
 import ast
 import pandas as pd
+import numpy as np
 
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -40,13 +41,11 @@ def analyze_customize(user_data:UserInputData):
 
     data = get_customized_analysis(duty, it_language, framework, library, tool)
     print(data)
-    if data is None:
+    # if data is None:
         # DB에 분석 결과가 없음
-        improvement_reulst = improvement(duty, categories)
-        # report_conclusion = analyze_conclusion(duty, data)
+        # improvement_reulst = analyze_improvement(duty, categories)
 
-    report_improvement = get_improvement_html(improvement_reulst) # get_improvement_html(improvement_reulst)
-    # report_conclusion = data[2]
+    report_improvement = "임시 차단" # get_improvement_html(improvement_reulst)
 
     return report_improvement
 
@@ -103,7 +102,7 @@ def find_matching_text(skill_value, res_eval):
             return text
     return ""  # 매칭되는 키가 없으면 빈 문자열 반환
 
-def improvement(duty, categories):
+def analyze_improvement(duty, categories):
     # 보완사항
     connection = get_connection()
 
@@ -235,30 +234,85 @@ def get_improvement_html(data_dict):
 
     return html_content
 
-def analyze_conclusion(duty, data):
-    """결론"""
-    prompt = f'''기술 스택을 기반으로 {duty} 직무에 대한 최종 결론을 350자 이내로 출력해주세요.
-    - 설명형 어투로 구체적으로 작성할 것
-    - 보유 기술이 {duty} 직무에서 어떻게 활용되는지 설명할 것.
-    - 부족한 기술이 실무에서 왜 중요한지, 이를 학습하면 어떤 장점이 있는지 설명할 것.
-    - 마지막에는 응원하는 메시지를 포함할 것.  
-    - 기술 스택의 순위는 {duty} 직무 공고에서 기술 스택이 나온 순위임.
-    기술스택: ['''
-    for i in data[0]:
-        prompt += f'{i[0]}:['
-        for j in i[1:]:
-            prompt += f'''{j[0]}({j[1]}위),'''
-        prompt += '],'
+def analyze_conclusion(user_data:UserInputData):
+    # 보완사항
 
-    prompt += f''']
-    부족한 기술: ['''
-    for i in data[1]:
-        prompt += f'{i[0]}:['
-        for j in i[1:]:
-            prompt += f'''{j[0]},'''
-        prompt += '],'
-    prompt += ']'
+    duty = user_data.jobs[0]
+    data = user_data.languages + user_data.frameworks + user_data.libraries + user_data.devtools
 
-    response = get_openai_response(prompt)
-        
-    return response
+    connection = get_connection()
+
+    try:
+        score = get_duty_scores(data)
+
+        prompt = make_conclusion_prompt(duty, data, score)
+
+        response = get_openai_response(prompt)
+        return response
+    except Exception as e:
+        return 'get_skill_prob_rank error' + str(e)
+    finally:
+        if connection:
+            connection.close()
+
+def get_duty_scores(skills, duty_num=3):
+    connection = get_connection()
+
+    try:
+        query = """
+            SELECT skill, category, duty,
+                RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC, skill ASC) AS rank 
+            FROM skill_probability
+            WHERE unit = 1
+            AND duty NOT IN ('언어별 개발자')
+            ORDER BY duty, category
+        """
+        data = pd.read_sql_query(query, connection)
+
+        score_series = data.groupby(by='duty', group_keys=False).apply(lambda x: calculate_score(x.drop(columns=['duty']), skills))
+        score_series.sort_values(ascending=False)
+
+        return score_series[:duty_num].to_dict()
+    except Exception as e:
+        return 'skill_combination error ' + str(e)
+    finally:
+        if connection:
+            connection.close()
+
+def calculate_score(df, user_skills):
+    # 카테고리 가중치
+    category_weights = {
+        'it_language': 0.3,
+        'framework': 0.3,
+        'library': 0.2,
+        'tool': 0.2
+    }
+
+    # 사용자 스킬 필터링
+    user_skills_df = df[df['skill'].isin(user_skills)].copy()
+
+    if user_skills_df.empty:
+        return 0  # 일치하는 기술이 없으면 0점 반환
+
+    # 지수 가중치 계산 (rank가 낮을수록 가중치 높음)
+    user_skills_df['weight'] = np.exp(-user_skills_df['rank'])
+
+    # 카테고리 가중치 적용
+    user_skills_df['category_weight'] = user_skills_df['category'].map(category_weights)
+    user_skills_df['final_weight'] = user_skills_df['weight'] * user_skills_df['category_weight']
+
+    # 최종 점수 계산 (100점 만점)
+    total_score = round(user_skills_df['final_weight'].sum() * 100, 2)
+    return total_score
+
+def make_conclusion_prompt(duty, skills, score):
+    prompt = f"""다음 양식에 맞춰서 작성해줘
+    사용자의 기술 스택: {','.join(skills)}
+    score: {score}
+    양식:
+    사용자의 기술 스택을 기반으로 직무별 점수를 계산한 결과, **{duty} 직무의 점수는 ?점**입니다. 보다 높은 점수를 받기 위해 "사용자 기술 분석"과 "보완 사항"을 참고하여 부족한 기술을 보완하는 것을 추천합니다.<br>
+    또한, 사용자의 기술 스택을 고려했을 때 가장 적합한 상위 3개 직무는 다음과 같습니다.<br><br>
+    <ol><li>score.key (score.val점): 어떤 직무이며 어떤 기술 스택 때문에 적합한지 설명(30자 이내)</li></ol><br><br>
+    현재 점수는 성장 가능성을 보여줄 뿐, 실력을 증명하는 절대적인 기준이 아닙니다. 꾸준한 학습과 실전 경험을 쌓으면 목표하는 직무에 도달할 수 있습니다. 포기하지 말고 나아가세요! 🚀 여러분의 도전을 응원합니다.
+    """
+    return prompt
