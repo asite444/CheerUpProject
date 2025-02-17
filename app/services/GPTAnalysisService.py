@@ -194,23 +194,31 @@ def make_improvement_prompt(duty, combination):
     # 중괄호 이슈 해결 및 리스트 변환
     skills = list(combination['skill'])  # Pandas Series가 아닐 경우 to_list() 필요 없음
     skill_str = ', '.join(f'"{item}"' for item in skills)
-    
-    prompt += f'{skill_str}'
+    print("skill_str:"+f'{{{skill_str}}}')
+    prompt += f'{{{skill_str}}}'
     
     return prompt
 
-
 def get_improvement_html(data_dict):
     columns = {'skill': '기술 조합', 'probability': '자격조건(%)', 'text': '설명'}
-
     html_content = ""
 
-    # Key별 (언어, 프레임워크 등) 테이블 생성 및 rskill 그룹화
     for category, values in data_dict.items():
-        html_content += f"<h2>{category}</h2>\n"
+        # ✅ 데이터가 없는 카테고리는 건너뛰기
+        if not values or not any(values.values()):
+            print(f"⚠️ Warning: {category} 데이터 없음, 건너뜀")
+            continue  # 데이터 없는 카테고리 생략
 
-        # rskill별 그룹 생성
+        html_content += f"<h2>{category}</h2>\n"
+        
         rskill_groups = {}
+        
+        # ✅ rskill 데이터가 없을 경우 방어 코드 추가
+        if "rskill" not in values or not values["rskill"]:
+            html_content += "<p>데이터 없음</p>\n"
+            continue
+
+        # ✅ rskill별 그룹 생성
         for i in range(len(values["rskill"])):
             rskill = values["rskill"][i]
             if rskill not in rskill_groups:
@@ -219,27 +227,35 @@ def get_improvement_html(data_dict):
             for col in columns.keys():
                 rskill_groups[rskill][col][len(rskill_groups[rskill][col])] = values[col][i]
 
-        # rskill별 테이블 생성
+        # ✅ rskill 그룹이 없으면 데이터 없음 메시지 출력
+        if not rskill_groups:
+            html_content += "<p>데이터 없음</p>\n"
+            continue
+
+        # ✅ rskill별 테이블 생성
         for rskill, rvalues in rskill_groups.items():
             html_content += f"<h3>{rskill} 관련 기술</h3>\n"
             html_content += "<table border='1'>\n"
 
-            # Extract headers and rename them
+            # ✅ 테이블 헤더 생성
             headers = [columns[col] for col in columns.keys()]
-            html_content += "<tr>" + "".join(f"<th>{col.replace(', ', ' + ')}</th>" for col in headers) + "</tr>\n"
+            html_content += "<tr>" + "".join(f"<th>{col}</th>" for col in headers) + "</tr>\n"
 
-            # Determine the number of rows
-            num_rows = len(next(iter(rvalues.values())))
-
-            # Populate table rows
-            for i in range(num_rows):
-                html_content += "<tr>" + "".join(
-                    f"<td>{rvalues[col].get(i, '')}</td>" for col in columns.keys()
-                ) + "</tr>\n"
+            # ✅ rvalues 데이터 확인
+            if not any(rvalues.values()):
+                html_content += "<tr><td colspan='3'>데이터 없음</td></tr>\n"
+            else:
+                # ✅ 행 생성
+                num_rows = len(next(iter(rvalues.values())))
+                for i in range(num_rows):
+                    html_content += "<tr>" + "".join(
+                        f"<td>{rvalues[col].get(i, '데이터 없음')}</td>" for col in columns.keys()
+                    ) + "</tr>\n"
 
             html_content += "</table>\n<br>\n"
 
     return html_content
+
 
 def analyze_conclusion(duty, data):
     """결론"""
