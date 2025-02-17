@@ -3,6 +3,7 @@ from app.models.user_input_data import UserInputData
 import ast
 import html
 import re 
+import pandas as pd
 
 def fetch_tech_stack():
     """
@@ -142,7 +143,7 @@ def analyze_stack_top5(user_data: UserInputData):
                     probability,
                     pre_probability,
                     description,
-                    RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC) AS rank
+                    RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC, skill ASC) AS rank
                 FROM skill_probability
                 WHERE category = ? AND duty IN ({','.join(['?'] * len(user_data.jobs))}) AND unit = 1
             )
@@ -151,17 +152,26 @@ def analyze_stack_top5(user_data: UserInputData):
             ORDER BY rank
             """
 
+
             cursor.execute(query, (category, *user_data.jobs))
             result = cursor.fetchall()
 
+            df = pd.read_sql_query(query, connection, params=(category, *user_data.jobs))
+
             # 상위 5개 기술 추출
             top5_data = result[:5]
+            print(top5_data)
+            print(f'df: {list(df[df['rank'] <= 5].itertuples(index=False, name=None))}', end='\n\n')
 
-            # 사용자가 선택한 기술 중 5순위 밖인 기술 필터링
             extra_selected_data = [row for row in result if row[0] in selected_skills and row not in top5_data]
+            print(extra_selected_data)
+
+            temp_ranked = set(list(range(1, 6)) + [x for i in df.loc[df["skill"].isin(selected_skills), 'rank'].to_list() for x in range(i-3, i+1)])
+            print(list(df[df['rank'].isin(temp_ranked)].itertuples(index=False, name=None)))
+
 
             # HTML 테이블 생성
-            html_outputs[display_name] = generate_html_table(display_name, top5_data, extra_selected_data)
+            html_outputs[display_name] = temp(display_name, list(df[df['rank'].isin(temp_ranked)].itertuples(index=False, name=None)), selected_skills)# generate_html_table(display_name, top5_data, extra_selected_data)
 
         return html_outputs
 
@@ -172,6 +182,66 @@ def analyze_stack_top5(user_data: UserInputData):
     finally:
         if connection:
             connection.close()
+
+def temp(title, data, user_selected_skills):
+    """
+    HTML 테이블을 생성하는 함수
+    - data: 기술 데이터 리스트 (순위가 비연속적인 경우 중간 생략 추가)
+    """
+
+    if not data:
+        return f"<h3>{title}</h3><p>데이터 없음</p>"
+
+    html_output = f"""
+    <h3>{title}</h3>
+    <p class="legend-right">⭐ 사용자 선택 기술</p>
+    <table class="analysis_top5">
+        <tr>
+            <th>순위</th>
+            <th>기술명</th>
+            <th>자격 요건(%)</th>
+            <th>우대 사항(%)</th>
+            <th>설명</th>
+            <th>설명</th>
+        </tr>
+    """
+
+    previous_rank = None
+    for skill, rank, probability, pre_probability, description in data:
+        # 중간 생략 여부 확인
+        if previous_rank is not None and rank > previous_rank + 1:
+            html_output += """
+            <tr class="skipped">
+                <td colspan="6" style="text-align:center;">(중간 생략)</td>
+            </tr>
+            """
+
+        # 기술 설명 리스트 분리
+        description_list = eval(description) if description else []
+        desc1 = description_list[0] if len(description_list) > 0 else ""
+        desc2 = description_list[1] if len(description_list) > 1 else ""
+
+        # 사용자 선택 기술 강조
+        highlight_class = "user-selected" if skill in user_selected_skills else "ranked"
+        star_icon = "⭐" if highlight_class == "user-selected" else ""
+
+        # 행 추가
+        html_output += f"""
+        <tr class="{highlight_class}">
+            <td>{rank}</td>
+            <td>{skill} {star_icon}</td>
+            <td>{probability:.2f}%</td>
+            <td>{pre_probability:.2f}%</td>
+            <td>{desc1}</td>
+            <td>{desc2}</td>
+        </tr>
+        """
+
+        # 현재 순위 저장
+        previous_rank = rank
+
+    html_output += "</table>"
+    return html_output
 
 
 def career_graph_search(user_data:UserInputData):

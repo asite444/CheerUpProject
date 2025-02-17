@@ -143,7 +143,7 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05)
                 SELECT
                     skill,
                     probability,
-                    RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC) AS rank
+                    RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC, skill ASC) AS rank
                 FROM skill_probability
                 WHERE category = ?
                 AND duty = ?
@@ -220,7 +220,7 @@ def get_improvement_html(data_dict):
 
             # Extract headers and rename them
             headers = [columns[col] for col in columns.keys()]
-            html_content += "<tr>" + "".join(f"<th>{col}</th>" for col in headers) + "</tr>\n"
+            html_content += "<tr>" + "".join(f"<th>{col.replace(', ', ' + ')}</th>" for col in headers) + "</tr>\n"
 
             # Determine the number of rows
             num_rows = len(next(iter(rvalues.values())))
@@ -228,7 +228,7 @@ def get_improvement_html(data_dict):
             # Populate table rows
             for i in range(num_rows):
                 html_content += "<tr>" + "".join(
-                    f"<td>{rvalues[col].get(i, '').replace(', ', ' + ')}</td>" for col in columns.keys()
+                    f"<td>{rvalues[col].get(i, '')}</td>" for col in columns.keys()
                 ) + "</tr>\n"
 
             html_content += "</table>\n<br>\n"
