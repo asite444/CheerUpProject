@@ -195,7 +195,7 @@ def make_improvement_prompt(duty, combination):
     return prompt
 
 def get_improvement_html(data_dict):
-    columns = {'skill': '기술명', 'probability': '자격조건(%)', 'text': '설명'}
+    columns = {'skill': '기술 조합', 'probability': '자격조건(%)', 'text': '설명'}
 
     html_content = ""
 
