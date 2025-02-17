@@ -42,14 +42,13 @@ def analyze_customize(user_data:UserInputData):
     print(data)
     if data is None:
         # DB에 분석 결과가 없음
-        data = [user_tech(duty, categories), improvement(duty, categories)]
-        report_conclusion = analyze_conclusion(duty, data)
+        improvement_reulst = improvement(duty, categories)
+        # report_conclusion = analyze_conclusion(duty, data)
 
-    report_user_tech = get_user_tech_html(data[0])
-    report_improvement = get_improvement_html(data[1])
+    report_improvement = get_improvement_html(improvement_reulst) # get_improvement_html(improvement_reulst)
     # report_conclusion = data[2]
 
-    return report_user_tech, report_improvement, report_conclusion
+    return report_improvement
 
 
 def get_customized_analysis(duty, it_language, framework, library, tool):
@@ -59,7 +58,7 @@ def get_customized_analysis(duty, it_language, framework, library, tool):
         cursor = connection.cursor()
         query = '''
                 SELECT
-                        user_tech, improvement, conclusion
+                        improvement, conclusion
                 FROM
                         customized_analysis
                 WHERE
@@ -98,132 +97,35 @@ def insert_customized_analysis(duty, it_language, framework, library, tool):
         if connection:
             connection.close()
 
-def user_tech(duty, categories):
-    connection = get_connection()
+def find_matching_text(skill_value, res_eval):
+    for key, text in res_eval.items():
+        if all(k in skill_value for k in key.split(", ")):  # key의 모든 스킬이 포함되면 매칭
+            return text
+    return ""  # 매칭되는 키가 없으면 빈 문자열 반환
 
-    try:
-        cursor = connection.cursor()
-
-        result = list()
-        for category in categories.keys():
-            query = f'''
-                    WITH Ranked AS (
-                        SELECT 
-                                skill, 
-                                probability, 
-                                pre_probability,
-                                RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC) AS rank
-                        FROM skill_probability
-                        WHERE category = ? AND duty = ? AND unit = 1
-                    )
-                    SELECT skill, rank, probability, pre_probability
-                    FROM Ranked
-                    WHERE skill IN ({", ".join(["?"] * len(categories[category][1]))})
-                    ORDER BY rank
-            '''
-            purchases = (category, duty, *categories[category][1], )
-            cursor.execute(query, purchases)
-            skill_probability = cursor.fetchall() # [('nodejs', 2, 28.16, 17.28), ('django', 7, 11.18, 14.62), ('flask', 11, 3.82, 3.65)]
-
-            temp = [categories[category][0]]
-            for i in skill_probability:
-                    prompt = make_user_tech_prompt(category, i[0])
-                    response = get_openai_response(prompt)
-
-                    temp.append(list(i) + response.replace('\"', '').replace('.', '').split('/'))
-            
-            result.append(temp)
-
-        return result
-    except Exception as e:
-        return 'user_tech ' + e
-    finally:
-        if connection:
-            connection.close()
-
-def make_user_tech_prompt(category, skill):
-    if category == 'it_language':
-        return f'{skill}에 대한 강점을 15자 "주요 특징" 형식으로 요약해줘. 예시: "객체지향적이고 이식성 높은 언어"'
-    elif category == 'framework':
-        return f'{skill}에 대한 강점을 "언어/주요 기능(20자 이내)" 형식으로 요약해줘. 예시: "Python/빠른 개발이 가능하며 확장성이 좋은 프레임워크"'
-    elif category == 'library':
-        return f'{skill}에 대한 강점을 "언어/주요 기능(20자 이내)" 형식으로 요약해줘. 예시: "Python/데이터 처리 및 분석에 특화된 라이브러리리"'
-    elif category == 'tool':
-        return f'{skill}에 대한 설명을 "사용 분야/주요 특징(20자 이내)" 형식으로 요약해줘. 예시: "컨테이너 가상화/애플리케이션 배포 및 관리"'
-
-def get_user_tech_html(data):
-    columns = {'언어': ['언어', '순위', '자격 조건(%)', '우대 조건(%)', '설명'],
-            '프레임워크': ['프레임워크', '순위', '자격 조건(%)', '우대 조건(%)', '기반 언어', '설명'],
-            '라이브러리': ['라이브러리', '순위', '자격 조건(%)', '우대 조건(%)', '기반 언어', '설명'],
-            '툴': ['언어', '순위', '자격 조건(%)', '우대 조건(%)', '분야', '설명']}
-
-    report = """<ul>"""
-    for i in data:
-        report += f'''<h3>{i[0]}</h3>
-        <table>
-            <tr>
-        '''
-        # 테이블 헤더 추가
-        for col in columns[i[0]]:
-            report += f'<th scope="col">{col}</th>'
-        report += '</tr>'
-
-        # 테이블 데이터 추가
-        for row in i[1:]:
-            report += '<tr>'
-            for idx, cell in enumerate(row):
-                if idx == 1:
-                    report += f'<td>{cell} 위</td>'
-                else:
-                    report += f'<td>{cell}</td>'
-            report += '</tr>'
-        
-        report += '</table>'
-    report += '''</ul>'''
-    return report
-
-def improvement(duty, categories, rank=2):
+def improvement(duty, categories):
     # 보완사항
     connection = get_connection()
 
     try:
-        cursor = connection.cursor()
-
-        result = list()
+        result = dict()
         for category in categories.keys():
-            query = f"""
-                WITH Ranked AS (
-                    SELECT
-                            skill,
-                            probability,
-                            RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC) AS rank
-                    FROM skill_probability
-                    WHERE category = ? AND duty = ? AND unit = 1
-                )
-                SELECT skill, probability
-                FROM Ranked
-                WHERE rank <= ? AND skill NOT IN ({", ".join(["?"] * len(categories[category][1]))})
-                ORDER BY rank
-            """
-            purchases = (category, duty, rank, *categories[category][1], )
-            cursor.execute(query, purchases)
-            skill_probability = cursor.fetchall()
+            combination_df = get_skill_combination(duty, category, categories[category][0])
 
-            if skill_probability is None:   # df가 비어있는 경우
-                continue
+            prompt = make_improvement_prompt(duty, combination_df)
 
-            temp = [categories[category][0]]
-            for i in skill_probability:
-                combination = get_skill_combination(duty, category, i[0])
+            response = get_openai_response(prompt)
+            try:
+                res_eval = ast.literal_eval(response)
+                print(res_eval)
+                combination_df["text"] = combination_df["skill"].apply(find_matching_text, args=(res_eval, ))
+            except SyntaxError as e:
+                return print('literal_eval error: ' + str(e))
+            except Exception as e:
+                print(e)
 
-                prompts = make_improvement_prompt(duty, i[0], combination if category != 'it_language' else None)
-                temp.append([i[0], combination])
-
-                for prompt in prompts:
-                    response = get_openai_response(prompt).replace('-', '').strip().split('\n')
-                    temp[-1].append(response)
-
-            result.append(temp)
+            result[categories[category][0]] = combination_df.to_dict()
+        print(result)
 
         return result
     except Exception as e:
@@ -232,109 +134,106 @@ def improvement(duty, categories, rank=2):
         if connection:
             connection.close()
 
-def get_skill_combination(duty, category, skill_keyword, probability=1, rank=2):
+def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05):
     connection = get_connection()
 
     try:
-        cursor = connection.cursor()
-        query = f"""
-            WITH Filtered AS (
-                    SELECT
-                        skill,
-                        probability
-                    FROM skill_probability
-                    WHERE probability >= ? AND duty = ? AND category = ?
-                    AND skill LIKE '%' || ? || '%'
-                    AND unit > 1
+        query = """
+            WITH Ranked AS (
+                SELECT
+                    skill,
+                    probability,
+                    RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC, skill ASC) AS rank
+                FROM skill_probability
+                WHERE category = ?
+                AND duty = ?
+                AND unit = 1
+                ORDER BY rank
+                LIMIT ?
             ),
-            Ranked AS (
-                    SELECT *, RANK() OVER (ORDER BY probability DESC) AS rank
-                    FROM Filtered
+            Filtered AS (
+                SELECT
+                    sp.skill,
+                    sp.probability,
+                    sp.pre_probability,
+                    r.skill AS rskill,
+                    r.probability AS rprobability,
+                    r.rank AS rrank,
+                    ROW_NUMBER() OVER (PARTITION BY r.rank ORDER BY sp.probability DESC, sp.pre_probability DESC) AS rn
+                FROM skill_probability sp
+                RIGHT OUTER JOIN Ranked r 
+                    ON sp.skill LIKE '%' || r.skill || '%'
+                WHERE sp.category = ?
+                AND sp.duty = ?
+                AND sp.unit > 1
+                AND sp.probability >= ?
+                AND sp.pre_probability != 0
+                AND sp.skill NOT IN (?)
             )
-            SELECT skill, probability
-            FROM Ranked
-            WHERE rank <= ?
-            ORDER BY rank
+            SELECT skill, probability, rskill, rprobability, rrank
+            FROM Filtered
+            WHERE rn <= 2  -- rrank별로 최대 2개 선택
+            ORDER BY rrank, probability DESC;
         """
-        purchases = (probability, duty, category, skill_keyword, rank, )
-        cursor.execute(query, purchases)    # [('javascript, typescript', 4.757185332011893, 1), ('css, html, javascript, typescript', 4.558969276511397, 2)]
-        return cursor.fetchall()
+        purchases = (category, duty, limit, category, duty, probability, ', '.join(user_skill), )
+        data = pd.read_sql_query(query, connection, params=purchases)
+        return data
     except Exception as e:
-        return 'skill_combination error ' + e
+        return 'skill_combination error ' + str(e)
     finally:
         if connection:
             connection.close()
 
-def make_improvement_prompt(duty, skill, combination=None):
+def make_improvement_prompt(duty, combination):
     """ 보완사항에 대한 프롬프트 작성 """
-    prompt = [f'''"{skill}"의 "{duty}" 직무에서의 필요성을 개조식(itemization)으로 본론만 출력해주세요.  
-        - 문장은 "- "로 시작하며, 각 문장은 독립적으로 작성할 것.  
-        - "~을 높여줍니다.", "~을 가능하게 합니다.", "~을 최적화합니다." 같은 동작 중심 표현 사용.  
-        - 150자 이내로 두 문장 출력.  
-        - 설명형 어투를 유지하되 간결하게 표현할 것.  
-        - "백엔드", "TypeScript" 같은 기술명이나 직무명을 반복하지 말 것.''']
+    prompt = f'''다음 스킬 조합을 "{duty}"에 지원하는 사람에게 추천하는 이유를 JSON 딕셔너리 형식으로 감싸서 반환하세요.
+반드시 "JSON 형식"을 따르며 키는 스킬 조합, 값은 "조합끼리의 시너지 효과(50자 이내)"의 형태여야 하며 본론만 말하세요.'''
+    prompt += '(예시: {"c#, c++, java, rust": "성능 최적화, 메모리 관리, 네트워크 프로그래밍에 강점을 가짐"}):'
 
-    if combination:
-        for com in combination:
-            prompt.append(f'''"{com[0]}"의 "{duty}" 직무에서의 기술 조합의 역할을 개조식(itemization)으로 본론만 출력해주세요.  
-    - 문장은 "- "로 시작하며, 각 문장은 독립적으로 작성할 것.  
-    - "~로 관리하고 ~로 구현합니다." 같은 조합의 효과를 설명.  
-    - 50자 이내로 한 문장 출력.  
-    - 설명형 어투를 유지하되 간결하게 표현할 것.  
-    - "백엔드", "TypeScript" 같은 기술명이나 직무명을 반복하지 말 것.''')
+    prompt += f'{', '.join(f'\"{item}\"' for item in combination['skill'].to_list())}'
     
     return prompt
 
-def get_improvement_html(data):
-    report = """<ul>"""
+def get_improvement_html(data_dict):
+    columns = {'skill': '기술 조합', 'probability': '자격조건(%)', 'text': '설명'}
 
-    for category in data:
-        category_name = category[0]  # 예: '언어', '프레임워크', '라이브러리', '툴'
-        report += f"<h3>{category_name}</h3>"
+    html_content = ""
 
-        for tech in category[1:]:  # 각 기술 항목
-            tech_name = tech[0]  # 기술명
-            combinations = tech[1] if len(tech) > 1 else []  # 기술 조합 리스트 (최대 2개)
-            descriptions = tech[2] if len(tech) > 2 else []  # 필요성 설명 리스트
-            comb1_details = tech[3] if len(tech) > 3 else []  # 기술조합 1에 대한 설명
-            comb2_details = tech[4] if len(tech) > 4 else []  # 기술조합 2에 대한 설명
+    # Key별 (언어, 프레임워크 등) 테이블 생성 및 rskill 그룹화
+    for category, values in data_dict.items():
+        html_content += f"<h2>{category}</h2>\n"
 
-            report += f"<ul><li><strong>{tech_name}</strong><ul>"
+        # rskill별 그룹 생성
+        rskill_groups = {}
+        for i in range(len(values["rskill"])):
+            rskill = values["rskill"][i]
+            if rskill not in rskill_groups:
+                rskill_groups[rskill] = {col: {} for col in columns.keys()}
+            
+            for col in columns.keys():
+                rskill_groups[rskill][col][len(rskill_groups[rskill][col])] = values[col][i]
 
-            # 필요성 설명 추가
-            if descriptions:
-                report += "<li><strong>📌 필요성</strong><ul>"
-                for desc in descriptions:
-                    report += f"<li>{desc}</li>"
-                report += "</ul></li>"
+        # rskill별 테이블 생성
+        for rskill, rvalues in rskill_groups.items():
+            html_content += f"<h3>{rskill} 관련 기술</h3>\n"
+            html_content += "<table border='1'>\n"
 
-            # 함께 많이 사용하는 조합 추가 (최대 2개)
-            if combinations:
-                report += "<li><strong>🔗 함께 많이 사용하는 조합</strong><ul>"
-                for i, comb in enumerate(combinations):
-                    report += f"<li>{comb[0]} (자격 조건: {round(comb[1], 2)}%)</li>"
-                    
-                    # 조합 1에 대한 설명 추가
-                    if i == 0 and comb1_details:
-                        report += "<ul>"
-                        for detail in comb1_details:
-                            report += f"<li>{detail}</li>"
-                        report += "</ul>"
+            # Extract headers and rename them
+            headers = [columns[col] for col in columns.keys()]
+            html_content += "<tr>" + "".join(f"<th>{col.replace(', ', ' + ')}</th>" for col in headers) + "</tr>\n"
 
-                    # 조합 2에 대한 설명 추가
-                    if i == 1 and comb2_details:
-                        report += "<ul>"
-                        for detail in comb2_details:
-                            report += f"<li>{detail}</li>"
-                        report += "</ul>"
+            # Determine the number of rows
+            num_rows = len(next(iter(rvalues.values())))
 
-                report += "</ul></li>"
+            # Populate table rows
+            for i in range(num_rows):
+                html_content += "<tr>" + "".join(
+                    f"<td>{rvalues[col].get(i, '')}</td>" for col in columns.keys()
+                ) + "</tr>\n"
 
-            report += "</ul></li></ul>"
+            html_content += "</table>\n<br>\n"
 
-    report += "</ul>"
-    return report
-
+    return html_content
 
 def analyze_conclusion(duty, data):
     """결론"""
