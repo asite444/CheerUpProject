@@ -115,7 +115,6 @@ def improvement(duty, categories):
             prompt = make_improvement_prompt(duty, combination_df)
 
             response = get_openai_response(prompt)
-            print(response)
             try:
                 res_eval = ast.literal_eval(response)
                 print(res_eval)
@@ -195,92 +194,44 @@ def make_improvement_prompt(duty, combination):
     
     return prompt
 
-# def get_improvement_html(data_dict):
-#     columns = {'skill': '기술명', 'probability': '자격조건(%)', 'text': '설명'}
-
-#     html_content = ""
-
-#     # Iterate over each key (category) in the dictionary
-#     for category, values in data_dict.items():
-#         html_content += f"<h3>{category}</h3>\n"
-#         html_content += "<table border='1'>\n"
-
-#         # Extract headers from dictionary keys
-#         headers = list(values.keys())
-#         html_content += "<tr>" + "".join(f"<th>{col}</th>" for col in headers) + "</tr>\n"
-
-#         # Determine the number of rows
-#         num_rows = len(next(iter(values.values())))
-
-#         # Populate table rows
-#         for i in range(num_rows):
-#             html_content += "<tr>" + "".join(
-#                 f"<td>{values[col].get(i, '')}</td>" for col in headers
-#             ) + "</tr>\n"
-
-#         html_content += "</table>\n<br>\n"
-
-#     return html_content
-
-
 def get_improvement_html(data_dict):
     columns = {'skill': '기술명', 'probability': '자격조건(%)', 'text': '설명'}
 
     html_content = ""
 
-    # 1️⃣ Key별 (언어, 프레임워크 등) 테이블 생성
+    # Key별 (언어, 프레임워크 등) 테이블 생성 및 rskill 그룹화
     for category, values in data_dict.items():
         html_content += f"<h2>{category}</h2>\n"
-        html_content += "<table border='1'>\n"
 
-        # Extract only necessary columns and rename them
-        filtered_columns = ["skill", "probability", "text"]
-        headers = [columns[col] for col in filtered_columns]
-        html_content += "<tr>" + "".join(f"<th>{col}</th>" for col in headers) + "</tr>\n"
-
-        # Determine the number of rows
-        num_rows = len(next(iter(values.values())))
-
-        # Populate table rows
-        for i in range(num_rows):
-            html_content += "<tr>" + "".join(
-                f"<td>{values[col].get(i, '')}</td>" for col in filtered_columns
-            ) + "</tr>\n"
-
-        html_content += "</table>\n<br>\n"
-
-    # 2️⃣ rskill별 테이블 생성
-    rskill_groups = {}
-    
-    # Group by rskill
-    for category, values in data_dict.items():
+        # rskill별 그룹 생성
+        rskill_groups = {}
         for i in range(len(values["rskill"])):
             rskill = values["rskill"][i]
             if rskill not in rskill_groups:
-                rskill_groups[rskill] = {col: {} for col in filtered_columns}
+                rskill_groups[rskill] = {col: {} for col in columns.keys()}
             
-            for col in filtered_columns:
+            for col in columns.keys():
                 rskill_groups[rskill][col][len(rskill_groups[rskill][col])] = values[col][i]
 
-    # Generate HTML for rskill tables
-    for rskill, values in rskill_groups.items():
-        html_content += f"<h2>{rskill} 관련 기술</h2>\n"
-        html_content += "<table border='1'>\n"
+        # rskill별 테이블 생성
+        for rskill, rvalues in rskill_groups.items():
+            html_content += f"<h3>{rskill} 관련 기술</h3>\n"
+            html_content += "<table border='1'>\n"
 
-        # Extract headers and rename them
-        headers = [columns[col] for col in filtered_columns]
-        html_content += "<tr>" + "".join(f"<th>{col}</th>" for col in headers) + "</tr>\n"
+            # Extract headers and rename them
+            headers = [columns[col] for col in columns.keys()]
+            html_content += "<tr>" + "".join(f"<th>{col}</th>" for col in headers) + "</tr>\n"
 
-        # Determine the number of rows
-        num_rows = len(next(iter(values.values())))
+            # Determine the number of rows
+            num_rows = len(next(iter(rvalues.values())))
 
-        # Populate table rows
-        for i in range(num_rows):
-            html_content += "<tr>" + "".join(
-                f"<td>{values[col].get(i, '')}</td>" for col in filtered_columns
-            ) + "</tr>\n"
+            # Populate table rows
+            for i in range(num_rows):
+                html_content += "<tr>" + "".join(
+                    f"<td>{rvalues[col].get(i, '').replace(', ', ' + ')}</td>" for col in columns.keys()
+                ) + "</tr>\n"
 
-        html_content += "</table>\n<br>\n"
+            html_content += "</table>\n<br>\n"
 
     return html_content
 
