@@ -188,11 +188,17 @@ def make_improvement_prompt(duty, combination):
     """ 보완사항에 대한 프롬프트 작성 """
     prompt = f'''다음 스킬 조합을 "{duty}"에 지원하는 사람에게 추천하는 이유를 JSON 딕셔너리 형식으로 감싸서 반환하세요.
 반드시 "JSON 형식"을 따르며 키는 스킬 조합, 값은 "조합끼리의 시너지 효과(50자 이내)"의 형태여야 하며 본론만 말하세요.'''
-    prompt += '(예시: {"c#, c++, java, rust": "성능 최적화, 메모리 관리, 네트워크 프로그래밍에 강점을 가짐"}):'
+    
+    prompt += '(예시: {"c#, c++, java, rust": "성능 최적화, 메모리 관리, 네트워크 프로그래밍에 강점을 가짐"}): '
 
-    prompt += f'{', '.join(f'\"{item}\"' for item in combination['skill'].to_list())}'
+    # 중괄호 이슈 해결 및 리스트 변환
+    skills = list(combination['skill'])  # Pandas Series가 아닐 경우 to_list() 필요 없음
+    skill_str = ', '.join(f'"{item}"' for item in skills)
+    
+    prompt += f'{{{skill_str}}}'
     
     return prompt
+
 
 def get_improvement_html(data_dict):
     columns = {'skill': '기술 조합', 'probability': '자격조건(%)', 'text': '설명'}
