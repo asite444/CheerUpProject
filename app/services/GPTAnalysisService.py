@@ -40,7 +40,6 @@ def analyze_customize(user_data:UserInputData):
                   'tool': ['툴', sorted(user_data.devtools)]}
 
     data = get_customized_analysis(duty, categories)
-    print(data)
     if data is None:
         # DB에 분석 결과가 없음
         improvement_reulst = analyze_improvement(duty, categories)
@@ -124,7 +123,6 @@ def analyze_improvement(duty, categories):
             response = get_openai_response(prompt)
             try:
                 res_eval = ast.literal_eval(response)
-                print(res_eval)
                 combination_df["text"] = combination_df["skill"].apply(find_matching_text, args=(res_eval, ))
             except SyntaxError as e:
                 print("Error during openai api response change eval:", str(e))
@@ -132,10 +130,8 @@ def analyze_improvement(duty, categories):
             except Exception as e:
                 print("Error during openai api response change eval:", str(e))
                 return {"error": str(e)}
-                print(e)
 
             result[categories[category][0]] = combination_df.to_dict()
-        print(result)
 
         return result
     except Exception as e:
@@ -206,7 +202,6 @@ def make_improvement_prompt(duty, combination):
     # 중괄호 이슈 해결 및 리스트 변환
     skills = list(combination['skill'])  # Pandas Series가 아닐 경우 to_list() 필요 없음
     skill_str = ', '.join(f'"{item}"' for item in skills)
-    print("skill_str:"+f'{{{skill_str}}}')
     prompt += f'{{{skill_str}}}'
     
     return prompt
