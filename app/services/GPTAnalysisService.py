@@ -71,7 +71,8 @@ def get_customized_analysis(duty, categories):
         cursor.execute(query, purchases)
         return cursor.fetchone()
     except Exception as e:
-        return 'get customized analysis error: ' + e
+        print("Error during SQL execution:", str(e))
+        return {"error": str(e)}
     finally:
         if connection:
             connection.close()
@@ -96,7 +97,8 @@ def set_customized_analysis(duty, categories, improvement, conclusion):
         cursor.execute(query, purchases)
         return True
     except Exception as e:
-        return 'insert_customized analysis error: ' + str(e)
+        print("Error during SQL execution:", str(e))
+        return {"error": str(e)}
     finally:
         if connection:
             connection.commit()
@@ -125,8 +127,11 @@ def analyze_improvement(duty, categories):
                 print(res_eval)
                 combination_df["text"] = combination_df["skill"].apply(find_matching_text, args=(res_eval, ))
             except SyntaxError as e:
-                return print('literal_eval error: ' + str(e))
+                print("Error during openai api response change eval:", str(e))
+                return {"error": str(e)}
             except Exception as e:
+                print("Error during openai api response change eval:", str(e))
+                return {"error": str(e)}
                 print(e)
 
             result[categories[category][0]] = combination_df.to_dict()
@@ -134,7 +139,8 @@ def analyze_improvement(duty, categories):
 
         return result
     except Exception as e:
-        return 'get_skill_prob_rank error' + e
+        print("Error during SQL execution:", str(e))
+        return {"error": str(e)}
     finally:
         if connection:
             connection.close()
@@ -184,7 +190,8 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05)
         data = pd.read_sql_query(query, connection, params=purchases)
         return data
     except Exception as e:
-        return 'skill_combination error ' + str(e)
+        print("Error during SQL execution:", str(e))
+        return {"error": str(e)}
     finally:
         if connection:
             connection.close()
@@ -245,20 +252,12 @@ def analyze_conclusion(user_data:UserInputData):
     duty = user_data.jobs[0]
     data = user_data.languages + user_data.frameworks + user_data.libraries + user_data.devtools
 
-    connection = get_connection()
+    score = get_duty_scores(data)
 
-    try:
-        score = get_duty_scores(data)
+    prompt = make_conclusion_prompt(duty, data, score)
 
-        prompt = make_conclusion_prompt(duty, data, score)
-
-        response = get_openai_response(prompt)
-        return response
-    except Exception as e:
-        return 'get_skill_prob_rank error' + str(e)
-    finally:
-        if connection:
-            connection.close()
+    response = get_openai_response(prompt)
+    return response
 
 def get_duty_scores(skills, duty_num=3):
     connection = get_connection()
@@ -279,7 +278,8 @@ def get_duty_scores(skills, duty_num=3):
 
         return score_series[:duty_num].to_dict()
     except Exception as e:
-        return 'skill_combination error ' + str(e)
+        print("Error during SQL execution:", str(e))
+        return {"error": str(e)}
     finally:
         if connection:
             connection.close()
