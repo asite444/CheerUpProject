@@ -232,12 +232,14 @@ function processAjaxRequest(selectedText, mouseX, mouseY, retries = 0) {
         data: { keywords: selectedText },
         xhrFields: { responseType: 'blob' }, // Blob 데이터 처리
         success: function (data, status, xhr) {
-            if (xhr.getResponseHeader("Content-Type").includes("application/json")) {
-                console.warn("서버에서 JSON 응답 수신:", data);
+            const contentType = xhr.getResponseHeader("Content-Type");
+
+            if (contentType.includes("application/json")) {
+                // JSON 응답이 왔을 경우 처리
                 data.text().then(text => {
                     try {
                         let jsonResponse = JSON.parse(text);
-                        console.error("오류:", jsonResponse.error);
+                        console.error("서버 오류:", jsonResponse.error);
                         $("#sticky-note").html("<p>데이터를 찾을 수 없습니다.</p>");
                     } catch (e) {
                         console.error("JSON 파싱 오류:", e);
@@ -247,6 +249,7 @@ function processAjaxRequest(selectedText, mouseX, mouseY, retries = 0) {
                 return;
             }
 
+            // 정상적인 Blob(이미지) 응답 처리
             const url = URL.createObjectURL(data);
             const img = new Image();
             img.src = url;
@@ -276,6 +279,7 @@ function processAjaxRequest(selectedText, mouseX, mouseY, retries = 0) {
         }
     });
 }
+
 
 /**
  * 포스트잇 표시 함수 (화면 끝에서 넘치지 않도록 조정)
