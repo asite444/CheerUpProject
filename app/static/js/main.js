@@ -94,19 +94,7 @@ function mapTechStackData() {
             let selectedCategory = $(this).attr("id").replace("-analysis", "");
             $(".analysis-top5").hide();
             $("#report_top5_" + selectedCategory).show();
-            if(selectedCategory=="it_language"){
-                $("#analysis_top5_h2").text("TOP5(언어)");
- 
-            } else if(selectedCategory=="framework"){
-                $("#analysis_top5_h2").text("TOP5(프레임워크)");
-
-            }  else if(selectedCategory=="library"){
-                $("#analysis_top5_h2").text("TOP5(라이브러리리)");
-
-            }  else if(selectedCategory=="tool"){
-                $("#analysis_top5_h2").text("TOP5(개발툴)");
-
-            } 
+           
 
             //console.log("선택된 버튼 ID:", selectedCategory);
         }
