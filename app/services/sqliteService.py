@@ -105,8 +105,8 @@ def generate_html_table(data, user_selected_skills, category):
         return f"<p>데이터 없음</p>"
 
     # 컬럼 추가 여부 결정
-    has_base_language = category in ["library", "framework"]
-    has_use_framework = category == "library"
+    has_base_language = category == "framework"  # 프레임워크에서만 기반 언어 표시
+    has_use_framework = category == "library"  # 라이브러리에서 적용 프레임워크 표시
 
     # 기본 컬럼 개수 (순위, 기술명, 자격 요건, 우대 사항, 설명)
     base_column_count = 5
@@ -124,9 +124,9 @@ def generate_html_table(data, user_selected_skills, category):
             <th>우대 사항(%)</th>"""
 
     if has_base_language:
-        html_output += "<th>기반 언어</th>"
+        html_output += "<th>기반 언어</th>"  # 프레임워크에만 표시
     if has_use_framework:
-        html_output += "<th>적용 프레임워크</th>"
+        html_output += "<th>적용 프레임워크</th>"  # 라이브러리에만 표시
 
     html_output += "<th>설명</th></tr>"
 
@@ -162,9 +162,9 @@ def generate_html_table(data, user_selected_skills, category):
             <td>{pre_probability:.2f}%</td>"""
 
         if has_base_language:
-            html_output += f"<td>{base_language or '-'}</td>"
+            html_output += f"<td>{base_language or '-'}</td>"  # 프레임워크에서만 표시
         if has_use_framework:
-            html_output += f"<td>{use_framework or '-'}</td>"
+            html_output += f"<td>{use_framework or '-'}</td>"  # 라이브러리에서만 표시
 
         html_output += f"""
             <td>
@@ -181,6 +181,7 @@ def generate_html_table(data, user_selected_skills, category):
 
     html_output += "</table>"
     return html_output
+
 
 
 
