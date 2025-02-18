@@ -108,6 +108,11 @@ def generate_html_table(data, user_selected_skills, category):
     has_base_language = category in ["library", "framework"]
     has_use_framework = category == "library"
 
+    # 기본 컬럼 개수 (순위, 기술명, 자격 요건, 우대 사항, 설명)
+    base_column_count = 5
+    extra_columns = int(has_base_language) + int(has_use_framework)  # 추가 컬럼 개수
+    total_columns = base_column_count + extra_columns  # 전체 컬럼 개수
+
     # 테이블 헤더 정의
     html_output = f"""
     <p class="legend-right">⭐ 사용자 선택 기술</p>
@@ -117,7 +122,7 @@ def generate_html_table(data, user_selected_skills, category):
             <th>기술명</th>
             <th>자격 요건(%)</th>
             <th>우대 사항(%)</th>"""
-    
+
     if has_base_language:
         html_output += "<th>기반 언어</th>"
     if has_use_framework:
@@ -129,9 +134,9 @@ def generate_html_table(data, user_selected_skills, category):
     for skill, rank, probability, pre_probability, description, *extra in data:
         # 중간 생략 여부 확인
         if previous_rank is not None and rank > previous_rank + 1:
-            html_output += """
+            html_output += f"""
             <tr class="skipped">
-                <td colspan="6" style="text-align:center;">(중간 생략)</td>
+                <td colspan="{total_columns}" style="text-align:center;">(중간 생략)</td>
             </tr>
             """
 
@@ -176,6 +181,7 @@ def generate_html_table(data, user_selected_skills, category):
 
     html_output += "</table>"
     return html_output
+
 
 
 
