@@ -40,17 +40,26 @@ def analyze_customize(user_data:UserInputData):
                   'tool': ['툴', sorted(user_data.devtools)]}
 
     data = get_customized_analysis(duty, categories)
+    print('data: ', data)
     if data is None:
         # DB에 분석 결과가 없음
-        improvement_reulst = analyze_improvement(duty, categories)
+        improvement_result = analyze_improvement(duty, categories)
         conclusion_result = analyze_conclusion(user_data)
-        set_customized_analysis(duty, categories, improvement_reulst, conclusion_result)
+        if improvement_result is False or conclusion_result is False:
+            set_customized_analysis(duty, categories, improvement_result, conclusion_result)
     else:
-        improvement_reulst = ast.literal_eval(data[0])
+        improvement_result = ast.literal_eval(data[0])
         conclusion_result = ast.literal_eval(data[1])
 
-    report_improvement =  get_improvement_html(improvement_reulst)
-    report_conclusion = get_conclusion_html(conclusion_result)
+    if improvement_result is not False:
+        report_improvement = get_improvement_html(improvement_result)
+    else:
+        report_improvement = "분석 도중 문제가 발생했습니다. 재요청 부탁드립니다🥲."
+    
+    if conclusion_result is not False:
+        report_conclusion = get_conclusion_html(conclusion_result)
+    else:
+        report_improvement = "분석 도중 문제가 발생했습니다. 재요청 부탁드립니다🥲."
 
     return report_improvement, report_conclusion
 
@@ -61,18 +70,22 @@ def get_customized_analysis(duty, categories):
         cursor = connection.cursor()
         query = '''
                 SELECT
-                        improvement, conclusion
+                    improvement, conclusion
                 FROM
-                        customized_analysis
+                    customized_analysis
                 WHERE
-                        duty = ? AND it_language = ? AND framework = ? AND library = ? AND tool = ?
+                    duty = ?
+                    AND it_language = COALESCE(NULLIF(?, ''), it_language)
+                    AND framework = COALESCE(NULLIF(?, ''), framework)
+                    AND library = COALESCE(NULLIF(?, ''), library)
+                    AND tool = COALESCE(NULLIF(?, ''), tool)
         '''
         purchases = (duty, ', '.join(categories['it_language'][1]), ', '.join(categories['framework'][1]), ', '.join(categories['library'][1]), ', '.join(categories['tool'][1]), )
         cursor.execute(query, purchases)
         return cursor.fetchone()
     except Exception as e:
         print("Error during SQL execution:", str(e))
-        return {"error": str(e)}
+        return None
     finally:
         if connection:
             connection.close()
@@ -126,18 +139,18 @@ def analyze_improvement(duty, categories):
                 res_eval = ast.literal_eval(response)
                 combination_df["text"] = combination_df["skill"].apply(find_matching_text, args=(res_eval, ))
             except SyntaxError as e:
-                print("Error during openai api response change eval:", str(e))
-                return {"error": str(e)}
+                print("Error during openai api response change eval(analyze_improvement):", str(e))
+                return False
             except Exception as e:
-                print("Error during openai api response change eval:", str(e))
-                return {"error": str(e)}
+                print("Error during openai api response change eval(analyze_improvement):", str(e))
+                return False
 
             result[categories[category][0]] = combination_df.to_dict()
 
         return result
     except Exception as e:
         print("Error during SQL execution:", str(e))
-        return {"error": str(e)}
+        return False
     finally:
         if connection:
             connection.close()
@@ -278,14 +291,14 @@ def analyze_conclusion(user_data:UserInputData):
         res_eval = ast.literal_eval(response)
         result_dict = {'duty': duty, 'score': score, 'description': res_eval}
     except SyntaxError as e:
-        print("Error during openai api response change eval:", str(e))
-        return {"error": str(e)}
+        print("Error during openai api response change eval(analyze_conclusion):", str(e))
+        return False
     except Exception as e:
-        print("Error during openai api response change eval:", str(e))
-        return {"error": str(e)}
+        print("Error during openai api response change eval(analyze_conclusion):", str(e))
+        return False
     return result_dict
 
-def get_duty_scores(skills, duty_num=3):
+def get_duty_scores(skills):
     connection = get_connection()
 
     try:
@@ -302,7 +315,7 @@ def get_duty_scores(skills, duty_num=3):
         score_series = data.groupby(by='duty', group_keys=False).apply(lambda x: calculate_score(x.drop(columns=['duty']), skills))
         score_series.sort_values(ascending=False)
 
-        return score_series[:duty_num].to_dict()
+        return score_series.to_dict()
     except Exception as e:
         print("Error during SQL execution:", str(e))
         return {"error": str(e)}
@@ -338,8 +351,8 @@ def calculate_score(df, user_skills):
 
 def make_conclusion_prompt(skills, score, top=3):
     prompt = '''다음은 사용자의 기술 스택을 기반으로 직무별 점수를 계산한 결과이다.
-JSON 딕셔너리 형식을 따르며 키는 직무, 값은 "직무에 대한 설명(50자 이내)와 직무를 추천하는 이유에 대한 설명(100자 이내)"을 반환해라
-(예시: "AI": ["AI 개발 및 데이터 분석을 수행하는 직무","Python, Pandas, FastAPI를 활용한 데이터 처리 및 AI 모델 개발 역량 보유"]).'''
+JSON 딕셔너리 형식을 따르며 키는 직무, 값은 "직무에 대한 설명(50자 이내)와 직무를 추천하는 이유에 대한 설명, 만약 추천할 이유가 없다면 "점수가 너무 낮아서 직무에 대한 판단을 드릴수없습니다."를 반환(100자 이내)"을 반환해라
+(예시: {"AI": ["AI 개발 및 데이터 분석을 수행하는 직무","Python, Pandas, FastAPI를 활용한 데이터 처리 및 AI 모델 개발 역량 보유"]}).'''
 
     prompt += f'''
     사용자의 기술 스택: {', '.join(skills)}
@@ -351,6 +364,7 @@ def get_conclusion_html(conclusion):
     duty = conclusion['duty']
     score = conclusion['score']
     description = conclusion['description']
+    print(conclusion)
 
     report = f'''<h3>📊 직무 점수 분석</h3>
     <p>
@@ -362,10 +376,10 @@ def get_conclusion_html(conclusion):
     <h3>🏆 가장 적합한 상위 3개 직무</h3>
     <ol>'''
 
-    for key, val in score.items():
+    for key, val in description.items():
         report += f'''
-    <li><b>{key} ({val}점)</b>: {description[key][0]}<br>
-    <span class="indent">{description[key][1]}</span>
+    <li><b>{key} ({score[key]}점)</b>: {val[0]}<br>
+    <span class="indent">{val[1]}</span>
     </li>'''
     
 
