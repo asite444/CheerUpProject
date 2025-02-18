@@ -54,12 +54,6 @@ h3 {
     text-align: center;
     font-weight: bold;
 }
-/* tech-results 내부에서 테이블이 넘칠 경우 스크롤 허용 */
-#tech-results {
-    width: 100%;
-    overflow-x: auto; /* 가로 스크롤 허용 */
-    max-width: 100%;
-}
 
 /* 기본 테이블 스타일 */
 .analysis_top5 {
