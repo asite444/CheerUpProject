@@ -46,4 +46,5 @@ async def googleTrandSearch_ajax(keywords: str = Form(...)):
         return StreamingResponse(buf, media_type="image/png")
 
     except Exception as e:
+        print(e)
         return JSONResponse(content={"error": f"Error: {str(e)}"}, status_code=500)

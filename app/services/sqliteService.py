@@ -130,7 +130,7 @@ def generate_html_table(data, user_selected_skills):
         html_output += f"""
         <tr class="{highlight_class}">
             <td>{rank}</td>
-            <td>{skill} {star_icon}</td>
+            <td class="skill">{skill} {star_icon}</td>
             <td>{probability:.2f}%</td>
             <td>{pre_probability:.2f}%</td>
             <td>
