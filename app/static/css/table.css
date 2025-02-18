@@ -90,6 +90,13 @@ h3 {
     vertical-align: middle;
 }
 
+/* 테이블 셀 스타일 */
+.analysis_top5 td ul li{
+  list-style: none;
+  text-align: left;
+  
+}
+
 /* 마우스 오버 효과 */
 .analysis_top5 tr:hover {
     background-color: #e0f7fa;

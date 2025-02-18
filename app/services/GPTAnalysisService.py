@@ -49,7 +49,7 @@ def analyze_customize(user_data:UserInputData):
         improvement_reulst = ast.literal_eval(data[0])
         report_conclusion = data[1]
 
-    report_improvement = get_improvement_html(improvement_reulst)
+    report_improvement =  get_improvement_html(improvement_reulst)
 
     return report_improvement, report_conclusion
 
@@ -327,13 +327,28 @@ def calculate_score(df, user_skills):
     return total_score
 
 def make_conclusion_prompt(duty, skills, score):
-    prompt = f"""다음 양식에 맞춰서 작성해줘
-    사용자의 기술 스택: {','.join(skills)}
+    prompt = f"""
+    사용자의 기술 스택: {', '.join(skills)}
     score: {score}
-    양식:
-    사용자의 기술 스택을 기반으로 직무별 점수를 계산한 결과, <b>{duty} 직무의 점수는 ?점</b>입니다. 보다 높은 점수를 받기 위해 "사용자 기술 분석"과 "보완 사항"을 참고하여 부족한 기술을 보완하는 것을 추천합니다.<br>
-    또한, 사용자의 기술 스택을 고려했을 때 가장 적합한 상위 3개 직무는 다음과 같습니다.<br><br>
-    <ol><li><b>score.key (score.val점)</b>: 어떤 직무이며 어떤 기술 스택 때문에 적합한지 설명(30자 이내)</li></ol><br>
-    현재 점수는 성장 가능성을 보여줄 뿐, 실력을 증명하는 절대적인 기준이 아닙니다. 꾸준한 학습과 실전 경험을 쌓으면 목표하는 직무에 도달할 수 있습니다. 포기하지 말고 나아가세요! 🚀 여러분의 도전을 응원합니다.
+
+    다음 양식에 맞춰서 HTML로 작성해줘. 단, <body>, <html> 태그를 포함하지 말고, 주어진 내용만 반환해:
+
+    <h3>📊 직무 점수 분석</h3>
+    <p>
+        사용자의 기술 스택을 기반으로 직무별 점수를 계산한 결과, 
+        <strong>{duty} 직무의 점수는 {score.get(duty, '?')}점</strong>입니다.
+        보다 높은 점수를 받기 위해 "사용자 기술 분석"과 "보완 사항"을 참고하여 부족한 기술을 보완하는 것을 추천합니다.
+    </p>
+
+    <h3>🏆 가장 적합한 상위 3개 직무</h3>
+    <ol>
+        {''.join(f'<li><b>{job} ({score_val}점)</b>: 어떤 직무이며 어떤 기술 스택 때문에 적합한지 설명(30자 이내)</li>' for job, score_val in sorted(score.items(), key=lambda x: x[1], reverse=True)[:3])}
+    </ol>
+
+    <p>
+        현재 점수는 성장 가능성을 보여줄 뿐, 실력을 증명하는 절대적인 기준이 아닙니다. 꾸준한 학습과 실전 경험을 쌓으면 목표하는 직무에 도달할 수 있습니다. 💪
+        <br><strong>포기하지 말고 나아가세요! 🚀 여러분의 도전을 응원합니다.</strong>
+    </p>
     """
     return prompt
+

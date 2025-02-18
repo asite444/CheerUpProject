@@ -74,7 +74,7 @@ def analyze_stack_top5(user_data: UserInputData):
             temp_ranked = set(list(range(1, 6)) + [x for i in df.loc[df["skill"].isin(selected_skills), 'rank'].to_list() for x in range(i-3, i+1)])
             extra_selected_data = list(df[df['rank'].isin(temp_ranked)].itertuples(index=False, name=None))
             # HTML 테이블 생성
-            html_outputs[display_name] = generate_html_table(display_name, extra_selected_data, selected_skills)
+            html_outputs[display_name] = generate_html_table( extra_selected_data, selected_skills)
 
         return html_outputs
 
@@ -86,17 +86,16 @@ def analyze_stack_top5(user_data: UserInputData):
         if connection:
             connection.close()
 
-def generate_html_table(title, data, user_selected_skills):
+def generate_html_table(data, user_selected_skills):
     """
     HTML 테이블을 생성하는 함수
     - data: 기술 데이터 리스트 (순위가 비연속적인 경우 중간 생략 추가)
     """
 
     if not data:
-        return f"<h3>{title}</h3><p>데이터 없음</p>"
+        return f"<p>데이터 없음</p>"
 
     html_output = f"""
-    <h3>{title}</h3>
     <p class="legend-right">⭐ 사용자 선택 기술</p>
     <table class="analysis_top5">
         <tr>
@@ -104,7 +103,6 @@ def generate_html_table(title, data, user_selected_skills):
             <th>기술명</th>
             <th>자격 요건(%)</th>
             <th>우대 사항(%)</th>
-            <th>설명</th>
             <th>설명</th>
         </tr>
     """
@@ -135,8 +133,13 @@ def generate_html_table(title, data, user_selected_skills):
             <td>{skill} {star_icon}</td>
             <td>{probability:.2f}%</td>
             <td>{pre_probability:.2f}%</td>
-            <td>{desc1}</td>
-            <td>{desc2}</td>
+            <td>
+            <ul>
+            <li>{desc1}</li>
+            <li>{desc2}</li>
+            </ul>
+            </td>
+            
         </tr>
         """
 
