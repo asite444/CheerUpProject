@@ -43,13 +43,14 @@ def analyze_customize(user_data:UserInputData):
     if data is None:
         # DB에 분석 결과가 없음
         improvement_reulst = analyze_improvement(duty, categories)
-        report_conclusion = analyze_conclusion(user_data)
-        set_customized_analysis(duty, categories, improvement_reulst, report_conclusion)
+        conclusion_result = analyze_conclusion(user_data)
+        set_customized_analysis(duty, categories, improvement_reulst, conclusion_result)
     else:
         improvement_reulst = ast.literal_eval(data[0])
-        report_conclusion = data[1]
+        conclusion_result = ast.literal_eval(data[1])
 
     report_improvement =  get_improvement_html(improvement_reulst)
+    report_conclusion = get_conclusion_html(conclusion_result)
 
     return report_improvement, report_conclusion
 
@@ -270,10 +271,19 @@ def analyze_conclusion(user_data:UserInputData):
 
     score = get_duty_scores(data)
 
-    prompt = make_conclusion_prompt(duty, data, score)
+    prompt = make_conclusion_prompt(data, score)
 
     response = get_openai_response(prompt)
-    return response
+    try:
+        res_eval = ast.literal_eval(response)
+        result_dict = {'duty': duty, 'score': score, 'description': res_eval}
+    except SyntaxError as e:
+        print("Error during openai api response change eval:", str(e))
+        return {"error": str(e)}
+    except Exception as e:
+        print("Error during openai api response change eval:", str(e))
+        return {"error": str(e)}
+    return result_dict
 
 def get_duty_scores(skills, duty_num=3):
     connection = get_connection()
@@ -326,29 +336,45 @@ def calculate_score(df, user_skills):
     total_score = round(user_skills_df['final_weight'].sum() * 100, 2)
     return total_score
 
-def make_conclusion_prompt(duty, skills, score):
-    prompt = f"""
+def make_conclusion_prompt(skills, score, top=3):
+    prompt = '''다음은 사용자의 기술 스택을 기반으로 직무별 점수를 계산한 결과이다.
+JSON 딕셔너리 형식을 따르며 키는 직무, 값은 "직무에 대한 설명(50자 이내)와 직무를 추천하는 이유에 대한 설명(100자 이내)"을 반환해라
+(예시: "AI": ["AI 개발 및 데이터 분석을 수행하는 직무","Python, Pandas, FastAPI를 활용한 데이터 처리 및 AI 모델 개발 역량 보유"]).'''
+
+    prompt += f'''
     사용자의 기술 스택: {', '.join(skills)}
-    score: {score}
+    score: {dict(list(score.items())[:top])}
+    '''
+    return prompt
 
-    다음 양식에 맞춰서 HTML로 작성해줘. 단, <body>, <html> 태그를 포함하지 말고, 주어진 내용만 반환해:
+def get_conclusion_html(conclusion):
+    duty = conclusion['duty']
+    score = conclusion['score']
+    description = conclusion['description']
 
-    <h3>📊 직무 점수 분석</h3>
+    report = f'''<h3>📊 직무 점수 분석</h3>
     <p>
         사용자의 기술 스택을 기반으로 직무별 점수를 계산한 결과, 
-        <strong>{duty} 직무의 점수는 {score.get(duty, '?')}점</strong>입니다.
+        <strong>{duty} 직무의 점수는 {score[duty]}점</strong>입니다.
         보다 높은 점수를 받기 위해 "사용자 기술 분석"과 "보완 사항"을 참고하여 부족한 기술을 보완하는 것을 추천합니다.
     </p>
 
     <h3>🏆 가장 적합한 상위 3개 직무</h3>
-    <ol>
-        {''.join(f'<li><b>{job} ({score_val}점)</b>: 어떤 직무이며 어떤 기술 스택 때문에 적합한지 설명(30자 이내)</li>' for job, score_val in sorted(score.items(), key=lambda x: x[1], reverse=True)[:3])}
+    <ol>'''
+
+    for key, val in score.items():
+        report += f'''
+    <li><b>{key} ({val}점)</b>: {description[key][0]}<br>
+    <span class="indent">{description[key][1]}</span>
+    </li>'''
+    
+
+    report += '''
     </ol>
 
     <p>
         현재 점수는 성장 가능성을 보여줄 뿐, 실력을 증명하는 절대적인 기준이 아닙니다. 꾸준한 학습과 실전 경험을 쌓으면 목표하는 직무에 도달할 수 있습니다. 💪
         <br><strong>포기하지 말고 나아가세요! 🚀 여러분의 도전을 응원합니다.</strong>
-    </p>
-    """
-    return prompt
+    </p>'''
 
+    return report
