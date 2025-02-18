@@ -17,7 +17,7 @@ import numpy as np
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import os
-
+import sqlite3
 # 초기 세팅
 crawling_dt = datetime.now().strftime('%Y-%m-%d-%H')
 
@@ -400,26 +400,41 @@ merged_df = pd.concat([programmers_df, wanted_df], axis=0, ignore_index=True)
 # with open('./csv/duty_replace.json', 'r', encoding='utf-8') as f:
 #     duty_replace = json.load(f)
 
-duty_replace = {
-    "PM": ["개발PM", "개발 매니저", "프로덕트 매니저", 'PM'],
-    "데이터 직무": ["DBA", "데이터 엔지니어링", "데이터 엔지니어", "빅데이터 엔지니어", "데이터 직무"],
-    "백엔드": ["서버/백엔드", "서버 개발자", "웹 개발자", "백엔드"],
-    "인프라 엔지니어": ["데브옵스", "인터넷 보안", "DevOps / 시스템 관리자", "보안 엔지니어", "네트워크 관리자", "소프트웨어 엔지니어", "인프라 엔지니어"],
-    "앱 개발자": ["iOS", "안드로이드", "안드로이드 개발자", "iOS 개발자", "크로스플랫폼 앱 개발자", "앱 개발자"],
-    "게임": ["모바일 게임", "게임 클라이언트", "게임 서버", "게임"],
-    "AI": ["머신러닝", "인공지능(AI)", "머신러닝 엔지니어", "음성 엔지니어", "AI"],
-    "임베디드": ["사물인터넷(IoT)", "로보틱스 미들웨어", "임베디드 소프트웨어", "하드웨어 엔지니어", "임베디드 개발자", "시스템 소프트웨어", "임베디드"],
-    "프론트 엔드": ["웹 퍼블리싱", "웹 퍼블리셔", "프론트엔드 개발자", "그래픽스", "그래픽스 엔지니어", "크로스 플랫폼", "프론트엔드", "프론트 엔드"],
-    "QA": ["QA", "테스트 엔지니어"],
-    "데이터 분석": ["데이터 분석", "BI 엔지니어", "데이터 사이언티스트"],
-    "VR": ["VR/AR/3D", "VR 엔지니어", "VR"],
-    "시스템": ["시스템/네트워크", "응용 프로그램", "시스템"],
-    "블록체인": ["블록체인", "블록체인 플랫폼 엔지니어"],
-    "ERP": ["ERP전문가", "ERP"],
-    "언어별 개발자": ["파이썬 개발자", "자바 개발자", "C", "C++ 개발자", ".NET 개발자", "Node.js 개발자", "PHP 개발자", "언어별 개발자"],
-    "삭제": ["Chief Information Officer", "Chief Technology Officer", "CIO", "CTO", "루비온레일즈 개발자", "기술지원", "영상", "삭제"],
-    "백엔드, 프론트 엔드": ["웹 풀스택"]
-}
+# duty_replace = {
+#     "PM": ["개발PM", "개발 매니저", "프로덕트 매니저", 'PM'],
+#     "데이터 직무": ["DBA", "데이터 엔지니어링", "데이터 엔지니어", "빅데이터 엔지니어", "데이터 직무"],
+#     "백엔드": ["서버/백엔드", "서버 개발자", "웹 개발자", "백엔드"],
+#     "인프라 엔지니어": ["데브옵스", "인터넷 보안", "DevOps / 시스템 관리자", "보안 엔지니어", "네트워크 관리자", "소프트웨어 엔지니어", "인프라 엔지니어"],
+#     "앱 개발자": ["iOS", "안드로이드", "안드로이드 개발자", "iOS 개발자", "크로스플랫폼 앱 개발자", "앱 개발자"],
+#     "게임": ["모바일 게임", "게임 클라이언트", "게임 서버", "게임"],
+#     "AI": ["머신러닝", "인공지능(AI)", "머신러닝 엔지니어", "음성 엔지니어", "AI"],
+#     "임베디드": ["사물인터넷(IoT)", "로보틱스 미들웨어", "임베디드 소프트웨어", "하드웨어 엔지니어", "임베디드 개발자", "시스템 소프트웨어", "임베디드"],
+#     "프론트 엔드": ["웹 퍼블리싱", "웹 퍼블리셔", "프론트엔드 개발자", "그래픽스", "그래픽스 엔지니어", "크로스 플랫폼", "프론트엔드", "프론트 엔드"],
+#     "QA": ["QA", "테스트 엔지니어"],
+#     "데이터 분석": ["데이터 분석", "BI 엔지니어", "데이터 사이언티스트"],
+#     "VR": ["VR/AR/3D", "VR 엔지니어", "VR"],
+#     "시스템": ["시스템/네트워크", "응용 프로그램", "시스템"],
+#     "블록체인": ["블록체인", "블록체인 플랫폼 엔지니어"],
+#     "ERP": ["ERP전문가", "ERP"],
+#     "언어별 개발자": ["파이썬 개발자", "자바 개발자", "C", "C++ 개발자", ".NET 개발자", "Node.js 개발자", "PHP 개발자", "언어별 개발자"],
+#     "삭제": ["Chief Information Officer", "Chief Technology Officer", "CIO", "CTO", "루비온레일즈 개발자", "기술지원", "영상", "삭제"],
+#     "백엔드, 프론트 엔드": ["웹 풀스택"]
+# }
+
+# SQLite 데이터베이스 파일 경로 지정 (예: database.db)
+db_path = "./asia.db"
+
+# 데이터베이스 연결
+conn = sqlite3.connect(db_path)
+
+query = "SELECT * FROM duty_element"
+df_duty_element = pd.read_sql_query(query, conn)
+
+duty_replace = {}
+for _, row in df_duty_element.iterrows():
+    if row['name'] not in duty_replace:
+        duty_replace[row['name']] = {}
+    duty_replace[row['name']] = row['synonym'].split(',')
 
 # 딕셔너리를 반대로 매핑 (value -> key)
 reverse_duty = {v: k for k, values in duty_replace.items() for v in values}
