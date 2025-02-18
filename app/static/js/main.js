@@ -468,8 +468,9 @@ function handleMouseUp(event) {
     const currentTime = new Date().getTime();
 
     // 1. 특정 영역에서만 검색 활성화
-    if (!$(event.target).closest("#selected-tech-list, #analysis-result-section").length) {
+    if (!$(event.target).closest(".skill").length) {
         console.warn("지정된 영역 외부에서 드래그 감지됨. 검색 요청을 무시합니다.");
+        hideStickyNote();
         return;
     }
 
