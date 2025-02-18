@@ -32,6 +32,8 @@ def fetch_tech_stack():
         if connection:
             connection.close()
 
+import pandas as pd
+
 def analyze_stack_top5(user_data: UserInputData):
     connection = get_connection()
 
@@ -61,20 +63,25 @@ def analyze_stack_top5(user_data: UserInputData):
                     probability,
                     pre_probability,
                     description,
-                    RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC, skill ASC) AS rank
+                    RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC, skill ASC) AS rank,
+                    base_language,
+                    use_framework
                 FROM skill_probability
                 WHERE category = ? AND duty IN ({','.join(['?'] * len(user_data.jobs))}) AND unit = 1
             )
-            SELECT skill, rank, probability, pre_probability, description
+            SELECT skill, rank, probability, pre_probability, description, base_language, use_framework
             FROM Ranked
             ORDER BY rank
             """
+
             df = pd.read_sql_query(query, connection, params=(category, *user_data.jobs))
 
+            # 중간 랭크 포함하여 추가적인 데이터 확보
             temp_ranked = set(list(range(1, 6)) + [x for i in df.loc[df["skill"].isin(selected_skills), 'rank'].to_list() for x in range(i-3, i+1)])
             extra_selected_data = list(df[df['rank'].isin(temp_ranked)].itertuples(index=False, name=None))
-            # HTML 테이블 생성
-            html_outputs[display_name] = generate_html_table( extra_selected_data, selected_skills)
+
+            # HTML 테이블 생성 (category 정보 추가)
+            html_outputs[display_name] = generate_html_table(extra_selected_data, selected_skills, category)
 
         return html_outputs
 
@@ -86,15 +93,22 @@ def analyze_stack_top5(user_data: UserInputData):
         if connection:
             connection.close()
 
-def generate_html_table(data, user_selected_skills):
+
+def generate_html_table(data, user_selected_skills, category):
     """
     HTML 테이블을 생성하는 함수
     - data: 기술 데이터 리스트 (순위가 비연속적인 경우 중간 생략 추가)
+    - category: 기술 카테고리 ('library' 또는 'framework' 등)
     """
 
     if not data:
         return f"<p>데이터 없음</p>"
 
+    # 컬럼 추가 여부 결정
+    has_base_language = category in ["library", "framework"]
+    has_use_framework = category == "library"
+
+    # 테이블 헤더 정의
     html_output = f"""
     <p class="legend-right">⭐ 사용자 선택 기술</p>
     <table class="analysis_top5">
@@ -102,13 +116,17 @@ def generate_html_table(data, user_selected_skills):
             <th>순위</th>
             <th>기술명</th>
             <th>자격 요건(%)</th>
-            <th>우대 사항(%)</th>
-            <th>설명</th>
-        </tr>
-    """
+            <th>우대 사항(%)</th>"""
+    
+    if has_base_language:
+        html_output += "<th>기반 언어</th>"
+    if has_use_framework:
+        html_output += "<th>적용 프레임워크</th>"
+
+    html_output += "<th>설명</th></tr>"
 
     previous_rank = None
-    for skill, rank, probability, pre_probability, description in data:
+    for skill, rank, probability, pre_probability, description, *extra in data:
         # 중간 생략 여부 확인
         if previous_rank is not None and rank > previous_rank + 1:
             html_output += """
@@ -126,20 +144,30 @@ def generate_html_table(data, user_selected_skills):
         highlight_class = "user-selected" if skill in user_selected_skills else "ranked"
         star_icon = "⭐" if highlight_class == "user-selected" else ""
 
+        # 추가 컬럼 데이터 처리
+        base_language = extra[0] if has_base_language else "-"
+        use_framework = extra[1] if has_use_framework else "-"
+
         # 행 추가
         html_output += f"""
         <tr class="{highlight_class}">
             <td>{rank}</td>
             <td class="skill">{skill} {star_icon}</td>
             <td>{probability:.2f}%</td>
-            <td>{pre_probability:.2f}%</td>
+            <td>{pre_probability:.2f}%</td>"""
+
+        if has_base_language:
+            html_output += f"<td>{base_language or '-'}</td>"
+        if has_use_framework:
+            html_output += f"<td>{use_framework or '-'}</td>"
+
+        html_output += f"""
             <td>
             <ul>
             <li>{desc1}</li>
             <li>{desc2}</li>
             </ul>
             </td>
-            
         </tr>
         """
 
@@ -148,6 +176,7 @@ def generate_html_table(data, user_selected_skills):
 
     html_output += "</table>"
     return html_output
+
 
 
 def career_graph_search(user_data:UserInputData):
