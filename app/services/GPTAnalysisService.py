@@ -313,9 +313,8 @@ def get_duty_scores(skills):
         data = pd.read_sql_query(query, connection)
 
         score_series = data.groupby(by='duty', group_keys=False).apply(lambda x: calculate_score(x.drop(columns=['duty']), skills))
-        score_series.sort_values(ascending=False)
-
-        return score_series.to_dict()
+        score_dict = score_series.to_dict()
+        return dict(sorted(score_dict.items(), key=lambda item: item[1], reverse=True))
     except Exception as e:
         print("Error during SQL execution:", str(e))
         return {"error": str(e)}
