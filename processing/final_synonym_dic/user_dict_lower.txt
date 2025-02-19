@@ -1,0 +1,232 @@
+agit
+airflow
+alamofire
+angular
+ansible
+apollo
+appium
+arangodb
+arcus
+argo cd
+armeria
+asana
+aws athena
+aws auroradb
+aws codebuild
+aws codedeploy
+aws codepipeline
+aws documentdb
+aws dynamodb
+aws kinesis
+aws mariadb
+aws redshift
+aws ses
+aws sns
+azure devops
+backbonejs
+bazel
+bitbucket
+bitrise
+capistrano
+cassandradb
+celery
+central dogma
+ceph
+circle ci
+clickhouse
+cockroachdb
+codeigniter
+confluence
+couchbase
+c++
+c#
+cubrid
+cucumber
+cypress
+dagger
+dart
+discord
+docker
+docusaurus
+dooray
+drone
+dropwizard
+druid
+echo
+elasticsearch
+electron
+elixir
+emberjs
+emotion
+enzyme
+exoplayer
+expressjs
+falcon
+fastapi
+fastify
+fastlane
+fiber
+flask
+flink
+flow
+fluentd
+gatsby
+gin
+github
+github action
+gitlab
+glide
+go
+go cd
+google bigquery
+google cloud build
+google data studio
+google firebase
+grafana
+graphql
+greenplum
+groovy
+grpc
+gulp
+h2
+hadoop
+harbor
+hazelcast
+hbase
+helm
+hive
+hugo
+immer
+impala
+influxdb
+istio
+jaeger
+jandi
+jasmine
+java
+javascript
+jenkins
+jira
+jotai
+junit
+kafka
+kakaotalk
+kakaowork
+karma
+karpenter
+keras
+kibana
+koa
+kotest
+ktor
+kube-bench
+kubeflow
+kubernetes
+kudu
+laravel
+linkerd
+liquibase
+locust
+looker
+lottie
+lua
+memcached
+metabase
+meteor
+microsoft-teams
+mlflow
+mobx
+mocha
+mockito
+monday
+mongodb
+moya
+mssql
+mysql
+naver works
+neo4j
+nestjs
+netty
+nextjs
+nexus
+ngrinder
+nifi
+nodejs
+notion
+nuxtjs
+openebs
+opengl
+oracledb
+packer
+perl
+phoenix
+php
+playwright
+postgresql
+presto
+prometheus
+puppeteer
+pytorch
+r
+rabbitmq
+rancher
+ranger
+ray
+react context
+reactivex
+reactjs
+react native
+reactorkit
+react query
+recoil
+redash
+redis
+redux
+relay
+rescript
+rest-assured
+retrofit
+ribs
+rocksdb
+ruby
+ruby on rails
+rust
+saltstack
+sanic
+scala
+selenium
+sinon
+slack
+snapkit
+snowflake
+solr
+sonarqube
+spark
+spring
+springboot
+storybook
+styled-components
+superset
+svelte
+swagger
+swift
+tableau
+tailwind
+telegram
+tensorflow
+testing library
+thrift
+traefik
+travis ci
+trello
+trino
+tuist
+typescript
+unity
+vault
+vuejs
+vuex
+zabbix
+zeppelin
+zipkin
+zustand
