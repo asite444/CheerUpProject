@@ -196,16 +196,12 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05)
         purchases = (category, duty, limit, category, duty, probability, ', '.join(user_skill), )
         data = pd.read_sql_query(query, connection, params=purchases)
 
-        print(data)
-
         # 중복된 skill을 가진 행 중 첫 번째 값만 유지
         df_filtered = data.drop_duplicates(subset=["skill"], keep="first")
 
         # 삭제할 skill 값 결정 후 필터링
         rank_skills = ', '.join(sorted(df_filtered['rskill'].unique()))
         df_filtered = df_filtered[df_filtered['skill'] != rank_skills]
-    
-        print(df_filtered)
 
         # rrank 별 상위 2개 선택
         df_filtered = df_filtered.groupby("rrank").head(2)
@@ -362,7 +358,7 @@ def calculate_score(df, user_skills):
 
 def make_conclusion_prompt(skills, score, top=3):
     prompt = '''다음은 사용자의 기술 스택을 기반으로 직무별 점수를 계산한 결과이다.
-JSON 딕셔너리 형식을 따르며 키는 직무, 값은 "직무에 대한 설명(50자 이내)와 직무를 추천하는 이유에 대한 설명, 만약 추천할 이유가 없다면 "점수가 너무 낮아서 직무에 대한 판단을 드릴수없습니다."를 반환(100자 이내)"을 반환해라
+JSON 딕셔너리 형식을 따르며 키는 직무, 값은 "직무에 대한 설명(50자 이내)와 직무를 추천하는 이유에 대한 설명, 만약 추천할 이유가 없다면 "관련된 기술 스택이 없어 직무에 대한 판단을 드릴 수 없습니다."를 반환(100자 이내)"을 반환해라
 (예시: {"AI": ["AI 개발 및 데이터 분석을 수행하는 직무","Python, Pandas, FastAPI를 활용한 데이터 처리 및 AI 모델 개발 역량 보유"]}).'''
 
     prompt += f'''
