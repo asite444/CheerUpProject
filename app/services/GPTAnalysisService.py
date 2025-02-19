@@ -182,7 +182,10 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05)
                 ROW_NUMBER() OVER (PARTITION BY r.rank ORDER BY sp.probability DESC, sp.pre_probability DESC) AS rn
             FROM skill_probability sp
             RIGHT OUTER JOIN Ranked r 
-                ON sp.skill LIKE '%' || r.skill || '%'
+                ON sp.skill = r.skill
+                OR sp.skill LIKE r.skill || ',%'
+                OR sp.skill LIKE '% ' || r.skill
+                OR sp.skill LIKE '% ' || r.skill || ',%'
             WHERE sp.category = ?
             AND sp.duty = ?
             AND sp.unit > 1
@@ -193,12 +196,16 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05)
         purchases = (category, duty, limit, category, duty, probability, ', '.join(user_skill), )
         data = pd.read_sql_query(query, connection, params=purchases)
 
+        print(data)
+
         # 중복된 skill을 가진 행 중 첫 번째 값만 유지
         df_filtered = data.drop_duplicates(subset=["skill"], keep="first")
 
         # 삭제할 skill 값 결정 후 필터링
         rank_skills = ', '.join(sorted(df_filtered['rskill'].unique()))
         df_filtered = df_filtered[df_filtered['skill'] != rank_skills]
+    
+        print(df_filtered)
 
         # rrank 별 상위 2개 선택
         df_filtered = df_filtered.groupby("rrank").head(2)
