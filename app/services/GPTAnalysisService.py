@@ -45,7 +45,7 @@ def analyze_customize(user_data:UserInputData):
         # DB에 분석 결과가 없음
         improvement_result = analyze_improvement(duty, categories)
         conclusion_result = analyze_conclusion(user_data)
-        if improvement_result is False or conclusion_result is False:
+        if improvement_result is not False and conclusion_result is not False:
             set_customized_analysis(duty, categories, improvement_result, conclusion_result)
     else:
         improvement_result = ast.literal_eval(data[0])
@@ -59,7 +59,7 @@ def analyze_customize(user_data:UserInputData):
     if conclusion_result is not False:
         report_conclusion = get_conclusion_html(conclusion_result)
     else:
-        report_improvement = "분석 도중 문제가 발생했습니다. 재요청 부탁드립니다🥲."
+        report_conclusion = "분석 도중 문제가 발생했습니다. 재요청 부탁드립니다🥲."
 
     return report_improvement, report_conclusion
 
@@ -356,7 +356,7 @@ JSON 딕셔너리 형식을 따르며 키는 직무, 값은 "직무에 대한 �
 
     prompt += f'''
     사용자의 기술 스택: {', '.join(skills)}
-    score: {dict(list(score.items())[:top])}
+    score: {list(score.items())[:top]}
     '''
     return prompt
 
@@ -364,7 +364,6 @@ def get_conclusion_html(conclusion):
     duty = conclusion['duty']
     score = conclusion['score']
     description = conclusion['description']
-    print(conclusion)
 
     report = f'''<h3>📊 직무 점수 분석</h3>
     <p>
