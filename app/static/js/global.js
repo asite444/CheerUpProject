@@ -25,6 +25,3 @@ export const techData = {
 
 
 
-
-// `global.js`가 로드되었는지 확인하는 로그
-console.log("✅ global.js loaded successfully!");
