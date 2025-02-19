@@ -1,0 +1,22 @@
+Docker
+Kubernetes
+Jenkins
+Git
+Postman
+Terraform
+Ansible
+ElasticSearch
+AWS
+Azure
+GCP
+VS Code
+IntelliJ
+PyCharm
+Slack
+JIRA
+Grafana
+Tableau
+MySQL
+PostgreSQL
+MongoDB
+Redis
