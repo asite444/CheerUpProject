@@ -43,7 +43,7 @@ def analyze_customize(user_data:UserInputData):
     print('data: ', data)
     if data is None:
         # DB에 분석 결과가 없음
-        improvement_result = analyze_improvement(duty, categories)
+        improvement_result =analyze_improvement(duty, categories)
         conclusion_result = analyze_conclusion(user_data)
         if improvement_result is not False and conclusion_result is not False:
             set_customized_analysis(duty, categories, improvement_result, conclusion_result)
@@ -311,11 +311,13 @@ def get_duty_scores(skills):
 
     try:
         query = """
-            SELECT skill, category, duty,
+            SELECT skill, category, duty, probability,
                 RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC, skill ASC) AS rank 
             FROM skill_probability
             WHERE unit = 1
             AND duty NOT IN ('언어별 개발자')
+            and duty == 'AI'
+            and probability != 0.0
             ORDER BY duty, category
         """
         data = pd.read_sql_query(query, connection)
@@ -343,17 +345,15 @@ def calculate_score(df, user_skills):
     user_skills_df = df[df['skill'].isin(user_skills)].copy()
 
     if user_skills_df.empty:
-        return 0  # 일치하는 기술이 없으면 0점 반환
-
-    # 지수 가중치 계산 (rank가 낮을수록 가중치 높음)
-    user_skills_df['weight'] = np.exp(-user_skills_df['rank'])
+        return 0
 
     # 카테고리 가중치 적용
     user_skills_df['category_weight'] = user_skills_df['category'].map(category_weights)
-    user_skills_df['final_weight'] = user_skills_df['weight'] * user_skills_df['category_weight']
+
+    user_skills_df['final_weight'] = user_skills_df['probability'] * user_skills_df['category_weight']
 
     # 최종 점수 계산 (100점 만점)
-    total_score = round(user_skills_df['final_weight'].sum() * 100, 2)
+    total_score = round(user_skills_df['final_weight'].sum(), 2)
     return total_score
 
 def make_conclusion_prompt(skills, score, top=3):
