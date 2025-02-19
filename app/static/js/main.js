@@ -26,8 +26,6 @@ $(document).ready(function () {
    
     //최초화면 로드시, 직업 카테고리 최초 선택처리
     displayTechList("job", techData);
-    // 토글 버튼 클릭 이벤트 바인딩(사용중지)
-    //$('.toggle-btn').on('click', handleToggleClick);
 
     // 드래그 후 마우스 놓기 이벤트 바인딩
     $(document).on('mouseup', handleMouseUp);

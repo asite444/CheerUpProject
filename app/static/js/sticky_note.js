@@ -45,7 +45,7 @@ function processAjaxRequest(selectedText, mouseX, mouseY, retries = 0) {
         },
         error: function (xhr, status, error) {
             if (retries < maxRetries) {
-                console.warn(`요청 실패. 재시도 중 (${retries + 1}/${maxRetries})...`);
+                //console.warn(`요청 실패. 재시도 중 (${retries + 1}/${maxRetries})...`);
                 const retryDelay = 1000 * Math.pow(2, retries);
                 setTimeout(() => {
                     processAjaxRequest(selectedText, mouseX, mouseY, retries + 1);
@@ -120,7 +120,7 @@ export function handleMouseUp(event) {
 
     // 1. 특정 영역에서만 검색 활성화
     if (!$(event.target).closest(".skill").length) {
-        console.warn("지정된 영역 외부에서 드래그 감지됨. 검색 요청을 무시합니다.");
+        //console.warn("지정된 영역 외부에서 드래그 감지됨. 검색 요청을 무시합니다.");
         hideStickyNote();
         return;
     }
@@ -128,7 +128,7 @@ export function handleMouseUp(event) {
     // 2. 너무 긴 텍스트는 무시
     const MAX_LENGTH = 50;
     if (selectedText.length > MAX_LENGTH) {
-        console.warn("선택한 텍스트가 너무 깁니다. 요청을 무시합니다.");
+        //console.warn("선택한 텍스트가 너무 깁니다. 요청을 무시합니다.");
         hideStickyNote();
         return;
     }

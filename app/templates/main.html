@@ -23,8 +23,8 @@
     <script>
         const techStackData = JSON.parse('{{ stack_data | tojson | safe }}');
     </script>
-
-        <script type="module" src="../static/js/global.js"></script>      <!-- 검색 관련 -->
+        <!-- 전역변수 파일 로드-->
+        <script type="module" src="../static/js/global.js"></script>      
         <!-- 기능별 JavaScript 파일 로드 -->
         <script type="module" src="../static/js/search.js"></script>      <!-- 검색 관련 -->
         <script type="module" src="../static/js/selection.js"></script>   <!-- 선택/삭제 관련 -->

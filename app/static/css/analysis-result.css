@@ -194,7 +194,7 @@
 .analysis-result #result-graph-language  figure figcaption ,
 .analysis-result #result-graph-degree  figure figcaption 
 {
-    font-size: 16px;
+    font-size: 18px;
     color: #333;
     text-align: left;
     line-height: 1.6;
@@ -220,15 +220,6 @@
 }
 
 
-/* Hover 효과 */
-/* 
-.analysis-result #result-graph-career  figure:hover ,
-.analysis-result #result-graph-language  figure:hover ,
-.analysis-result #result-graph-degree  figure:hover 
-{
-    transform: scale(1.05);
-    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
-} */
 
 
 /* 경력 분석 그래프 개별 설정 */
@@ -273,7 +264,7 @@
 
 /* 설명글 (이미지 아래 배치, 중앙 정렬) */
 .analysis-result #result-graph-career figure figcaption {
-    font-size: 16px;
+    font-size: 18px;
     color: #333;
     text-align: left; /* 중앙 정렬 */
     line-height: 1.6;
