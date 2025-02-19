@@ -58,9 +58,10 @@ h3 {
 /* 기본 테이블 스타일 */
 .analysis_top5 {
     width: 100%;
+    max-width: 100%; /* 화면을 넘지 않도록 제한 */
     border-collapse: collapse;
     margin: 20px 0;
-    font-size: 18px;
+    font-size: 18px; /* 기본 글씨 크기 조정 */
     text-align: left;
     background-color: #fff;
     border-radius: 8px;
@@ -72,29 +73,40 @@ h3 {
 .analysis_top5 th {
     background-color: #007BFF;
     color: white;
-    padding: 12px;
+    padding: 10px;
     text-align: center;
     font-weight: bold;
     white-space: nowrap;
-    min-width: 120px;
-    max-width: 250px;
+    min-width: 80px;  /* 최소 크기 축소 */
+    max-width: 150px;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 /* 테이블 셀 스타일 */
 .analysis_top5 td {
-    padding: 12px;
+    padding: 10px;
     border-bottom: 1px solid #ddd;
     text-align: center;
     vertical-align: middle;
+    white-space: nowrap; /* 기본적으로 줄바꿈 방지 */
 }
 
-/* 테이블 셀 스타일 */
-.analysis_top5 td ul li{
-  list-style: none;
-  text-align: left;
-  
+/* 설명 컬럼 스타일 - 내용이 많아도 크기가 너무 커지지 않도록 제한 */
+.analysis_top5 td:nth-child(5),
+.analysis_top5 td:nth-child(6) {
+    min-width: 180px;
+    max-width: 400px; /* 너무 넓어지지 않도록 설정 */
+    white-space: normal; /* 여러 줄 표시 */
+    word-break: break-word; /* 긴 단어 줄바꿈 */
+    text-align: center;
+    padding: 10px;
+}
+
+/* 테이블 리스트 스타일 */
+.analysis_top5 td ul li {
+    list-style: none;
+    text-align: left;
 }
 
 /* 마우스 오버 효과 */
@@ -102,20 +114,20 @@ h3 {
     background-color: #e0f7fa;
 }
 
-/* 🌟 사용자 선택한 기술 강조 (배경색 & 글자 강조) */
+/* 사용자 선택한 기술 강조 */
 .analysis_top5 tr.user-selected {
-    background-color: #ffffe0; /* 연한 노란색 */
+    background-color: #ffffe0;
     font-weight: bold;
-    color: #d9534f; /* 강조된 글씨색 (빨간색 계열) */
+    color: #d9534f;
 }
 
-/* 사용자 선택한 기술의 글자 크기 및 스타일 */
+/* 사용자 선택한 기술 강조 스타일 */
 .analysis_top5 tr.user-selected td:nth-child(2) {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
 }
 
-/* 🟦 중간 생략 표시 스타일 */
+/* 중간 생략 표시 스타일 */
 .analysis_top5 tr.skipped {
     background-color: #f8f8f8;
     font-style: italic;
@@ -129,16 +141,36 @@ h3 {
     100% { background-color: #ffffe0; }
 }
 
-/* 사용자 선택한 기술을 깜빡이게 함 */
 .analysis_top5 tr.user-selected {
     animation: blink 1.5s infinite alternate;
 }
 
-/* ⭐ 범례 스타일 (오른쪽 정렬) */
+/* 범례 스타일 */
 .legend-right {
     text-align: right;
     font-size: 14px;
     font-weight: bold;
     color: #333;
     margin-bottom: 5px;
+}
+
+/* 📌 반응형 스타일 - 작은 화면에서는 가로 스크롤 허용 */
+@media (max-width: 1024px) {
+    #tech-results {
+        overflow-x: scroll;
+    }
+    
+    .analysis_top5 {
+        font-size: 14px; /* 작은 화면에서 글씨 크기 줄이기 */
+    }
+
+    .analysis_top5 th, .analysis_top5 td {
+        padding: 8px; /* 패딩 조정 */
+    }
+
+    .analysis_top5 td:nth-child(5),
+    .analysis_top5 td:nth-child(6) {
+        min-width: 150px;
+        max-width: 300px; /* 작은 화면에서 설명 칸 크기 조정 */
+    }
 }
