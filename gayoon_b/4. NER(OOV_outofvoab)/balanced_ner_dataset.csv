@@ -1,0 +1,1142 @@
+﻿seq,category,name,ner_label
+0,language,solidity,B-LANG
+1,language,c,B-LANG
+2,language,c++,B-LANG
+3,language,c#,B-LANG
+4,language,dart,B-LANG
+5,language,elixir,B-LANG
+6,language,groovy,B-LANG
+7,language,java,B-LANG
+8,language,javascript,B-LANG
+9,language,lua,B-LANG
+10,language,perl,B-LANG
+11,language,php,B-LANG
+12,language,python,B-LANG
+13,language,r,B-LANG
+14,language,ruby,B-LANG
+15,language,rust,B-LANG
+16,language,scala,B-LANG
+17,language,swift,B-LANG
+18,language,typescript,B-LANG
+19,language,rescript,B-LANG
+20,language,go,B-LANG
+21,language,abap,B-LANG
+22,language,ada,B-LANG
+23,language,bash,B-LANG
+24,language,erlang,B-LANG
+25,language,f#,B-LANG
+26,language,fortran,B-LANG
+27,language,haskell,B-LANG
+28,language,julia,B-LANG
+29,language,kotlin,B-LANG
+30,language,matlab,B-LANG
+31,language,vhdl,B-LANG
+32,language,css,B-LANG
+33,language,html,B-LANG
+34,language,hiveql,B-LANG
+35,framework,angular,B-FRAME
+36,framework,appium,B-FRAME
+37,framework,armeria,B-FRAME
+38,framework,backbonejs,B-FRAME
+39,framework,codeigniter,B-FRAME
+40,framework,dagger,B-FRAME
+41,framework,dropwizard,B-FRAME
+42,framework,echo,B-FRAME
+43,framework,electra,B-FRAME
+44,framework,electron,B-FRAME
+45,framework,emberjs,B-FRAME
+46,framework,expressjs,B-FRAME
+47,framework,falcon,B-FRAME
+48,framework,fastapi,B-FRAME
+49,framework,fastify,B-FRAME
+50,framework,fiber,B-FRAME
+51,framework,flask,B-FRAME
+52,framework,flink,B-FRAME
+53,framework,gatsby,B-FRAME
+54,framework,grpc,B-FRAME
+55,framework,hadoop,B-FRAME
+56,framework,jasmine,B-FRAME
+57,framework,junit,B-FRAME
+58,framework,kotest,B-FRAME
+59,framework,ktor,B-FRAME
+60,framework,laravel,B-FRAME
+61,framework,meteor,B-FRAME
+62,framework,mocha,B-FRAME
+63,framework,mockito,B-FRAME
+64,framework,nestjs,B-FRAME
+65,framework,netty,B-FRAME
+66,framework,nextjs,B-FRAME
+67,framework,nuxtjs,B-FRAME
+68,framework,phoenix,B-FRAME
+69,framework,ray,B-FRAME
+70,framework,react native,B-FRAME
+71,framework,reactorkit,B-FRAME
+72,framework,relay,B-FRAME
+73,framework,ribs,B-FRAME
+74,framework,ruby on rails,B-FRAME
+75,framework,sanic,B-FRAME
+76,framework,selenium,B-FRAME
+77,framework,spark,B-FRAME
+78,framework,spring,B-FRAME
+79,framework,springboot,B-FRAME
+80,framework,svelte,B-FRAME
+81,framework,swagger,B-FRAME
+82,framework,tailwind,B-FRAME
+83,framework,thrift,B-FRAME
+84,framework,vuejs,B-FRAME
+85,framework,nodejs,B-FRAME
+86,framework,django,B-FRAME
+87,framework,javafx,B-FRAME
+88,framework,mono,B-FRAME
+89,library,alamofire,B-LIB
+90,library,apollo,B-LIB
+91,library,emotion,B-LIB
+92,library,enzyme,B-LIB
+93,library,exoplayer,B-LIB
+94,library,glide,B-LIB
+95,library,immer,B-LIB
+96,library,jotai,B-LIB
+97,library,keras,B-LIB
+98,library,lottie,B-LIB
+99,library,mobx,B-LIB
+100,library,moya,B-LIB
+101,library,react context,B-LIB
+102,library,reactivex,B-LIB
+103,library,reactjs,B-LIB
+104,library,react query,B-LIB
+105,library,recoil,B-LIB
+106,library,redux,B-LIB
+107,library,rest-assured,B-LIB
+108,library,retrofit,B-LIB
+109,library,sinon,B-LIB
+110,library,snapkit,B-LIB
+111,library,styled-components,B-LIB
+112,library,tensorflow,B-LIB
+113,library,testing library,B-LIB
+114,library,vuex,B-LIB
+115,library,zustand,B-LIB
+116,library,pytorch,B-LIB
+117,library,graphql,B-LIB
+118,library,beautifulsoup,B-LIB
+119,library,bokeh,B-LIB
+120,library,fastai,B-LIB
+121,library,grpcio,B-LIB
+122,library,huggingface,B-LIB
+123,library,lightgbm,B-LIB
+124,library,matplotlib,B-LIB
+125,library,numpy,B-LIB
+126,library,opencv,B-LIB
+127,library,pandas,B-LIB
+128,library,plotly,B-LIB
+129,library,pydantic,B-LIB
+130,library,requests,B-LIB
+131,library,scikit-learn,B-LIB
+132,library,seaborn,B-LIB
+133,library,sqlalchemy,B-LIB
+134,library,transformers,B-LIB
+135,library,xgboost,B-LIB
+136,library,react,B-LIB
+137,tool,agit,B-TOOL
+138,tool,airflow,B-TOOL
+139,tool,ansible,B-TOOL
+140,tool,arcus,B-TOOL
+141,tool,arangodb,B-TOOL
+142,tool,argo cd,B-TOOL
+143,tool,asana,B-TOOL
+144,tool,aws,B-TOOL
+145,tool,aws athena,B-TOOL
+146,tool,aws auroradb,B-TOOL
+147,tool,aws codebuild,B-TOOL
+148,tool,aws codedeploy,B-TOOL
+149,tool,aws codepipeline,B-TOOL
+150,tool,aws documentdb,B-TOOL
+151,tool,aws dynamodb,B-TOOL
+152,tool,aws kinesis,B-TOOL
+153,tool,aws mariadb,B-TOOL
+154,tool,aws redshift,B-TOOL
+155,tool,aws ses,B-TOOL
+156,tool,aws sns,B-TOOL
+157,tool,azure devops,B-TOOL
+158,tool,bazel,B-TOOL
+159,tool,bitbucket,B-TOOL
+160,tool,bitrise,B-TOOL
+161,tool,capistrano,B-TOOL
+162,tool,cassandradb,B-TOOL
+163,tool,celery,B-TOOL
+164,tool,central dogma,B-TOOL
+165,tool,ceph,B-TOOL
+166,tool,circle ci,B-TOOL
+167,tool,clickhouse,B-TOOL
+168,tool,cockroachdb,B-TOOL
+169,tool,confluence,B-TOOL
+170,tool,couchbase,B-TOOL
+171,tool,cubrid,B-TOOL
+172,tool,cucumber,B-TOOL
+173,tool,cypress,B-TOOL
+174,tool,discord,B-TOOL
+175,tool,docker,B-TOOL
+176,tool,docusaurus,B-TOOL
+177,tool,dooray,B-TOOL
+178,tool,drone,B-TOOL
+179,tool,druid,B-TOOL
+180,tool,elasticsearch,B-TOOL
+181,tool,fastlane,B-TOOL
+182,tool,fluentd,B-TOOL
+183,tool,flow,B-TOOL
+184,tool,git,B-TOOL
+185,tool,github,B-TOOL
+186,tool,github action,B-TOOL
+187,tool,gitlab,B-TOOL
+188,tool,go cd,B-TOOL
+189,tool,google bigquery,B-TOOL
+190,tool,google cloud build,B-TOOL
+191,tool,google data studio,B-TOOL
+192,tool,google firebase,B-TOOL
+193,tool,grafana,B-TOOL
+194,tool,greenplum,B-TOOL
+195,tool,gulp,B-TOOL
+196,tool,h2,B-TOOL
+197,tool,harbor,B-TOOL
+198,tool,hbase,B-TOOL
+199,tool,hazelcast,B-TOOL
+200,tool,helm,B-TOOL
+201,tool,hive,B-TOOL
+202,tool,hugo,B-TOOL
+203,tool,istio,B-TOOL
+204,tool,jaeger,B-TOOL
+205,tool,jandi,B-TOOL
+206,tool,jenkins,B-TOOL
+207,tool,jira,B-TOOL
+208,tool,kafka,B-TOOL
+209,tool,kakaotalk,B-TOOL
+210,tool,kakaowork,B-TOOL
+211,tool,karma,B-TOOL
+212,tool,karpenter,B-TOOL
+213,tool,kibana,B-TOOL
+214,tool,kube-bench,B-TOOL
+215,tool,kubeflow,B-TOOL
+216,tool,kubernetes,B-TOOL
+217,tool,kudu,B-TOOL
+218,tool,linkerd,B-TOOL
+219,tool,liquibase,B-TOOL
+220,tool,locust,B-TOOL
+221,tool,looker,B-TOOL
+222,tool,memcached,B-TOOL
+223,tool,metabase,B-TOOL
+224,tool,microsoft-teams,B-TOOL
+225,tool,mlflow,B-TOOL
+226,tool,monday,B-TOOL
+227,tool,mongodb,B-TOOL
+228,tool,mssql,B-TOOL
+229,tool,mysql,B-TOOL
+230,tool,naver works,B-TOOL
+231,tool,neo4j,B-TOOL
+232,tool,nexus,B-TOOL
+233,tool,ngrinder,B-TOOL
+234,tool,nifi,B-TOOL
+235,tool,notion,B-TOOL
+236,tool,openebs,B-TOOL
+237,tool,oracledb,B-TOOL
+238,tool,packer,B-TOOL
+239,tool,playwright,B-TOOL
+240,tool,postgresql,B-TOOL
+241,tool,presto,B-TOOL
+242,tool,prometheus,B-TOOL
+243,tool,rabbitmq,B-TOOL
+244,tool,rancher,B-TOOL
+245,tool,ranger,B-TOOL
+246,tool,redash,B-TOOL
+247,tool,redis,B-TOOL
+248,tool,rocksdb,B-TOOL
+249,tool,saltstack,B-TOOL
+250,tool,slack,B-TOOL
+251,tool,snowflake,B-TOOL
+252,tool,solr,B-TOOL
+253,tool,sonarqube,B-TOOL
+254,tool,storybook,B-TOOL
+255,tool,superset,B-TOOL
+256,tool,tableau,B-TOOL
+257,tool,telegram,B-TOOL
+258,tool,travis ci,B-TOOL
+259,tool,trello,B-TOOL
+260,tool,trino,B-TOOL
+261,tool,tuist,B-TOOL
+262,tool,unity,B-TOOL
+263,tool,vault,B-TOOL
+264,tool,zabbix,B-TOOL
+265,tool,zeppelin,B-TOOL
+266,tool,puppeteer,B-TOOL
+267,tool,opengl,B-TOOL
+268,tool,zipkin,B-TOOL
+269,tool,impala,B-TOOL
+270,tool,influxdb,B-TOOL
+271,tool,traefik,B-TOOL
+272,tool,apache spark,B-TOOL
+273,tool,dask,B-TOOL
+274,tool,openstack,B-TOOL
+275,tool,terraform,B-TOOL
+276,tool,zeplin,B-TOOL
+277,tool,jmeter,B-TOOL
+73,framework,ribs,B-FRAME
+86,framework,django,B-FRAME
+63,framework,mockito,B-FRAME
+49,framework,fastify,B-FRAME
+77,framework,spark,B-FRAME
+42,framework,echo,B-FRAME
+55,framework,hadoop,B-FRAME
+73,framework,ribs,B-FRAME
+53,framework,gatsby,B-FRAME
+57,framework,junit,B-FRAME
+45,framework,emberjs,B-FRAME
+45,framework,emberjs,B-FRAME
+58,framework,kotest,B-FRAME
+87,framework,javafx,B-FRAME
+70,framework,react native,B-FRAME
+74,framework,ruby on rails,B-FRAME
+58,framework,kotest,B-FRAME
+37,framework,armeria,B-FRAME
+56,framework,jasmine,B-FRAME
+87,framework,javafx,B-FRAME
+36,framework,appium,B-FRAME
+58,framework,kotest,B-FRAME
+78,framework,spring,B-FRAME
+64,framework,nestjs,B-FRAME
+72,framework,relay,B-FRAME
+36,framework,appium,B-FRAME
+55,framework,hadoop,B-FRAME
+67,framework,nuxtjs,B-FRAME
+46,framework,expressjs,B-FRAME
+56,framework,jasmine,B-FRAME
+78,framework,spring,B-FRAME
+59,framework,ktor,B-FRAME
+83,framework,thrift,B-FRAME
+61,framework,meteor,B-FRAME
+76,framework,selenium,B-FRAME
+62,framework,mocha,B-FRAME
+50,framework,fiber,B-FRAME
+49,framework,fastify,B-FRAME
+81,framework,swagger,B-FRAME
+85,framework,nodejs,B-FRAME
+78,framework,spring,B-FRAME
+86,framework,django,B-FRAME
+37,framework,armeria,B-FRAME
+71,framework,reactorkit,B-FRAME
+85,framework,nodejs,B-FRAME
+41,framework,dropwizard,B-FRAME
+55,framework,hadoop,B-FRAME
+43,framework,electra,B-FRAME
+73,framework,ribs,B-FRAME
+52,framework,flink,B-FRAME
+38,framework,backbonejs,B-FRAME
+59,framework,ktor,B-FRAME
+48,framework,fastapi,B-FRAME
+84,framework,vuejs,B-FRAME
+43,framework,electra,B-FRAME
+60,framework,laravel,B-FRAME
+87,framework,javafx,B-FRAME
+36,framework,appium,B-FRAME
+54,framework,grpc,B-FRAME
+62,framework,mocha,B-FRAME
+81,framework,swagger,B-FRAME
+41,framework,dropwizard,B-FRAME
+78,framework,spring,B-FRAME
+42,framework,echo,B-FRAME
+81,framework,swagger,B-FRAME
+69,framework,ray,B-FRAME
+48,framework,fastapi,B-FRAME
+51,framework,flask,B-FRAME
+70,framework,react native,B-FRAME
+84,framework,vuejs,B-FRAME
+74,framework,ruby on rails,B-FRAME
+38,framework,backbonejs,B-FRAME
+36,framework,appium,B-FRAME
+40,framework,dagger,B-FRAME
+88,framework,mono,B-FRAME
+76,framework,selenium,B-FRAME
+38,framework,backbonejs,B-FRAME
+88,framework,mono,B-FRAME
+63,framework,mockito,B-FRAME
+52,framework,flink,B-FRAME
+60,framework,laravel,B-FRAME
+78,framework,spring,B-FRAME
+68,framework,phoenix,B-FRAME
+44,framework,electron,B-FRAME
+70,framework,react native,B-FRAME
+48,framework,fastapi,B-FRAME
+65,framework,netty,B-FRAME
+127,library,pandas,B-LIB
+117,library,graphql,B-LIB
+103,library,reactjs,B-LIB
+131,library,scikit-learn,B-LIB
+96,library,jotai,B-LIB
+109,library,sinon,B-LIB
+127,library,pandas,B-LIB
+107,library,rest-assured,B-LIB
+111,library,styled-components,B-LIB
+99,library,mobx,B-LIB
+99,library,mobx,B-LIB
+112,library,tensorflow,B-LIB
+124,library,matplotlib,B-LIB
+128,library,plotly,B-LIB
+112,library,tensorflow,B-LIB
+91,library,emotion,B-LIB
+110,library,snapkit,B-LIB
+90,library,apollo,B-LIB
+112,library,tensorflow,B-LIB
+132,library,seaborn,B-LIB
+118,library,beautifulsoup,B-LIB
+126,library,opencv,B-LIB
+90,library,apollo,B-LIB
+109,library,sinon,B-LIB
+121,library,grpcio,B-LIB
+100,library,moya,B-LIB
+110,library,snapkit,B-LIB
+132,library,seaborn,B-LIB
+113,library,testing library,B-LIB
+115,library,zustand,B-LIB
+130,library,requests,B-LIB
+116,library,pytorch,B-LIB
+104,library,react query,B-LIB
+103,library,reactjs,B-LIB
+135,library,xgboost,B-LIB
+132,library,seaborn,B-LIB
+91,library,emotion,B-LIB
+125,library,numpy,B-LIB
+95,library,immer,B-LIB
+109,library,sinon,B-LIB
+97,library,keras,B-LIB
+127,library,pandas,B-LIB
+106,library,redux,B-LIB
+92,library,enzyme,B-LIB
+113,library,testing library,B-LIB
+102,library,reactivex,B-LIB
+97,library,keras,B-LIB
+114,library,vuex,B-LIB
+90,library,apollo,B-LIB
+108,library,retrofit,B-LIB
+116,library,pytorch,B-LIB
+135,library,xgboost,B-LIB
+95,library,immer,B-LIB
+132,library,seaborn,B-LIB
+96,library,jotai,B-LIB
+135,library,xgboost,B-LIB
+123,library,lightgbm,B-LIB
+102,library,reactivex,B-LIB
+105,library,recoil,B-LIB
+124,library,matplotlib,B-LIB
+128,library,plotly,B-LIB
+92,library,enzyme,B-LIB
+90,library,apollo,B-LIB
+94,library,glide,B-LIB
+130,library,requests,B-LIB
+92,library,enzyme,B-LIB
+117,library,graphql,B-LIB
+106,library,redux,B-LIB
+114,library,vuex,B-LIB
+132,library,seaborn,B-LIB
+122,library,huggingface,B-LIB
+98,library,lottie,B-LIB
+124,library,matplotlib,B-LIB
+102,library,reactivex,B-LIB
+119,library,bokeh,B-LIB
+136,library,react,B-LIB
+103,library,reactjs,B-LIB
+96,library,jotai,B-LIB
+102,library,reactivex,B-LIB
+111,library,styled-components,B-LIB
+128,library,plotly,B-LIB
+109,library,sinon,B-LIB
+104,library,react query,B-LIB
+133,library,sqlalchemy,B-LIB
+106,library,redux,B-LIB
+135,library,xgboost,B-LIB
+112,library,tensorflow,B-LIB
+114,library,vuex,B-LIB
+113,library,testing library,B-LIB
+133,library,sqlalchemy,B-LIB
+129,library,pydantic,B-LIB
+117,library,graphql,B-LIB
+103,library,reactjs,B-LIB
+28,language,julia,B-LANG
+14,language,ruby,B-LANG
+7,language,java,B-LANG
+20,language,go,B-LANG
+18,language,typescript,B-LANG
+22,language,ada,B-LANG
+10,language,perl,B-LANG
+10,language,perl,B-LANG
+23,language,bash,B-LANG
+23,language,bash,B-LANG
+2,language,c++,B-LANG
+21,language,abap,B-LANG
+1,language,c,B-LANG
+23,language,bash,B-LANG
+29,language,kotlin,B-LANG
+1,language,c,B-LANG
+20,language,go,B-LANG
+32,language,css,B-LANG
+11,language,php,B-LANG
+21,language,abap,B-LANG
+24,language,erlang,B-LANG
+26,language,fortran,B-LANG
+27,language,haskell,B-LANG
+15,language,rust,B-LANG
+14,language,ruby,B-LANG
+2,language,c++,B-LANG
+6,language,groovy,B-LANG
+20,language,go,B-LANG
+8,language,javascript,B-LANG
+17,language,swift,B-LANG
+3,language,c#,B-LANG
+24,language,erlang,B-LANG
+13,language,r,B-LANG
+8,language,javascript,B-LANG
+25,language,f#,B-LANG
+1,language,c,B-LANG
+19,language,rescript,B-LANG
+27,language,haskell,B-LANG
+6,language,groovy,B-LANG
+7,language,java,B-LANG
+34,language,hiveql,B-LANG
+13,language,r,B-LANG
+16,language,scala,B-LANG
+3,language,c#,B-LANG
+1,language,c,B-LANG
+5,language,elixir,B-LANG
+3,language,c#,B-LANG
+28,language,julia,B-LANG
+17,language,swift,B-LANG
+25,language,f#,B-LANG
+33,language,html,B-LANG
+9,language,lua,B-LANG
+13,language,r,B-LANG
+30,language,matlab,B-LANG
+14,language,ruby,B-LANG
+7,language,java,B-LANG
+13,language,r,B-LANG
+22,language,ada,B-LANG
+20,language,go,B-LANG
+15,language,rust,B-LANG
+17,language,swift,B-LANG
+23,language,bash,B-LANG
+25,language,f#,B-LANG
+24,language,erlang,B-LANG
+28,language,julia,B-LANG
+14,language,ruby,B-LANG
+0,language,solidity,B-LANG
+24,language,erlang,B-LANG
+6,language,groovy,B-LANG
+8,language,javascript,B-LANG
+23,language,bash,B-LANG
+0,language,solidity,B-LANG
+7,language,java,B-LANG
+23,language,bash,B-LANG
+10,language,perl,B-LANG
+16,language,scala,B-LANG
+7,language,java,B-LANG
+34,language,hiveql,B-LANG
+34,language,hiveql,B-LANG
+32,language,css,B-LANG
+4,language,dart,B-LANG
+27,language,haskell,B-LANG
+6,language,groovy,B-LANG
+8,language,javascript,B-LANG
+7,language,java,B-LANG
+11,language,php,B-LANG
+33,language,html,B-LANG
+32,language,css,B-LANG
+22,language,ada,B-LANG
+23,language,bash,B-LANG
+34,language,hiveql,B-LANG
+21,language,abap,B-LANG
+26,language,fortran,B-LANG
+34,language,hiveql,B-LANG
+0,language,solidity,B-LANG
+34,language,hiveql,B-LANG
+13,language,r,B-LANG
+2,language,c++,B-LANG
+0,language,solidity,B-LANG
+4,language,dart,B-LANG
+25,language,f#,B-LANG
+13,language,r,B-LANG
+26,language,fortran,B-LANG
+8,language,javascript,B-LANG
+14,language,ruby,B-LANG
+14,language,ruby,B-LANG
+1,language,하드웨어 아키텍처,B-LANG
+3,language,objective-c,B-LANG
+4,language,mac,B-LANG
+5,language,shell scripting,B-LANG
+6,language,embedded c,B-LANG
+7,language,visual basic,B-LANG
+8,language,html 스크립트,B-LANG
+9,language,sass(scss),B-LANG
+10,language,scripting,B-LANG
+11,language,일본어,B-LANG
+12,language,es6,B-LANG
+13,language,css3,B-LANG
+15,language,임베디드 소프트웨어,B-LANG
+16,language,tcl,B-LANG
+17,language,oop,B-LANG
+19,language,rtl 설계,B-LANG
+20,language,mes,B-LANG
+21,language,html5,B-LANG
+22,language,css 자바 스크립트,B-LANG
+23,language,제어 이론,B-LANG
+25,language,c 프로그래밍,B-LANG
+26,language,영어 실력,B-LANG
+27,language,objectivec,B-LANG
+29,language,통계적 추론,B-LANG
+30,language,통계 프로그래밍,B-LANG
+32,language,ml,B-LANG
+33,language,c / c++,B-LANG
+34,language,coroutine,B-LANG
+35,language,glsl,B-LANG
+37,language,verilog,B-LANG
+40,language,rtl 코딩,B-LANG
+41,language,golang,B-LANG
+42,language,jsx,B-LANG
+44,language,xml,B-LANG
+45,language,아날로그 회로 설계,B-LANG
+47,language,ar,B-LANG
+48,language,알고리즘 개발,B-LANG
+49,language,delphi,B-LANG
+51,language,shell script,B-LANG
+52,language,es5,B-LANG
+53,language,can,B-LANG
+55,language,eda,B-LANG
+57,language,assembly,B-LANG
+59,language,jsp,B-LANG
+62,language,bi,B-LANG
+63,language,kernel programming,B-LANG
+65,language,qml,B-LANG
+66,language,프론트엔드 개발자,B-LANG
+72,framework,api,B-FRAME
+73,framework,vr,B-FRAME
+74,framework,drf(django rest framework),B-FRAME
+75,framework,unity3d,B-FRAME
+76,framework,gui 개발,B-FRAME
+77,framework,.net core,B-FRAME
+78,framework,rest api,B-FRAME
+79,framework,ui 디자인,B-FRAME
+80,framework,tailwind css,B-FRAME
+81,framework,병렬 프로그래밍,B-FRAME
+82,framework,nest.js,B-FRAME
+83,framework,ajax,B-FRAME
+84,framework,ux,B-FRAME
+85,framework,웹 개발,B-FRAME
+86,framework,flex,B-FRAME
+87,framework,spring data jpa,B-FRAME
+88,framework,product management,B-FRAME
+89,framework,spring framework,B-FRAME
+90,framework,react admin,B-FRAME
+91,framework,rest,B-FRAME
+92,framework,react native router,B-FRAME
+93,framework,apache tomcat,B-FRAME
+94,framework,restful api,B-FRAME
+95,framework,apache,B-FRAME
+96,framework,redux-observable,B-FRAME
+97,framework,machine learning,B-FRAME
+98,framework,wpf 개발,B-FRAME
+99,framework,typeorm,B-FRAME
+100,framework,microservice architecture,B-FRAME
+101,framework,scrum,B-FRAME
+102,framework,nginx,B-FRAME
+103,framework,nexacro,B-FRAME
+104,framework,sdn,B-FRAME
+105,framework,xamarin,B-FRAME
+106,framework,qt,B-FRAME
+107,framework,mxnet,B-FRAME
+108,framework,tensorflow lite,B-FRAME
+109,framework,ros,B-FRAME
+110,framework,element ui,B-FRAME
+111,framework,unity ml-agents,B-FRAME
+112,framework,yolo,B-FRAME
+113,framework,google guice,B-FRAME
+114,framework,spinnaker,B-FRAME
+115,framework,bamboo,B-FRAME
+116,framework,sass(scss),B-FRAME
+117,framework,apache http server,B-FRAME
+118,framework,jsp,B-FRAME
+119,framework,rtos,B-FRAME
+120,framework,nuxt.js,B-FRAME
+121,framework,caffe(convolutional architecture for fast feature embedding),B-FRAME
+122,framework,mybatis,B-FRAME
+123,framework,rxswift,B-FRAME
+124,framework,회로 설계,B-FRAME
+125,framework,ios,B-FRAME
+126,framework,gan(generative adversarial network),B-FRAME
+127,framework,autosar,B-FRAME
+128,framework,jpa,B-FRAME
+129,framework,deep learning,B-FRAME
+130,framework,mvvm(model-view-viewmodel),B-FRAME
+131,framework,react.js,B-FRAME
+132,framework,mvp,B-FRAME
+133,framework,arm,B-FRAME
+134,framework,embedded system,B-FRAME
+135,framework,vrrp,B-FRAME
+136,framework,spring batch,B-FRAME
+137,framework,windows forms,B-FRAME
+138,framework,klaytn,B-FRAME
+139,framework,apache airflow,B-FRAME
+140,framework,apache druid,B-FRAME
+141,framework,webrtc,B-FRAME
+142,framework,apache hadoop,B-FRAME
+143,framework,babel,B-FRAME
+144,framework,cnn(convolutional neural network),B-FRAME
+145,framework,공정 관리,B-FRAME
+146,framework,hci,B-FRAME
+147,framework,openflow,B-FRAME
+148,framework,mvc,B-FRAME
+149,framework,wpf,B-FRAME
+150,framework,mfc,B-FRAME
+151,framework,.net,B-FRAME
+152,framework,websocket,B-FRAME
+153,framework,임베디드 시스템,B-FRAME
+154,framework,web socket,B-FRAME
+155,framework,angularjs,B-FRAME
+156,framework,reactor,B-FRAME
+157,framework,소프트웨어 공학,B-FRAME
+160,framework,전자정부프레임워크,B-FRAME
+161,framework,컴퓨터 비전,B-FRAME
+162,framework,redmine,B-FRAME
+165,framework,신호 처리,B-FRAME
+166,framework,웹 전략,B-FRAME
+167,framework,클라우드 응용 프로그램,B-FRAME
+168,framework,솔루션 개발,B-FRAME
+169,framework,웹 기술,B-FRAME
+170,framework,restful architecture,B-FRAME
+171,framework,openfoam,B-FRAME
+173,framework,meteorjs,B-FRAME
+174,framework,unreal engine,B-FRAME
+175,framework,게임 개발,B-FRAME
+176,framework,소프트웨어 구현,B-FRAME
+177,framework,soc,B-FRAME
+180,framework,hilt,B-FRAME
+181,framework,restful webservices,B-FRAME
+186,framework,ux 기획,B-FRAME
+187,framework,opencl,B-FRAME
+188,framework,보안,B-FRAME
+189,framework,spring boot,B-FRAME
+190,framework,게임 프로그래밍,B-FRAME
+191,framework,백엔드 개발,B-FRAME
+192,framework,winform,B-FRAME
+196,framework,접근성,B-FRAME
+197,framework,클라이언트 개발,B-FRAME
+199,framework,웹 표준,B-FRAME
+200,framework,gui,B-FRAME
+201,framework,보안 운영,B-FRAME
+203,framework,spa,B-FRAME
+204,framework,asp .net,B-FRAME
+205,framework,asp.net,B-FRAME
+206,framework,agile,B-FRAME
+207,framework,가상화,B-FRAME
+208,framework,xen,B-FRAME
+209,framework,embedded linux,B-FRAME
+210,framework,딥 러닝,B-FRAME
+211,framework,oauth,B-FRAME
+212,framework,clean architecture,B-FRAME
+213,framework,android,B-FRAME
+214,framework,devops,B-FRAME
+215,framework,node.js,B-FRAME
+216,framework,인공 지능,B-FRAME
+217,framework,api 개발,B-FRAME
+218,framework,jpa(java persistent api),B-FRAME
+219,framework,신뢰성,B-FRAME
+220,framework,vue.js,B-FRAME
+221,framework,flutter,B-FRAME
+222,framework,sass,B-FRAME
+223,framework,next.js,B-FRAME
+224,framework,tomcat,B-FRAME
+225,framework,mvvm,B-FRAME
+227,framework,bootstrap,B-FRAME
+228,framework,머신 비전,B-FRAME
+229,framework,guice,B-FRAME
+232,framework,음성 인식,B-FRAME
+233,framework,프로토콜 설계,B-FRAME
+235,framework,공공 관리,B-FRAME
+237,framework,네트워크 보안,B-FRAME
+238,framework,보안 관리,B-FRAME
+239,framework,tdd,B-FRAME
+240,framework,iot,B-FRAME
+241,framework,metal,B-FRAME
+242,framework,협력,B-FRAME
+243,library,의료 영상,B-LIB
+244,library,orm,B-LIB
+245,library,retrofit2,B-LIB
+246,library,ml,B-LIB
+247,library,jwt,B-LIB
+248,library,sass(scss),B-LIB
+249,library,임베디드 시스템,B-LIB
+250,library,펌웨어,B-LIB
+251,library,cuda,B-LIB
+252,library,ethers.js,B-LIB
+253,library,speech,B-LIB
+254,library,metal,B-LIB
+255,library,3d,B-LIB
+256,library,shader,B-LIB
+257,library,opengl es,B-LIB
+258,library,typeorm,B-LIB
+259,library,spi,B-LIB
+260,library,dsp,B-LIB
+261,library,라이브러리 관리,B-LIB
+262,library,i2c,B-LIB
+263,library,web socket,B-LIB
+264,library,axios,B-LIB
+265,library,webgl,B-LIB
+266,library,opencl,B-LIB
+270,library,realm,B-LIB
+271,library,sequelize.js,B-LIB
+272,library,redux.js,B-LIB
+274,library,web3.js,B-LIB
+276,library,machine vision,B-LIB
+277,library,vanilla js,B-LIB
+279,library,torch,B-LIB
+280,library,무선 통신,B-LIB
+284,library,영상,B-LIB
+286,library,css3,B-LIB
+287,library,amplitude,B-LIB
+288,library,dlib,B-LIB
+289,library,babel,B-LIB
+291,library,threejs,B-LIB
+292,library,jquery,B-LIB
+293,library,regular expression,B-LIB
+295,library,d3.js,B-LIB
+296,library,eigen,B-LIB
+297,library,kendo ui,B-LIB
+298,library,highcharts,B-LIB
+299,library,nlp,B-LIB
+301,library,eda,B-LIB
+302,library,mpeg,B-LIB
+303,library,querydsl,B-LIB
+305,library,scipy,B-LIB
+306,library,pll,B-LIB
+307,library,redux-saga,B-LIB
+309,library,redux-thunk,B-LIB
+310,library,rx,B-LIB
+311,library,jpa(java persistent api),B-LIB
+312,library,websocket,B-LIB
+313,library,react hooks api,B-LIB
+314,library,3d 그래픽,B-LIB
+315,tool,orcad,B-TOOL
+316,tool,atlassian jira,B-TOOL
+317,tool,pcb 디자인,B-TOOL
+318,tool,의료 영상,B-TOOL
+319,tool,pads layout,B-TOOL
+320,tool,광학 현미경,B-TOOL
+321,tool,catia v5,B-TOOL
+322,tool,sap bw,B-TOOL
+323,tool,마이크로프로세서,B-TOOL
+324,tool,sap bi,B-TOOL
+325,tool,sap 포털,B-TOOL
+326,tool,문서 제도,B-TOOL
+327,tool,문서 관리,B-TOOL
+328,tool,프로토콜 개발,B-TOOL
+329,tool,data guard,B-TOOL
+330,tool,lidar,B-TOOL
+331,tool,문서 검토,B-TOOL
+332,tool,3g,B-TOOL
+333,tool,vxworks,B-TOOL
+334,tool,pcle,B-TOOL
+335,tool,무선 통신,B-TOOL
+336,tool,power point,B-TOOL
+337,tool,셀레니움,B-TOOL
+338,tool,directx,B-TOOL
+339,tool,회로 설계,B-TOOL
+340,tool,microsoft license,B-TOOL
+341,tool,microsoft project,B-TOOL
+342,tool,couchdb,B-TOOL
+343,tool,iso 27001,B-TOOL
+344,tool,ips,B-TOOL
+345,tool,vpn,B-TOOL
+346,tool,power bi,B-TOOL
+347,tool,nfc,B-TOOL
+348,tool,dbt,B-TOOL
+349,tool,fortinet,B-TOOL
+350,tool,cisa,B-TOOL
+351,tool,itgc,B-TOOL
+352,tool,adobe,B-TOOL
+353,tool,암호화,B-TOOL
+354,tool,mpi,B-TOOL
+355,tool,i2c,B-TOOL
+356,tool,spi,B-TOOL
+357,tool,edi,B-TOOL
+358,tool,ceh,B-TOOL
+359,tool,하드웨어 설계,B-TOOL
+360,tool,ui 디자인,B-TOOL
+361,tool,qc,B-TOOL
+362,tool,splunk,B-TOOL
+363,tool,microsoft dynamics,B-TOOL
+364,tool,wireshark,B-TOOL
+365,tool,네트워크 관리,B-TOOL
+366,tool,네트워크 운영,B-TOOL
+367,tool,microsoft outlook,B-TOOL
+368,tool,solidworks,B-TOOL
+369,tool,adobe photoshop,B-TOOL
+370,tool,네트워크 인프라,B-TOOL
+371,tool,프로젝트 계획,B-TOOL
+372,tool,dsl,B-TOOL
+373,tool,프로젝트 관리,B-TOOL
+374,tool,파일 시스템,B-TOOL
+375,tool,adobe xd,B-TOOL
+376,tool,adobe illustrator,B-TOOL
+377,tool,redmine,B-TOOL
+378,tool,프로젝트 실행,B-TOOL
+379,tool,active directory,B-TOOL
+380,tool,usb,B-TOOL
+381,tool,dwdm,B-TOOL
+382,tool,서버 관리,B-TOOL
+383,tool,기술 개발,B-TOOL
+384,tool,잉크젯,B-TOOL
+385,tool,서버,B-TOOL
+386,tool,방화벽,B-TOOL
+387,tool,스위치,B-TOOL
+388,tool,라우터,B-TOOL
+389,tool,erp,B-TOOL
+390,tool,회로,B-TOOL
+391,tool,vlan,B-TOOL
+392,tool,네트워크 설치,B-TOOL
+393,tool,카메라,B-TOOL
+394,tool,ids,B-TOOL
+395,tool,smtp,B-TOOL
+396,tool,nas,B-TOOL
+397,tool,erp 소프트웨어,B-TOOL
+398,tool,erp 구현,B-TOOL
+399,tool,dhcp,B-TOOL
+400,tool,nat,B-TOOL
+401,tool,dns,B-TOOL
+402,tool,powershell,B-TOOL
+403,tool,회로 테스트,B-TOOL
+404,tool,lte,B-TOOL
+405,tool,teamcity,B-TOOL
+406,tool,san,B-TOOL
+407,tool,cissp,B-TOOL
+408,tool,광학,B-TOOL
+409,tool,hp,B-TOOL
+410,tool,fusion360,B-TOOL
+411,tool,ccnp,B-TOOL
+412,tool,pyxis,B-TOOL
+413,tool,xcode,B-TOOL
+414,tool,google analytics,B-TOOL
+415,tool,blockchain,B-TOOL
+416,tool,cisco vpn,B-TOOL
+417,tool,cisco wireless,B-TOOL
+418,tool,cisco,B-TOOL
+419,tool,dns 관리,B-TOOL
+420,tool,sox (404),B-TOOL
+421,tool,access 데이터베이스,B-TOOL
+422,tool,ccie,B-TOOL
+423,tool,wsus,B-TOOL
+424,tool,vdi,B-TOOL
+425,tool,ssl,B-TOOL
+426,tool,voip,B-TOOL
+427,tool,uart,B-TOOL
+428,tool,sip,B-TOOL
+429,tool,cti,B-TOOL
+430,tool,gps,B-TOOL
+431,tool,4g,B-TOOL
+432,tool,adc,B-TOOL
+433,tool,3d 시각화,B-TOOL
+434,tool,oss,B-TOOL
+435,tool,dacs,B-TOOL
+436,tool,클라우드 컴퓨팅,B-TOOL
+437,tool,fcc,B-TOOL
+438,tool,하드웨어 테스트,B-TOOL
+439,tool,xilinx ise,B-TOOL
+440,tool,gis,B-TOOL
+441,tool,oracle database,B-TOOL
+442,tool,scm,B-TOOL
+443,tool,eeo,B-TOOL
+444,tool,하드웨어 지원,B-TOOL
+445,tool,android studio,B-TOOL
+446,tool,nx unigraphics,B-TOOL
+447,tool,smt,B-TOOL
+448,tool,품질 관리,B-TOOL
+449,tool,storage,B-TOOL
+450,tool,제품 인증,B-TOOL
+451,tool,salesforce.com,B-TOOL
+452,tool,하드웨어 개발,B-TOOL
+453,tool,iaas,B-TOOL
+454,tool,계정 관리,B-TOOL
+455,tool,하드웨어,B-TOOL
+456,tool,solidworks simulation,B-TOOL
+457,tool,설계,B-TOOL
+458,tool,sap 구현,B-TOOL
+459,tool,sap sd,B-TOOL
+460,tool,sap mm,B-TOOL
+461,tool,spotfire,B-TOOL
+462,tool,sap fi,B-TOOL
+463,tool,sap hr,B-TOOL
+464,tool,rfid,B-TOOL
+465,tool,pads,B-TOOL
+466,tool,sap erp,B-TOOL
+468,tool,dlp,B-TOOL
+469,tool,qad,B-TOOL
+470,tool,mssql(microsoft sql server),B-TOOL
+471,tool,ios,B-TOOL
+472,tool,nosql,B-TOOL
+473,tool,linux kernel,B-TOOL
+474,tool,tcp/ip,B-TOOL
+475,tool,amazon web services(aws),B-TOOL
+476,tool,sap,B-TOOL
+477,tool,aws s3,B-TOOL
+478,tool,aws cloud9,B-TOOL
+479,tool,slack api,B-TOOL
+480,tool,aws elastic beanstalk,B-TOOL
+481,tool,apache kafka,B-TOOL
+482,tool,unix,B-TOOL
+483,tool,google cloud platform,B-TOOL
+484,tool,windows,B-TOOL
+485,tool,eslint,B-TOOL
+486,tool,webpack,B-TOOL
+487,tool,azure,B-TOOL
+488,tool,aws ec2,B-TOOL
+489,tool,github actions,B-TOOL
+490,tool,aws simple queue service(aws sqs),B-TOOL
+491,tool,apache maven,B-TOOL
+492,tool,gradle,B-TOOL
+493,tool,sql,B-TOOL
+494,tool,aurora db,B-TOOL
+495,tool,datadog,B-TOOL
+496,tool,data analysis,B-TOOL
+497,tool,aws cloudfront,B-TOOL
+498,tool,aws elasticbeanstalk,B-TOOL
+499,tool,yarn,B-TOOL
+500,tool,database,B-TOOL
+501,tool,microsoft azure,B-TOOL
+502,tool,aws emr,B-TOOL
+503,tool,aws ecs,B-TOOL
+504,tool,plc,B-TOOL
+505,tool,aws eks,B-TOOL
+506,tool,raspberry pi,B-TOOL
+507,tool,spdk,B-TOOL
+508,tool,hls(http live streaming),B-TOOL
+509,tool,gcp(google cloud platform),B-TOOL
+510,tool,ci/cd,B-TOOL
+511,tool,mariadb,B-TOOL
+512,tool,cocoapods,B-TOOL
+513,tool,mapbox,B-TOOL
+514,tool,azure kubernetes service (aks),B-TOOL
+515,tool,google cloud functions,B-TOOL
+516,tool,google gke on-prem,B-TOOL
+517,tool,azure microsoft portal,B-TOOL
+518,tool,ubuntu,B-TOOL
+519,tool,ml kit,B-TOOL
+520,tool,big data,B-TOOL
+521,tool,linux,B-TOOL
+522,tool,aws rds,B-TOOL
+523,tool,aws lambda,B-TOOL
+527,tool,oracle,B-TOOL
+562,tool,jest,B-TOOL
+566,tool,circleci,B-TOOL
+575,tool,gcp,B-TOOL
+576,tool,paas,B-TOOL
+577,tool,azure emotion,B-TOOL
+578,tool,3ds max,B-TOOL
+579,tool,vm웨어,B-TOOL
+580,tool,ansys fluent,B-TOOL
+581,tool,cuda,B-TOOL
+582,tool,microchip pic,B-TOOL
+583,tool,디지털 회로 설계,B-TOOL
+584,tool,데이터 보안,B-TOOL
+585,tool,데이터 통합,B-TOOL
+586,tool,데이터베이스,B-TOOL
+587,tool,vmware view,B-TOOL
+588,tool,vmware infrastructure,B-TOOL
+589,tool,vmware server,B-TOOL
+590,tool,ldap,B-TOOL
+591,tool,rfp,B-TOOL
+592,tool,네트워크 통신,B-TOOL
+593,tool,pcb 레이아웃 설계,B-TOOL
+594,tool,장비,B-TOOL
+595,tool,취약점 스캐닝,B-TOOL
+596,tool,api,B-TOOL
+597,tool,etl,B-TOOL
+598,tool,pmp,B-TOOL
+599,tool,typeform,B-TOOL
+600,tool,fpga 프로토 타이핑,B-TOOL
+601,tool,fpga,B-TOOL
+602,tool,인프라,B-TOOL
+603,tool,windows 서비스,B-TOOL
+604,tool,전략 개발,B-TOOL
+605,tool,클라우드 보안,B-TOOL
+606,tool,특허,B-TOOL
+607,tool,visual studio,B-TOOL
+608,tool,데이터 과학,B-TOOL
+609,tool,excel,B-TOOL
+610,tool,eclipse,B-TOOL
+611,tool,svn,B-TOOL
+612,tool,udp,B-TOOL
+613,tool,sdlc,B-TOOL
+614,tool,emr,B-TOOL
+615,tool,테스트 및 평가,B-TOOL
+616,tool,cms,B-TOOL
+617,tool,xilinx,B-TOOL
+618,tool,stp,B-TOOL
+619,tool,펌웨어,B-TOOL
+620,tool,소프트웨어 산업,B-TOOL
+621,tool,gpu,B-TOOL
+622,tool,soc,B-TOOL
+623,tool,운영체제,B-TOOL
+624,tool,office 365,B-TOOL
+625,tool,altium designer,B-TOOL
+626,tool,autocad,B-TOOL
+627,tool,ip,B-TOOL
+628,tool,tcp,B-TOOL
+629,tool,네트워크 설계,B-TOOL
+630,tool,saas,B-TOOL
+631,tool,arduino,B-TOOL
+632,tool,amazon web service,B-TOOL
+633,tool,mantis bug tracker,B-TOOL
+634,tool,mqtt,B-TOOL
+635,tool,aws certificate manager,B-TOOL
+636,tool,aws route 53,B-TOOL
+637,tool,red hat ceph storage,B-TOOL
+638,tool,apache hadoop,B-TOOL
+639,tool,aws sagemaker,B-TOOL
+640,tool,jupyter,B-TOOL
+641,tool,aws api gateway,B-TOOL
+642,tool,devexpress,B-TOOL
+643,tool,azure network watcher,B-TOOL
+644,tool,aws cloudformation,B-TOOL
+645,tool,azure cache for redis,B-TOOL
+646,tool,iot,B-TOOL
+647,tool,sqlite,B-TOOL
+648,tool,shell,B-TOOL
+649,tool,composer,B-TOOL
+650,tool,dba(database administration),B-TOOL
+651,tool,aws cloudwatch,B-TOOL
+652,tool,aws codecommit,B-TOOL
+653,tool,ncp(naver cloud platform),B-TOOL
+654,tool,nvidia tensorrt,B-TOOL
+655,tool,firebase,B-TOOL
+656,tool,uml,B-TOOL
+657,tool,windows server,B-TOOL
+658,tool,msql,B-TOOL
+659,tool,aws alexa,B-TOOL
+660,tool,altium,B-TOOL
+661,tool,ansys,B-TOOL
+662,tool,gcc,B-TOOL
+663,tool,cae,B-TOOL
+664,tool,cad,B-TOOL
+665,tool,qa 엔지니어링,B-TOOL
+666,tool,ms 오피스,B-TOOL
+667,tool,ssis,B-TOOL
+668,tool,it 관리,B-TOOL
+669,tool,it 운영,B-TOOL
+670,tool,개발,B-TOOL
+671,tool,data mining,B-TOOL
+672,tool,windows 서버,B-TOOL
+673,tool,소프트웨어 개발,B-TOOL
+674,tool,리눅스 서버,B-TOOL
+675,tool,rdbms,B-TOOL
+676,tool,http,B-TOOL
+677,tool,ec2,B-TOOL
+678,tool,visual studio code,B-TOOL
+679,tool,heroku,B-TOOL
+680,tool,intellij idea,B-TOOL
+681,tool,통계 자료 분석,B-TOOL
+682,tool,데이터 분석,B-TOOL
+683,tool,google container registry,B-TOOL
+684,tool,figma,B-TOOL
+685,tool,google tag manager,B-TOOL

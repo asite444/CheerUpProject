@@ -1,0 +1,17 @@
+# 우리가 최종 식별하지 못한 기술 언어(대표값으로 넣어야할 지 의견 필요) 
+
+categories = {
+    "languages": [
+         "abap", "ada", "bash", "erlang", "f#", "fortran", "haskell", "julia", "kotlin", "matlab", "vhdl"
+    ],
+    "frameworks": [
+        "django"
+    ],
+    "libraries": [
+        "beautifulsoup", "bokeh", "fastai", "grpcio", "huggingface", "lightgbm", "matplotlib", "numpy", "opencv",
+        "pandas", "plotly", "pydantic", "requests", "scikit-learn", "seaborn", "sqlalchemy", "transformers", "xgboost"
+    ],
+    "tools": [
+        "apache spark", "dask", "openstack", "terraform"
+    ]
+}

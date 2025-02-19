@@ -1,0 +1,888 @@
+{
+    "languages": {
+        "c": [
+            "c"
+        ],
+        "c++": [
+            "c++"
+        ],
+        "c#": [
+            "c#"
+        ],
+        "dart": [
+            "dart"
+        ],
+        "elixir": [
+            "elixir"
+        ],
+        "groovy": [
+            "groovy"
+        ],
+        "java": [
+            "java",
+            "jdk"
+        ],
+        "javascript": [
+            "js",
+            "javascript"
+        ],
+        "lua": [
+            "lua"
+        ],
+        "perl": [
+            "perl"
+        ],
+        "php": [
+            "php"
+        ],
+        "python": [
+            "py",
+            "python"
+        ],
+        "r": [
+            "r"
+        ],
+        "ruby": [
+            "rails",
+            "ruby"
+        ],
+        "rust": [
+            "rust"
+        ],
+        "scala": [
+            "scala"
+        ],
+        "swift": [
+            "swift"
+        ],
+        "typescript": [
+            "ts",
+            "typescript"
+        ],
+        "rescript": [
+            "rescript"
+        ],
+        "go": [
+            "golang",
+            "go"
+        ],
+        "abap": [
+            "abap"
+        ],
+        "ada": [
+            "ada"
+        ],
+        "bash": [
+            "bash"
+        ],
+        "erlang": [
+            "erlang"
+        ],
+        "f#": [
+            "f#"
+        ],
+        "fortran": [
+            "fortran"
+        ],
+        "haskell": [
+            "haskell"
+        ],
+        "julia": [
+            "julia"
+        ],
+        "kotlin": [
+            "kotlin"
+        ],
+        "matlab": [
+            "matlab"
+        ],
+        "vhdl": [
+            "vhdl"
+        ]
+    },
+    "frameworks": {
+        "angular": [
+            "angular"
+        ],
+        "appium": [
+            "appium"
+        ],
+        "armeria": [
+            "armeria"
+        ],
+        "backbonejs": [
+            "backbonejs",
+            "backbone js"
+        ],
+        "codeigniter": [
+            "codeigniter"
+        ],
+        "dagger": [
+            "dagger"
+        ],
+        "dropwizard": [
+            "dropwizard"
+        ],
+        "echo": [
+            "echo"
+        ],
+        "electron": [
+            "electron"
+        ],
+        "emberjs": [
+            "emberjs",
+            "ember js"
+        ],
+        "expressjs": [
+            "express js",
+            "express",
+            "expressjs"
+        ],
+        "falcon": [
+            "falcon"
+        ],
+        "fastapi": [
+            "fastapi"
+        ],
+        "fastify": [
+            "fastify"
+        ],
+        "fiber": [
+            "fiber"
+        ],
+        "flask": [
+            "flask"
+        ],
+        "flink": [
+            "flink"
+        ],
+        "gatsby": [
+            "gatsby"
+        ],
+        "gin": [
+            "gin"
+        ],
+        "grpc": [
+            "grpc"
+        ],
+        "hadoop": [
+            "hadoop"
+        ],
+        "jasmine": [
+            "jasmine"
+        ],
+        "junit": [
+            "junit"
+        ],
+        "kotest": [
+            "kotest"
+        ],
+        "ktor": [
+            "ktor"
+        ],
+        "laravel": [
+            "laravel"
+        ],
+        "meteor": [
+            "meteor"
+        ],
+        "mocha": [
+            "mocha"
+        ],
+        "mockito": [
+            "mockito"
+        ],
+        "nestjs": [
+            "nestjs",
+            "nest js"
+        ],
+        "netty": [
+            "netty"
+        ],
+        "nextjs": [
+            "next js",
+            "nextjs"
+        ],
+        "nuxtjs": [
+            "nuxtjs",
+            "nuxt js"
+        ],
+        "phoenix": [
+            "phoenix"
+        ],
+        "ray": [
+            "ray"
+        ],
+        "react native": [
+            "reactnative",
+            "react native"
+        ],
+        "reactorkit": [
+            "reactorkit"
+        ],
+        "relay": [
+            "relay"
+        ],
+        "ribs": [
+            "ribs"
+        ],
+        "ruby on rails": [
+            "rails",
+            "ruby on rails"
+        ],
+        "sanic": [
+            "sanic"
+        ],
+        "selenium": [
+            "selenium"
+        ],
+        "spark": [
+            "spark"
+        ],
+        "spring": [
+            "spring"
+        ],
+        "springboot": [
+            "springboot"
+        ],
+        "svelte": [
+            "svelte"
+        ],
+        "swagger": [
+            "swagger"
+        ],
+        "tailwind": [
+            "tailwind"
+        ],
+        "thrift": [
+            "thrift"
+        ],
+        "vuejs": [
+            "vuejs",
+            "vue js",
+            "vue"
+        ],
+        "nodejs": [
+            "node",
+            "node js",
+            "nodejs"
+        ],
+        "koa": [
+            "koa"
+        ],
+        "django": [
+            "django"
+        ],
+        "javafx": [
+            "javafx"
+        ]
+    },
+    "libraries": {
+        "alamofire": [
+            "alamofire"
+        ],
+        "apollo": [
+            "apollo"
+        ],
+        "emotion": [
+            "emotion"
+        ],
+        "enzyme": [
+            "enzyme"
+        ],
+        "exoplayer": [
+            "exoplayer"
+        ],
+        "glide": [
+            "glide"
+        ],
+        "immer": [
+            "immer"
+        ],
+        "jotai": [
+            "jotai"
+        ],
+        "keras": [
+            "keras"
+        ],
+        "lottie": [
+            "lottie"
+        ],
+        "mobx": [
+            "mobx"
+        ],
+        "moya": [
+            "moya"
+        ],
+        "react context": [
+            "reactcontext",
+            "react context"
+        ],
+        "reactivex": [
+            "reactivex"
+        ],
+        "reactjs": [
+            "reactjs",
+            "react js",
+            "react"
+        ],
+        "react query": [
+            "reactquery",
+            "react query"
+        ],
+        "recoil": [
+            "recoil"
+        ],
+        "redux": [
+            "redux"
+        ],
+        "rest-assured": [
+            "rest-assured"
+        ],
+        "retrofit": [
+            "retrofit"
+        ],
+        "sinon": [
+            "sinon"
+        ],
+        "snapkit": [
+            "snapkit"
+        ],
+        "styled-components": [
+            "styled-components"
+        ],
+        "tensorflow": [
+            "tensorflow",
+            "tf"
+        ],
+        "testing library": [
+            "testinglibrary",
+            "testing library"
+        ],
+        "vuex": [
+            "vuex"
+        ],
+        "zustand": [
+            "zustand"
+        ],
+        "pytorch": [
+            "pytorch",
+            "torch"
+        ],
+        "graphql": [
+            "graphql"
+        ],
+        "beautifulsoup": [
+            "beautifulsoup"
+        ],
+        "bokeh": [
+            "bokeh"
+        ],
+        "fastai": [
+            "fastai"
+        ],
+        "grpcio": [
+            "grpcio"
+        ],
+        "huggingface": [
+            "huggingface"
+        ],
+        "lightgbm": [
+            "lightgbm"
+        ],
+        "matplotlib": [
+            "matplotlib"
+        ],
+        "numpy": [
+            "numpy"
+        ],
+        "opencv": [
+            "opencv"
+        ],
+        "pandas": [
+            "pandas"
+        ],
+        "plotly": [
+            "plotly"
+        ],
+        "pydantic": [
+            "pydantic"
+        ],
+        "requests": [
+            "requests"
+        ],
+        "scikit-learn": [
+            "scikit-learn"
+        ],
+        "seaborn": [
+            "seaborn"
+        ],
+        "sqlalchemy": [
+            "sqlalchemy"
+        ],
+        "transformers": [
+            "transformers"
+        ],
+        "xgboost": [
+            "xgboost"
+        ]
+    },
+    "tools": {
+        "agit": [
+            "agit"
+        ],
+        "airflow": [
+            "airflow"
+        ],
+        "ansible": [
+            "ansible"
+        ],
+        "arcus": [
+            "arcus"
+        ],
+        "arangodb": [
+            "arangodb",
+            "arango db"
+        ],
+        "argo cd": [
+            "argo cd",
+            "argocd"
+        ],
+        "asana": [
+            "asana"
+        ],
+        "aws athena": [
+            "aws",
+            "aws athena",
+            "awsathena"
+        ],
+        "aws auroradb": [
+            "awsauroradb",
+            "aws aurora db",
+            "aws auroradb"
+        ],
+        "aws codebuild": [
+            "aws codebuild",
+            "awscodebuild"
+        ],
+        "aws codedeploy": [
+            "aws codedeploy",
+            "awscodedeploy"
+        ],
+        "aws codepipeline": [
+            "aws codepipeline",
+            "awscodepipeline"
+        ],
+        "aws documentdb": [
+            "awsdocumentdb",
+            "aws documentdb",
+            "aws document db"
+        ],
+        "aws dynamodb": [
+            "aws dynamodb",
+            "awsdynamodb",
+            "aws dynamo db"
+        ],
+        "aws kinesis": [
+            "aws kinesis",
+            "awskinesis"
+        ],
+        "aws mariadb": [
+            "aws mariadb",
+            "awsmariadb",
+            "aws maria db"
+        ],
+        "aws redshift": [
+            "awsredshift",
+            "aws redshift"
+        ],
+        "aws ses": [
+            "aws ses",
+            "awsses"
+        ],
+        "aws sns": [
+            "awssns",
+            "aws sns"
+        ],
+        "azure devops": [
+            "azure devops",
+            "azuredevops"
+        ],
+        "bazel": [
+            "bazel"
+        ],
+        "bitbucket": [
+            "bitbucket"
+        ],
+        "bitrise": [
+            "bitrise"
+        ],
+        "capistrano": [
+            "capistrano"
+        ],
+        "cassandradb": [
+            "cassandra db",
+            "cassandradb"
+        ],
+        "celery": [
+            "celery"
+        ],
+        "central dogma": [
+            "centraldogma",
+            "central dogma"
+        ],
+        "ceph": [
+            "ceph"
+        ],
+        "circle ci": [
+            "circle ci",
+            "circleci"
+        ],
+        "clickhouse": [
+            "clickhouse"
+        ],
+        "cockroachdb": [
+            "cockroachdb",
+            "cockroach db"
+        ],
+        "confluence": [
+            "confluence"
+        ],
+        "couchbase": [
+            "couchbase"
+        ],
+        "cubrid": [
+            "cubrid"
+        ],
+        "cucumber": [
+            "cucumber"
+        ],
+        "cypress": [
+            "cypress"
+        ],
+        "discord": [
+            "discord"
+        ],
+        "docker": [
+            "docker"
+        ],
+        "docusaurus": [
+            "docusaurus"
+        ],
+        "dooray": [
+            "dooray"
+        ],
+        "drone": [
+            "drone"
+        ],
+        "druid": [
+            "druid"
+        ],
+        "elasticsearch": [
+            "elasticsearch"
+        ],
+        "fastlane": [
+            "fastlane"
+        ],
+        "fluentd": [
+            "fluentd"
+        ],
+        "flow": [
+            "flow"
+        ],
+        "git": [
+            "git"
+        ],
+        "github": [
+            "github"
+        ],
+        "github action": [
+            "githubaction",
+            "github action"
+        ],
+        "gitlab": [
+            "gitlab"
+        ],
+        "go cd": [
+            "go cd",
+            "gocd"
+        ],
+        "google bigquery": [
+            "googlebigquery",
+            "google bigquery"
+        ],
+        "google cloud build": [
+            "gcp",
+            "google cloud build",
+            "googlecloudbuild"
+        ],
+        "google data studio": [
+            "googledatastudio",
+            "google data studio"
+        ],
+        "google firebase": [
+            "google firebase",
+            "googlefirebase"
+        ],
+        "grafana": [
+            "grafana"
+        ],
+        "greenplum": [
+            "greenplum"
+        ],
+        "gulp": [
+            "gulp"
+        ],
+        "h2": [
+            "h2"
+        ],
+        "harbor": [
+            "harbor"
+        ],
+        "hbase": [
+            "hbase"
+        ],
+        "hazelcast": [
+            "hazelcast"
+        ],
+        "helm": [
+            "helm"
+        ],
+        "hive": [
+            "hive"
+        ],
+        "hugo": [
+            "hugo"
+        ],
+        "istio": [
+            "istio"
+        ],
+        "jaeger": [
+            "jaeger"
+        ],
+        "jandi": [
+            "jandi"
+        ],
+        "jenkins": [
+            "jenkins"
+        ],
+        "jira": [
+            "jira"
+        ],
+        "kafka": [
+            "kafka"
+        ],
+        "kakaotalk": [
+            "kakaotalk"
+        ],
+        "kakaowork": [
+            "kakaowork"
+        ],
+        "karma": [
+            "karma"
+        ],
+        "karpenter": [
+            "karpenter"
+        ],
+        "kibana": [
+            "kibana"
+        ],
+        "kube-bench": [
+            "kube-bench"
+        ],
+        "kubeflow": [
+            "kubeflow"
+        ],
+        "kubernetes": [
+            "k8s",
+            "kubernetes"
+        ],
+        "kudu": [
+            "kudu"
+        ],
+        "linkerd": [
+            "linkerd"
+        ],
+        "liquibase": [
+            "liquibase"
+        ],
+        "locust": [
+            "locust"
+        ],
+        "looker": [
+            "looker"
+        ],
+        "memcached": [
+            "memcached"
+        ],
+        "metabase": [
+            "metabase"
+        ],
+        "microsoft-teams": [
+            "microsoft-teams"
+        ],
+        "mlflow": [
+            "mlflow"
+        ],
+        "monday": [
+            "monday"
+        ],
+        "mongodb": [
+            "mongo db",
+            "mongodb",
+            "mongo"
+        ],
+        "mssql": [
+            "mssql",
+            "ms sql"
+        ],
+        "mysql": [
+            "mysql",
+            "my sql"
+        ],
+        "naver works": [
+            "naverworks",
+            "naver works"
+        ],
+        "neo4j": [
+            "neo4j"
+        ],
+        "nexus": [
+            "nexus"
+        ],
+        "ngrinder": [
+            "ngrinder"
+        ],
+        "nifi": [
+            "nifi"
+        ],
+        "notion": [
+            "notion"
+        ],
+        "openebs": [
+            "openebs"
+        ],
+        "oracledb": [
+            "oracle db",
+            "oracledb"
+        ],
+        "packer": [
+            "packer"
+        ],
+        "playwright": [
+            "playwright"
+        ],
+        "postgresql": [
+            "postgres",
+            "postgresql",
+            "postgre sql"
+        ],
+        "presto": [
+            "presto"
+        ],
+        "prometheus": [
+            "prometheus"
+        ],
+        "rabbitmq": [
+            "rabbitmq"
+        ],
+        "rancher": [
+            "rancher"
+        ],
+        "ranger": [
+            "ranger"
+        ],
+        "redash": [
+            "redash"
+        ],
+        "redis": [
+            "redis"
+        ],
+        "rocksdb": [
+            "rocksdb",
+            "rocks db"
+        ],
+        "saltstack": [
+            "saltstack"
+        ],
+        "slack": [
+            "slack"
+        ],
+        "snowflake": [
+            "snowflake"
+        ],
+        "solr": [
+            "solr"
+        ],
+        "sonarqube": [
+            "sonarqube"
+        ],
+        "storybook": [
+            "storybook"
+        ],
+        "superset": [
+            "superset"
+        ],
+        "tableau": [
+            "tableau"
+        ],
+        "telegram": [
+            "telegram"
+        ],
+        "travis ci": [
+            "travis",
+            "travis ci"
+        ],
+        "trello": [
+            "trello"
+        ],
+        "trino": [
+            "trino"
+        ],
+        "tuist": [
+            "tuist"
+        ],
+        "unity": [
+            "unity"
+        ],
+        "vault": [
+            "vault"
+        ],
+        "zabbix": [
+            "zabbix"
+        ],
+        "zeppelin": [
+            "zeppelin"
+        ],
+        "puppeteer": [
+            "puppeteer"
+        ],
+        "opengl": [
+            "opengl"
+        ],
+        "zipkin": [
+            "zipkin"
+        ],
+        "impala": [
+            "impala"
+        ],
+        "influxdb": [
+            "influxdb"
+        ],
+        "traefik": [
+            "traefik"
+        ],
+        "apache spark": [
+            "apache spark"
+        ],
+        "dask": [
+            "dask"
+        ],
+        "openstack": [
+            "openstack"
+        ],
+        "terraform": [
+            "terraform"
+        ]
+    }
+}

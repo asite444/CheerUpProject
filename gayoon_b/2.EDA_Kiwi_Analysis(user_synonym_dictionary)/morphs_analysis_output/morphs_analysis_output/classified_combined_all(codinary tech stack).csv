@@ -1,0 +1,233 @@
+name,Classification
+Agit,Tool
+Airflow,Library
+Alamofire,Framework
+Angular,Framework
+Ansible,Tool
+Apollo,Framework
+Appium,Tool
+ArangoDB,Library
+Arcus,Library
+Argo CD,Tool
+Armeria,Framework
+Asana,Tool
+AWS Athena,Library
+AWS AuroraDB,Library
+AWS CodeBuild,Tool
+AWS CodeDeploy,Tool
+AWS CodePipeline,Tool
+AWS DocumentDB,Library
+AWS DynamoDB,Library
+AWS Kinesis,Framework
+AWS MariaDB,Library
+AWS Redshift,Library
+AWS SES,Framework
+AWS SNS,Framework
+Azure DevOps,Tool
+BackboneJS,Framework
+Bazel,Framework
+Bitbucket,Tool
+Bitrise,Framework
+Capistrano,Tool
+CassandraDB,Library
+Celery,Framework
+Central Dogma,Tool
+Ceph,Library
+Circle CI,Tool
+Clickhouse,Library
+CockroachDB,Library
+CodeIgniter,Framework
+Confluence,Tool
+Couchbase,Library
+C++,Language
+C#,Language
+Cubrid,Library
+Cucumber,Tool
+Cypress,Tool
+Dagger,Framework
+Dart,Language
+Discord,Tool
+Docker,Tool
+Docusaurus,Framework
+Dooray,Tool
+Drone,Tool
+Dropwizard,Framework
+Druid,Library
+Echo,Framework
+ElasticSearch,Library
+Electron,Framework
+Elixir,Language
+EmberJS,Framework
+Emotion,Framework
+Enzyme,Tool
+ExoPlayer,Framework
+ExpressJS,Framework
+Falcon,Framework
+FastAPI,Framework
+Fastify,Framework
+Fastlane,Framework
+Fiber,Framework
+Flask,Framework
+Flink,Library
+Flow,Tool
+Fluentd,Library
+Gatsby,Framework
+Gin,Framework
+Github,Tool
+Github Action,Tool
+Gitlab,Tool
+Glide,Framework
+Go,Language
+Go CD,Tool
+Google BigQuery,Library
+Google Cloud Build,Tool
+Google Data Studio,Library
+Google Firebase,Framework
+Grafana,Library
+GraphQL,Framework
+Greenplum,Library
+Groovy,Language
+GRPC,Framework
+Gulp,Tool
+H2,Library
+Hadoop,Library
+Harbor,Tool
+Hazelcast,Library
+HBase,Library
+Helm,Tool
+Hive,Library
+Hugo,Framework
+Immer,Framework
+Impala,Library
+InfluxDB,Library
+Istio,Tool
+Jaeger,Tool
+Jandi,Tool
+Jasmine,Tool
+Java,Language
+Javascript,Language
+Jenkins,Tool
+Jira,Tool
+Jotai,Framework
+JUnit,Tool
+Kafka,Library
+Kakaotalk,Tool
+KakaoWork,Tool
+Karma,Tool
+Karpenter,Tool
+Keras,Library
+Kibana,Library
+Koa,Framework
+Kotest,Tool
+Ktor,Framework
+Kube-Bench,Tool
+Kubeflow,Library
+Kubernetes,Tool
+Kudu,Library
+Laravel,Framework
+Linkerd,Tool
+Liquibase,Framework
+Locust,Tool
+Looker,Library
+Lottie,Framework
+Lua,Language
+Memcached,Library
+Metabase,Library
+Meteor,Framework
+Microsoft-Teams,Tool
+MLflow,Library
+MobX,Framework
+Mocha,Tool
+Mockito,Tool
+Monday,Tool
+MongoDB,Library
+Moya,Framework
+MSSQL,Library
+MySQL,Library
+Naver Works,Tool
+Neo4j,Library
+NestJS,Framework
+Netty,Framework
+NextJS,Framework
+Nexus,Tool
+nGrinder,Tool
+NIFI,Library
+NodeJS,Framework
+Notion,Tool
+NuxtJS,Framework
+OpenEBS,Tool
+OpenGL,Framework
+OracleDB,Library
+Packer,Tool
+Perl,Language
+Phoenix,Framework
+PHP,Language
+Playwright,Tool
+PostgreSQL,Library
+Presto,Library
+Prometheus,Library
+Puppeteer,Tool
+Pytorch,Library
+R,Language
+RabbitMQ,Framework
+Rancher,Tool
+Ranger,Library
+Ray,Library
+React Context,Framework
+ReactiveX,Framework
+ReactJS,Framework
+React Native,Framework
+ReactorKit,Framework
+React Query,Framework
+Recoil,Framework
+Redash,Library
+Redis,Library
+Redux,Framework
+Relay,Framework
+ReScript,Language
+Rest-Assured,Tool
+Retrofit,Framework
+RIBs,Framework
+RocksDB,Library
+Ruby,Language
+Ruby on Rails,Framework
+Rust,Language
+Saltstack,Tool
+Sanic,Framework
+Scala,Language
+Selenium,Tool
+Sinon,Tool
+Slack,Tool
+SnapKit,Framework
+Snowflake,Library
+Solr,Library
+Sonarqube,Tool
+Spark,Library
+Spring,Framework
+SpringBoot,Framework
+Storybook,Framework
+Styled-Components,Framework
+Superset,Library
+Svelte,Framework
+Swagger,Framework
+Swift,Language
+Tableau,Library
+Tailwind,Framework
+Telegram,Tool
+Tensorflow,Library
+Testing Library,Tool
+Thrift,Framework
+Traefik,Tool
+Travis CI,Tool
+Trello,Tool
+Trino,Library
+Tuist,Framework
+Typescript,Language
+Unity,Framework
+Vault,Tool
+VueJS,Framework
+Vuex,Framework
+Zabbix,Tool
+Zeppelin,Library
+Zipkin,Library
+Zustand,Framework

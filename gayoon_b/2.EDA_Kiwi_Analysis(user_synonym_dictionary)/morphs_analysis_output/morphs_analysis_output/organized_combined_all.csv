@@ -1,0 +1,80 @@
+Language,Framework,Library,Tool
+C++,Alamofire,Airflow,Agit
+C#,Angular,ArangoDB,Ansible
+Dart,Apollo,Arcus,Appium
+Elixir,Armeria,AWS Athena,Argo CD
+Go,AWS Kinesis,AWS AuroraDB,Asana
+Groovy,AWS SES,AWS DocumentDB,AWS CodeBuild
+Java,AWS SNS,AWS DynamoDB,AWS CodeDeploy
+Javascript,BackboneJS,AWS MariaDB,AWS CodePipeline
+Lua,Bazel,AWS Redshift,Azure DevOps
+Perl,Bitrise,CassandraDB,Bitbucket
+PHP,Celery,Ceph,Capistrano
+R,CodeIgniter,Clickhouse,Central Dogma
+ReScript,Dagger,CockroachDB,Circle CI
+Ruby,Docusaurus,Couchbase,Confluence
+Rust,Dropwizard,Cubrid,Cucumber
+Scala,Echo,Druid,Cypress
+Swift,Electron,ElasticSearch,Discord
+Typescript,EmberJS,Flink,Docker
+,Emotion,Fluentd,Dooray
+,ExoPlayer,Google BigQuery,Drone
+,ExpressJS,Google Data Studio,Enzyme
+,Falcon,Grafana,Flow
+,FastAPI,Greenplum,Github
+,Fastify,H2,Github Action
+,Fastlane,Hadoop,Gitlab
+,Fiber,Hazelcast,Go CD
+,Flask,HBase,Google Cloud Build
+,Gatsby,Hive,Gulp
+,Gin,Impala,Harbor
+,Glide,InfluxDB,Helm
+,Google Firebase,Kafka,Istio
+,GraphQL,Keras,Jaeger
+,GRPC,Kibana,Jandi
+,Hugo,Kubeflow,Jasmine
+,Immer,Kudu,Jenkins
+,Jotai,Looker,Jira
+,Koa,Memcached,JUnit
+,Ktor,Metabase,Kakaotalk
+,Laravel,MLflow,KakaoWork
+,Liquibase,MongoDB,Karma
+,Lottie,MSSQL,Karpenter
+,Meteor,MySQL,Kotest
+,MobX,Neo4j,Kube-Bench
+,Moya,NIFI,Kubernetes
+,NestJS,OracleDB,Linkerd
+,Netty,PostgreSQL,Locust
+,NextJS,Presto,Microsoft-Teams
+,NodeJS,Prometheus,Mocha
+,NuxtJS,Pytorch,Mockito
+,OpenGL,Ranger,Monday
+,Phoenix,Ray,Naver Works
+,RabbitMQ,Redash,Nexus
+,React Context,Redis,nGrinder
+,ReactiveX,RocksDB,Notion
+,ReactJS,Snowflake,OpenEBS
+,React Native,Solr,Packer
+,ReactorKit,Spark,Playwright
+,React Query,Superset,Puppeteer
+,Recoil,Tableau,Rancher
+,Redux,Tensorflow,Rest-Assured
+,Relay,Trino,Saltstack
+,Retrofit,Zeppelin,Selenium
+,RIBs,Zipkin,Sinon
+,Ruby on Rails,,Slack
+,Sanic,,Sonarqube
+,SnapKit,,Telegram
+,Spring,,Testing Library
+,SpringBoot,,Traefik
+,Storybook,,Travis CI
+,Styled-Components,,Trello
+,Svelte,,Vault
+,Swagger,,Zabbix
+,Tailwind,,
+,Thrift,,
+,Tuist,,
+,Unity,,
+,VueJS,,
+,Vuex,,
+,Zustand,,

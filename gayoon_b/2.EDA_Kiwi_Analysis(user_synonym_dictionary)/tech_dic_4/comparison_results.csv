@@ -1,0 +1,5 @@
+﻿,missing_from_old,missing_from_new,total_combined
+languages.txt,"['C#', 'C++']",[],16
+frameworks.txt,"['ASP.NET', 'Express', 'FastAPI', 'Spark', 'TensorFlow', 'Vue.js']",['Spring Boot'],16
+libraries.txt,"['Axios', 'BeautifulSoup', 'D3.js', 'Keras', 'Lodash', 'Matplotlib', 'PyTorch', 'Requests', 'Scikit-learn', 'Seaborn', 'TensorFlow', 'Three.js', 'gRPC']","['Bootstrap', 'jQuery']",17
+tools.txt,"['ElasticSearch', 'Grafana', 'IntelliJ', 'JIRA', 'Postman', 'PyCharm', 'Tableau', 'VS Code']","['Elasticsearch', 'Jupyter']",24

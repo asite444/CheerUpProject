@@ -1,0 +1,232 @@
+Agit,Agit,Agit,NNP,*,*,Agit,*,*,*
+Airflow,Airflow,Airflow,NNP,*,*,Airflow,*,*,*
+Alamofire,Alamofire,Alamofire,NNP,*,*,Alamofire,*,*,*
+Angular,Angular,Angular,NNP,*,*,Angular,*,*,*
+Ansible,Ansible,Ansible,NNP,*,*,Ansible,*,*,*
+Apollo,Apollo,Apollo,NNP,*,*,Apollo,*,*,*
+Appium,Appium,Appium,NNP,*,*,Appium,*,*,*
+ArangoDB,ArangoDB,ArangoDB,NNP,*,*,ArangoDB,*,*,*
+Arcus,Arcus,Arcus,NNP,*,*,Arcus,*,*,*
+Argo CD,Argo CD,Argo CD,NNP,*,*,Argo CD,*,*,*
+Armeria,Armeria,Armeria,NNP,*,*,Armeria,*,*,*
+Asana,Asana,Asana,NNP,*,*,Asana,*,*,*
+AWS Athena,AWS Athena,AWS Athena,NNP,*,*,AWS Athena,*,*,*
+AWS AuroraDB,AWS AuroraDB,AWS AuroraDB,NNP,*,*,AWS AuroraDB,*,*,*
+AWS CodeBuild,AWS CodeBuild,AWS CodeBuild,NNP,*,*,AWS CodeBuild,*,*,*
+AWS CodeDeploy,AWS CodeDeploy,AWS CodeDeploy,NNP,*,*,AWS CodeDeploy,*,*,*
+AWS CodePipeline,AWS CodePipeline,AWS CodePipeline,NNP,*,*,AWS CodePipeline,*,*,*
+AWS DocumentDB,AWS DocumentDB,AWS DocumentDB,NNP,*,*,AWS DocumentDB,*,*,*
+AWS DynamoDB,AWS DynamoDB,AWS DynamoDB,NNP,*,*,AWS DynamoDB,*,*,*
+AWS Kinesis,AWS Kinesis,AWS Kinesis,NNP,*,*,AWS Kinesis,*,*,*
+AWS MariaDB,AWS MariaDB,AWS MariaDB,NNP,*,*,AWS MariaDB,*,*,*
+AWS Redshift,AWS Redshift,AWS Redshift,NNP,*,*,AWS Redshift,*,*,*
+AWS SES,AWS SES,AWS SES,NNP,*,*,AWS SES,*,*,*
+AWS SNS,AWS SNS,AWS SNS,NNP,*,*,AWS SNS,*,*,*
+Azure DevOps,Azure DevOps,Azure DevOps,NNP,*,*,Azure DevOps,*,*,*
+BackboneJS,BackboneJS,BackboneJS,NNP,*,*,BackboneJS,*,*,*
+Bazel,Bazel,Bazel,NNP,*,*,Bazel,*,*,*
+Bitbucket,Bitbucket,Bitbucket,NNP,*,*,Bitbucket,*,*,*
+Bitrise,Bitrise,Bitrise,NNP,*,*,Bitrise,*,*,*
+Capistrano,Capistrano,Capistrano,NNP,*,*,Capistrano,*,*,*
+CassandraDB,CassandraDB,CassandraDB,NNP,*,*,CassandraDB,*,*,*
+Celery,Celery,Celery,NNP,*,*,Celery,*,*,*
+Central Dogma,Central Dogma,Central Dogma,NNP,*,*,Central Dogma,*,*,*
+Ceph,Ceph,Ceph,NNP,*,*,Ceph,*,*,*
+Circle CI,Circle CI,Circle CI,NNP,*,*,Circle CI,*,*,*
+Clickhouse,Clickhouse,Clickhouse,NNP,*,*,Clickhouse,*,*,*
+CockroachDB,CockroachDB,CockroachDB,NNP,*,*,CockroachDB,*,*,*
+CodeIgniter,CodeIgniter,CodeIgniter,NNP,*,*,CodeIgniter,*,*,*
+Confluence,Confluence,Confluence,NNP,*,*,Confluence,*,*,*
+Couchbase,Couchbase,Couchbase,NNP,*,*,Couchbase,*,*,*
+C++,C++,C++,NNP,*,*,C++,*,*,*
+C#,C#,C#,NNP,*,*,C#,*,*,*
+Cubrid,Cubrid,Cubrid,NNP,*,*,Cubrid,*,*,*
+Cucumber,Cucumber,Cucumber,NNP,*,*,Cucumber,*,*,*
+Cypress,Cypress,Cypress,NNP,*,*,Cypress,*,*,*
+Dagger,Dagger,Dagger,NNP,*,*,Dagger,*,*,*
+Dart,Dart,Dart,NNP,*,*,Dart,*,*,*
+Discord,Discord,Discord,NNP,*,*,Discord,*,*,*
+Docker,Docker,Docker,NNP,*,*,Docker,*,*,*
+Docusaurus,Docusaurus,Docusaurus,NNP,*,*,Docusaurus,*,*,*
+Dooray,Dooray,Dooray,NNP,*,*,Dooray,*,*,*
+Drone,Drone,Drone,NNP,*,*,Drone,*,*,*
+Dropwizard,Dropwizard,Dropwizard,NNP,*,*,Dropwizard,*,*,*
+Druid,Druid,Druid,NNP,*,*,Druid,*,*,*
+Echo,Echo,Echo,NNP,*,*,Echo,*,*,*
+ElasticSearch,ElasticSearch,ElasticSearch,NNP,*,*,ElasticSearch,*,*,*
+Electron,Electron,Electron,NNP,*,*,Electron,*,*,*
+Elixir,Elixir,Elixir,NNP,*,*,Elixir,*,*,*
+EmberJS,EmberJS,EmberJS,NNP,*,*,EmberJS,*,*,*
+Emotion,Emotion,Emotion,NNP,*,*,Emotion,*,*,*
+Enzyme,Enzyme,Enzyme,NNP,*,*,Enzyme,*,*,*
+ExoPlayer,ExoPlayer,ExoPlayer,NNP,*,*,ExoPlayer,*,*,*
+ExpressJS,ExpressJS,ExpressJS,NNP,*,*,ExpressJS,*,*,*
+Falcon,Falcon,Falcon,NNP,*,*,Falcon,*,*,*
+FastAPI,FastAPI,FastAPI,NNP,*,*,FastAPI,*,*,*
+Fastify,Fastify,Fastify,NNP,*,*,Fastify,*,*,*
+Fastlane,Fastlane,Fastlane,NNP,*,*,Fastlane,*,*,*
+Fiber,Fiber,Fiber,NNP,*,*,Fiber,*,*,*
+Flask,Flask,Flask,NNP,*,*,Flask,*,*,*
+Flink,Flink,Flink,NNP,*,*,Flink,*,*,*
+Flow,Flow,Flow,NNP,*,*,Flow,*,*,*
+Fluentd,Fluentd,Fluentd,NNP,*,*,Fluentd,*,*,*
+Gatsby,Gatsby,Gatsby,NNP,*,*,Gatsby,*,*,*
+Gin,Gin,Gin,NNP,*,*,Gin,*,*,*
+Github,Github,Github,NNP,*,*,Github,*,*,*
+Github Action,Github Action,Github Action,NNP,*,*,Github Action,*,*,*
+Gitlab,Gitlab,Gitlab,NNP,*,*,Gitlab,*,*,*
+Glide,Glide,Glide,NNP,*,*,Glide,*,*,*
+Go,Go,Go,NNP,*,*,Go,*,*,*
+Go CD,Go CD,Go CD,NNP,*,*,Go CD,*,*,*
+Google BigQuery,Google BigQuery,Google BigQuery,NNP,*,*,Google BigQuery,*,*,*
+Google Cloud Build,Google Cloud Build,Google Cloud Build,NNP,*,*,Google Cloud Build,*,*,*
+Google Data Studio,Google Data Studio,Google Data Studio,NNP,*,*,Google Data Studio,*,*,*
+Google Firebase,Google Firebase,Google Firebase,NNP,*,*,Google Firebase,*,*,*
+Grafana,Grafana,Grafana,NNP,*,*,Grafana,*,*,*
+GraphQL,GraphQL,GraphQL,NNP,*,*,GraphQL,*,*,*
+Greenplum,Greenplum,Greenplum,NNP,*,*,Greenplum,*,*,*
+Groovy,Groovy,Groovy,NNP,*,*,Groovy,*,*,*
+GRPC,GRPC,GRPC,NNP,*,*,GRPC,*,*,*
+Gulp,Gulp,Gulp,NNP,*,*,Gulp,*,*,*
+H2,H2,H2,NNP,*,*,H2,*,*,*
+Hadoop,Hadoop,Hadoop,NNP,*,*,Hadoop,*,*,*
+Harbor,Harbor,Harbor,NNP,*,*,Harbor,*,*,*
+Hazelcast,Hazelcast,Hazelcast,NNP,*,*,Hazelcast,*,*,*
+HBase,HBase,HBase,NNP,*,*,HBase,*,*,*
+Helm,Helm,Helm,NNP,*,*,Helm,*,*,*
+Hive,Hive,Hive,NNP,*,*,Hive,*,*,*
+Hugo,Hugo,Hugo,NNP,*,*,Hugo,*,*,*
+Immer,Immer,Immer,NNP,*,*,Immer,*,*,*
+Impala,Impala,Impala,NNP,*,*,Impala,*,*,*
+InfluxDB,InfluxDB,InfluxDB,NNP,*,*,InfluxDB,*,*,*
+Istio,Istio,Istio,NNP,*,*,Istio,*,*,*
+Jaeger,Jaeger,Jaeger,NNP,*,*,Jaeger,*,*,*
+Jandi,Jandi,Jandi,NNP,*,*,Jandi,*,*,*
+Jasmine,Jasmine,Jasmine,NNP,*,*,Jasmine,*,*,*
+Java,Java,Java,NNP,*,*,Java,*,*,*
+Javascript,Javascript,Javascript,NNP,*,*,Javascript,*,*,*
+Jenkins,Jenkins,Jenkins,NNP,*,*,Jenkins,*,*,*
+Jira,Jira,Jira,NNP,*,*,Jira,*,*,*
+Jotai,Jotai,Jotai,NNP,*,*,Jotai,*,*,*
+JUnit,JUnit,JUnit,NNP,*,*,JUnit,*,*,*
+Kafka,Kafka,Kafka,NNP,*,*,Kafka,*,*,*
+Kakaotalk,Kakaotalk,Kakaotalk,NNP,*,*,Kakaotalk,*,*,*
+KakaoWork,KakaoWork,KakaoWork,NNP,*,*,KakaoWork,*,*,*
+Karma,Karma,Karma,NNP,*,*,Karma,*,*,*
+Karpenter,Karpenter,Karpenter,NNP,*,*,Karpenter,*,*,*
+Keras,Keras,Keras,NNP,*,*,Keras,*,*,*
+Kibana,Kibana,Kibana,NNP,*,*,Kibana,*,*,*
+Koa,Koa,Koa,NNP,*,*,Koa,*,*,*
+Kotest,Kotest,Kotest,NNP,*,*,Kotest,*,*,*
+Ktor,Ktor,Ktor,NNP,*,*,Ktor,*,*,*
+Kube-Bench,Kube-Bench,Kube-Bench,NNP,*,*,Kube-Bench,*,*,*
+Kubeflow,Kubeflow,Kubeflow,NNP,*,*,Kubeflow,*,*,*
+Kubernetes,Kubernetes,Kubernetes,NNP,*,*,Kubernetes,*,*,*
+Kudu,Kudu,Kudu,NNP,*,*,Kudu,*,*,*
+Laravel,Laravel,Laravel,NNP,*,*,Laravel,*,*,*
+Linkerd,Linkerd,Linkerd,NNP,*,*,Linkerd,*,*,*
+Liquibase,Liquibase,Liquibase,NNP,*,*,Liquibase,*,*,*
+Locust,Locust,Locust,NNP,*,*,Locust,*,*,*
+Looker,Looker,Looker,NNP,*,*,Looker,*,*,*
+Lottie,Lottie,Lottie,NNP,*,*,Lottie,*,*,*
+Lua,Lua,Lua,NNP,*,*,Lua,*,*,*
+Memcached,Memcached,Memcached,NNP,*,*,Memcached,*,*,*
+Metabase,Metabase,Metabase,NNP,*,*,Metabase,*,*,*
+Meteor,Meteor,Meteor,NNP,*,*,Meteor,*,*,*
+Microsoft-Teams,Microsoft-Teams,Microsoft-Teams,NNP,*,*,Microsoft-Teams,*,*,*
+MLflow,MLflow,MLflow,NNP,*,*,MLflow,*,*,*
+MobX,MobX,MobX,NNP,*,*,MobX,*,*,*
+Mocha,Mocha,Mocha,NNP,*,*,Mocha,*,*,*
+Mockito,Mockito,Mockito,NNP,*,*,Mockito,*,*,*
+Monday,Monday,Monday,NNP,*,*,Monday,*,*,*
+MongoDB,MongoDB,MongoDB,NNP,*,*,MongoDB,*,*,*
+Moya,Moya,Moya,NNP,*,*,Moya,*,*,*
+MSSQL,MSSQL,MSSQL,NNP,*,*,MSSQL,*,*,*
+MySQL,MySQL,MySQL,NNP,*,*,MySQL,*,*,*
+Naver Works,Naver Works,Naver Works,NNP,*,*,Naver Works,*,*,*
+Neo4j,Neo4j,Neo4j,NNP,*,*,Neo4j,*,*,*
+NestJS,NestJS,NestJS,NNP,*,*,NestJS,*,*,*
+Netty,Netty,Netty,NNP,*,*,Netty,*,*,*
+NextJS,NextJS,NextJS,NNP,*,*,NextJS,*,*,*
+Nexus,Nexus,Nexus,NNP,*,*,Nexus,*,*,*
+nGrinder,nGrinder,nGrinder,NNP,*,*,nGrinder,*,*,*
+NIFI,NIFI,NIFI,NNP,*,*,NIFI,*,*,*
+NodeJS,NodeJS,NodeJS,NNP,*,*,NodeJS,*,*,*
+Notion,Notion,Notion,NNP,*,*,Notion,*,*,*
+NuxtJS,NuxtJS,NuxtJS,NNP,*,*,NuxtJS,*,*,*
+OpenEBS,OpenEBS,OpenEBS,NNP,*,*,OpenEBS,*,*,*
+OpenGL,OpenGL,OpenGL,NNP,*,*,OpenGL,*,*,*
+OracleDB,OracleDB,OracleDB,NNP,*,*,OracleDB,*,*,*
+Packer,Packer,Packer,NNP,*,*,Packer,*,*,*
+Perl,Perl,Perl,NNP,*,*,Perl,*,*,*
+Phoenix,Phoenix,Phoenix,NNP,*,*,Phoenix,*,*,*
+PHP,PHP,PHP,NNP,*,*,PHP,*,*,*
+Playwright,Playwright,Playwright,NNP,*,*,Playwright,*,*,*
+PostgreSQL,PostgreSQL,PostgreSQL,NNP,*,*,PostgreSQL,*,*,*
+Presto,Presto,Presto,NNP,*,*,Presto,*,*,*
+Prometheus,Prometheus,Prometheus,NNP,*,*,Prometheus,*,*,*
+Puppeteer,Puppeteer,Puppeteer,NNP,*,*,Puppeteer,*,*,*
+Pytorch,Pytorch,Pytorch,NNP,*,*,Pytorch,*,*,*
+R,R,R,NNP,*,*,R,*,*,*
+RabbitMQ,RabbitMQ,RabbitMQ,NNP,*,*,RabbitMQ,*,*,*
+Rancher,Rancher,Rancher,NNP,*,*,Rancher,*,*,*
+Ranger,Ranger,Ranger,NNP,*,*,Ranger,*,*,*
+Ray,Ray,Ray,NNP,*,*,Ray,*,*,*
+React Context,React Context,React Context,NNP,*,*,React Context,*,*,*
+ReactiveX,ReactiveX,ReactiveX,NNP,*,*,ReactiveX,*,*,*
+ReactJS,ReactJS,ReactJS,NNP,*,*,ReactJS,*,*,*
+React Native,React Native,React Native,NNP,*,*,React Native,*,*,*
+ReactorKit,ReactorKit,ReactorKit,NNP,*,*,ReactorKit,*,*,*
+React Query,React Query,React Query,NNP,*,*,React Query,*,*,*
+Recoil,Recoil,Recoil,NNP,*,*,Recoil,*,*,*
+Redash,Redash,Redash,NNP,*,*,Redash,*,*,*
+Redis,Redis,Redis,NNP,*,*,Redis,*,*,*
+Redux,Redux,Redux,NNP,*,*,Redux,*,*,*
+Relay,Relay,Relay,NNP,*,*,Relay,*,*,*
+ReScript,ReScript,ReScript,NNP,*,*,ReScript,*,*,*
+Rest-Assured,Rest-Assured,Rest-Assured,NNP,*,*,Rest-Assured,*,*,*
+Retrofit,Retrofit,Retrofit,NNP,*,*,Retrofit,*,*,*
+RIBs,RIBs,RIBs,NNP,*,*,RIBs,*,*,*
+RocksDB,RocksDB,RocksDB,NNP,*,*,RocksDB,*,*,*
+Ruby,Ruby,Ruby,NNP,*,*,Ruby,*,*,*
+Ruby on Rails,Ruby on Rails,Ruby on Rails,NNP,*,*,Ruby on Rails,*,*,*
+Rust,Rust,Rust,NNP,*,*,Rust,*,*,*
+Saltstack,Saltstack,Saltstack,NNP,*,*,Saltstack,*,*,*
+Sanic,Sanic,Sanic,NNP,*,*,Sanic,*,*,*
+Scala,Scala,Scala,NNP,*,*,Scala,*,*,*
+Selenium,Selenium,Selenium,NNP,*,*,Selenium,*,*,*
+Sinon,Sinon,Sinon,NNP,*,*,Sinon,*,*,*
+Slack,Slack,Slack,NNP,*,*,Slack,*,*,*
+SnapKit,SnapKit,SnapKit,NNP,*,*,SnapKit,*,*,*
+Snowflake,Snowflake,Snowflake,NNP,*,*,Snowflake,*,*,*
+Solr,Solr,Solr,NNP,*,*,Solr,*,*,*
+Sonarqube,Sonarqube,Sonarqube,NNP,*,*,Sonarqube,*,*,*
+Spark,Spark,Spark,NNP,*,*,Spark,*,*,*
+Spring,Spring,Spring,NNP,*,*,Spring,*,*,*
+SpringBoot,SpringBoot,SpringBoot,NNP,*,*,SpringBoot,*,*,*
+Storybook,Storybook,Storybook,NNP,*,*,Storybook,*,*,*
+Styled-Components,Styled-Components,Styled-Components,NNP,*,*,Styled-Components,*,*,*
+Superset,Superset,Superset,NNP,*,*,Superset,*,*,*
+Svelte,Svelte,Svelte,NNP,*,*,Svelte,*,*,*
+Swagger,Swagger,Swagger,NNP,*,*,Swagger,*,*,*
+Swift,Swift,Swift,NNP,*,*,Swift,*,*,*
+Tableau,Tableau,Tableau,NNP,*,*,Tableau,*,*,*
+Tailwind,Tailwind,Tailwind,NNP,*,*,Tailwind,*,*,*
+Telegram,Telegram,Telegram,NNP,*,*,Telegram,*,*,*
+Tensorflow,Tensorflow,Tensorflow,NNP,*,*,Tensorflow,*,*,*
+Testing Library,Testing Library,Testing Library,NNP,*,*,Testing Library,*,*,*
+Thrift,Thrift,Thrift,NNP,*,*,Thrift,*,*,*
+Traefik,Traefik,Traefik,NNP,*,*,Traefik,*,*,*
+Travis CI,Travis CI,Travis CI,NNP,*,*,Travis CI,*,*,*
+Trello,Trello,Trello,NNP,*,*,Trello,*,*,*
+Trino,Trino,Trino,NNP,*,*,Trino,*,*,*
+Tuist,Tuist,Tuist,NNP,*,*,Tuist,*,*,*
+Typescript,Typescript,Typescript,NNP,*,*,Typescript,*,*,*
+Unity,Unity,Unity,NNP,*,*,Unity,*,*,*
+Vault,Vault,Vault,NNP,*,*,Vault,*,*,*
+VueJS,VueJS,VueJS,NNP,*,*,VueJS,*,*,*
+Vuex,Vuex,Vuex,NNP,*,*,Vuex,*,*,*
+Zabbix,Zabbix,Zabbix,NNP,*,*,Zabbix,*,*,*
+Zeppelin,Zeppelin,Zeppelin,NNP,*,*,Zeppelin,*,*,*
+Zipkin,Zipkin,Zipkin,NNP,*,*,Zipkin,*,*,*
+Zustand,Zustand,Zustand,NNP,*,*,Zustand,*,*,*

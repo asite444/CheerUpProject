@@ -1,0 +1,279 @@
+﻿seq,category,name,synonym,ner_label
+0,language,solidity,solidity,B-LANG
+1,language,c,c,B-LANG
+2,language,c++,c++,B-LANG
+3,language,c#,c#,B-LANG
+4,language,dart,dart,B-LANG
+5,language,elixir,elixir,B-LANG
+6,language,groovy,groovy,B-LANG
+7,language,java,"javas,java,jdk",B-LANG
+8,language,javascript,"javacript,javasript,jsi,javsscript,js,javascript,javascipt,javavscript,javascrpit,javscript,javasscript",B-LANG
+9,language,lua,lua,B-LANG
+10,language,perl,perl,B-LANG
+11,language,php,php,B-LANG
+12,language,python,"pyton,py,python,pytnon,pyhton,pyhthon,pyhon",B-LANG
+13,language,r,r,B-LANG
+14,language,ruby,"ruby,rails",B-LANG
+15,language,rust,rust,B-LANG
+16,language,scala,scala,B-LANG
+17,language,swift,"swift,switft,swiftui,swiftmr",B-LANG
+18,language,typescript,"ts,typesrcipt,typescrpit,typesciprt,tyescript,typescript,typscript",B-LANG
+19,language,rescript,rescript,B-LANG
+20,language,go,"go,golang",B-LANG
+21,language,abap,abap,B-LANG
+22,language,ada,ada,B-LANG
+23,language,bash,bash,B-LANG
+24,language,erlang,erlang,B-LANG
+25,language,f#,f#,B-LANG
+26,language,fortran,fortran,B-LANG
+27,language,haskell,haskell,B-LANG
+28,language,julia,julia,B-LANG
+29,language,kotlin,kotlin,B-LANG
+30,language,matlab,matlab,B-LANG
+31,language,vhdl,vhdl,B-LANG
+32,language,css,css,B-LANG
+33,language,html,html,B-LANG
+34,language,hiveql,hiveql,B-LANG
+35,framework,angular,"angluar,angularjs,angular",B-FRAME
+36,framework,appium,appium,B-FRAME
+37,framework,armeria,armeria,B-FRAME
+38,framework,backbonejs,"backbonejs,backbone js,backbone",B-FRAME
+39,framework,codeigniter,"codelgniter,codeigniter",B-FRAME
+40,framework,dagger,dagger,B-FRAME
+41,framework,dropwizard,dropwizard,B-FRAME
+42,framework,echo,echo,B-FRAME
+43,framework,electra,electra,B-FRAME
+44,framework,electron,"electronjs,electron",B-FRAME
+45,framework,emberjs,"emberjs,ember js",B-FRAME
+46,framework,expressjs,"express,expressjs,express js",B-FRAME
+47,framework,falcon,falcon,B-FRAME
+48,framework,fastapi,fastapi,B-FRAME
+49,framework,fastify,fastify,B-FRAME
+50,framework,fiber,fiber,B-FRAME
+51,framework,flask,flask,B-FRAME
+52,framework,flink,flink,B-FRAME
+53,framework,gatsby,gatsby,B-FRAME
+54,framework,grpc,"grpc,grpcio,grp",B-FRAME
+55,framework,hadoop,hadoop,B-FRAME
+56,framework,jasmine,jasmine,B-FRAME
+57,framework,junit,junit,B-FRAME
+58,framework,kotest,kotest,B-FRAME
+59,framework,ktor,ktor,B-FRAME
+60,framework,laravel,"lalavel,laravle,laravel",B-FRAME
+61,framework,meteor,meteor,B-FRAME
+62,framework,mocha,mocha,B-FRAME
+63,framework,mockito,mockito,B-FRAME
+64,framework,nestjs,"nest,nestjs,nest js",B-FRAME
+65,framework,netty,netty,B-FRAME
+66,framework,nextjs,"next,next js,nextjs",B-FRAME
+67,framework,nuxtjs,"nuxt js,nuxtjs,nuxt",B-FRAME
+68,framework,phoenix,phoenix,B-FRAME
+69,framework,ray,ray,B-FRAME
+70,framework,react native,"react native,reactnative,reactive",B-FRAME
+71,framework,reactorkit,"reactor,reactorkit",B-FRAME
+72,framework,relay,"relay,relayer",B-FRAME
+73,framework,ribs,ribs,B-FRAME
+74,framework,ruby on rails,"rail,ruby on rails,rails,raise",B-FRAME
+75,framework,sanic,sanic,B-FRAME
+76,framework,selenium,selenium,B-FRAME
+77,framework,spark,spark,B-FRAME
+78,framework,spring,"sprint,sprting,spring,spirng,sping,springdoc",B-FRAME
+79,framework,springboot,"spring boot,springboot,springboottest",B-FRAME
+80,framework,svelte,"sveltekit,svelte",B-FRAME
+81,framework,swagger,swagger,B-FRAME
+82,framework,tailwind,"tailwind,tailwindcss",B-FRAME
+83,framework,thrift,thrift,B-FRAME
+84,framework,vuejs,"vue,vue js,vuejs",B-FRAME
+85,framework,nodejs,"node,node js,nodejs",B-FRAME
+86,framework,django,django,B-FRAME
+87,framework,javafx,javafx,B-FRAME
+88,framework,mono,mono,B-FRAME
+89,library,alamofire,alamofire,B-LIB
+90,library,apollo,apollo,B-LIB
+91,library,emotion,emotion,B-LIB
+92,library,enzyme,enzyme,B-LIB
+93,library,exoplayer,exoplayer,B-LIB
+94,library,glide,glide,B-LIB
+95,library,immer,immer,B-LIB
+96,library,jotai,jotai,B-LIB
+97,library,keras,keras,B-LIB
+98,library,lottie,lottie,B-LIB
+99,library,mobx,mobx,B-LIB
+100,library,moya,moya,B-LIB
+101,library,react context,"reactcontext,react context",B-LIB
+102,library,reactivex,reactivex,B-LIB
+103,library,reactjs,"react,react js,reactjs",B-LIB
+104,library,react query,"reactquery,react query",B-LIB
+105,library,recoil,recoil,B-LIB
+106,library,redux,redux,B-LIB
+107,library,rest-assured,"rest assured,rest-assured,restassured",B-LIB
+108,library,retrofit,retrofit,B-LIB
+109,library,sinon,sinon,B-LIB
+110,library,snapkit,snapkit,B-LIB
+111,library,styled-components,"styled components,styledcomponents,styled-components,styledcompinents",B-LIB
+112,library,tensorflow,"temsorflow,tensorflow,tf",B-LIB
+113,library,testing library,"testing library,testinglibrary",B-LIB
+114,library,vuex,vuex,B-LIB
+115,library,zustand,zustand,B-LIB
+116,library,pytorch,"pytouch,torch,pytorch,pytorh",B-LIB
+117,library,graphql,"graphol,graphql",B-LIB
+118,library,beautifulsoup,beautifulsoup,B-LIB
+119,library,bokeh,bokeh,B-LIB
+120,library,fastai,fastai,B-LIB
+121,library,grpcio,grpcio,B-LIB
+122,library,huggingface,huggingface,B-LIB
+123,library,lightgbm,lightgbm,B-LIB
+124,library,matplotlib,matplotlib,B-LIB
+125,library,numpy,numpy,B-LIB
+126,library,opencv,opencv,B-LIB
+127,library,pandas,pandas,B-LIB
+128,library,plotly,plotly,B-LIB
+129,library,pydantic,pydantic,B-LIB
+130,library,requests,requests,B-LIB
+131,library,scikit-learn,"scikit learn,scikitlearn,scikit-learn",B-LIB
+132,library,seaborn,seaborn,B-LIB
+133,library,sqlalchemy,sqlalchemy,B-LIB
+134,library,transformers,transformers,B-LIB
+135,library,xgboost,xgboost,B-LIB
+136,library,react,reach,B-LIB
+137,tool,agit,agit,B-TOOL
+138,tool,airflow,airflow,B-TOOL
+139,tool,ansible,ansible,B-TOOL
+140,tool,arcus,arcus,B-TOOL
+141,tool,arangodb,"arango db,arangodb",B-TOOL
+142,tool,argo cd,"argo,argo cd,argocd",B-TOOL
+143,tool,asana,asana,B-TOOL
+144,tool,aws,asw,B-TOOL
+145,tool,aws athena,"awsathena,aws athena,aws",B-TOOL
+146,tool,aws auroradb,"aws aurora db,awsauroradb,aws auroradb",B-TOOL
+147,tool,aws codebuild,"aws codebuild,awscodebuild",B-TOOL
+148,tool,aws codedeploy,"aws codedeploy,awscodedeploy",B-TOOL
+149,tool,aws codepipeline,"aws codepipeline,awscodepipeline",B-TOOL
+150,tool,aws documentdb,"aws documentdb,awsdocumentdb,aws document db",B-TOOL
+151,tool,aws dynamodb,"aws dynamo db,awsdynamodb,aws dynamodb",B-TOOL
+152,tool,aws kinesis,"aws kinesis,awskinesis",B-TOOL
+153,tool,aws mariadb,"aws maria db,awsmariadb,aws mariadb",B-TOOL
+154,tool,aws redshift,"aws redshift,awsredshift",B-TOOL
+155,tool,aws ses,"aws ses,awsses",B-TOOL
+156,tool,aws sns,"aws sns,awssns",B-TOOL
+157,tool,azure devops,"azuredevops,azure devops",B-TOOL
+158,tool,bazel,bazel,B-TOOL
+159,tool,bitbucket,bitbucket,B-TOOL
+160,tool,bitrise,bitrise,B-TOOL
+161,tool,capistrano,capistrano,B-TOOL
+162,tool,cassandradb,"casandra,cassandra db,cassandra,cassandradb",B-TOOL
+163,tool,celery,celery,B-TOOL
+164,tool,central dogma,"central dogma,centraldogma",B-TOOL
+165,tool,ceph,ceph,B-TOOL
+166,tool,circle ci,"circle ci,circleci",B-TOOL
+167,tool,clickhouse,clickhouse,B-TOOL
+168,tool,cockroachdb,"cockroach db,cockroachdb",B-TOOL
+169,tool,confluence,"confleunce,confluence,confluece,conflunce",B-TOOL
+170,tool,couchbase,couchbase,B-TOOL
+171,tool,cubrid,cubrid,B-TOOL
+172,tool,cucumber,cucumber,B-TOOL
+173,tool,cypress,cypress,B-TOOL
+174,tool,discord,discord,B-TOOL
+175,tool,docker,docker,B-TOOL
+176,tool,docusaurus,docusaurus,B-TOOL
+177,tool,dooray,dooray,B-TOOL
+178,tool,drone,drone,B-TOOL
+179,tool,druid,druid,B-TOOL
+180,tool,elasticsearch,"elasticsearch,elasticserach",B-TOOL
+181,tool,fastlane,fastlane,B-TOOL
+182,tool,fluentd,fluentd,B-TOOL
+183,tool,flow,flow,B-TOOL
+184,tool,git,git,B-TOOL
+185,tool,github,"github,githb",B-TOOL
+186,tool,github action,"github action,githubaction",B-TOOL
+187,tool,gitlab,gitlab,B-TOOL
+188,tool,go cd,"go cd,gocd",B-TOOL
+189,tool,google bigquery,"google bigquery,googlebigquery",B-TOOL
+190,tool,google cloud build,"google cloud build,gcp,googlecloudbuild",B-TOOL
+191,tool,google data studio,"googledatastudio,google data studio",B-TOOL
+192,tool,google firebase,"google firebase,googlefirebase",B-TOOL
+193,tool,grafana,grafana,B-TOOL
+194,tool,greenplum,greenplum,B-TOOL
+195,tool,gulp,gulp,B-TOOL
+196,tool,h2,h2,B-TOOL
+197,tool,harbor,harbor,B-TOOL
+198,tool,hbase,hbase,B-TOOL
+199,tool,hazelcast,hazelcast,B-TOOL
+200,tool,helm,helm,B-TOOL
+201,tool,hive,hive,B-TOOL
+202,tool,hugo,hugo,B-TOOL
+203,tool,istio,istio,B-TOOL
+204,tool,jaeger,jaeger,B-TOOL
+205,tool,jandi,jandi,B-TOOL
+206,tool,jenkins,jenkins,B-TOOL
+207,tool,jira,jira,B-TOOL
+208,tool,kafka,"kafa,kafka",B-TOOL
+209,tool,kakaotalk,kakaotalk,B-TOOL
+210,tool,kakaowork,kakaowork,B-TOOL
+211,tool,karma,karma,B-TOOL
+212,tool,karpenter,karpenter,B-TOOL
+213,tool,kibana,kibana,B-TOOL
+214,tool,kube-bench,"kube-bench,kubebench,kube bench",B-TOOL
+215,tool,kubeflow,kubeflow,B-TOOL
+216,tool,kubernetes,"kuberentes,kubernetes,kuberntes,kubenretes,kubanetes,kuberneties,kubernates,kubernets,kubemetes,k8s,kubenetes,kuerbernetes",B-TOOL
+217,tool,kudu,kudu,B-TOOL
+218,tool,linkerd,linkerd,B-TOOL
+219,tool,liquibase,liquibase,B-TOOL
+220,tool,locust,locust,B-TOOL
+221,tool,looker,looker,B-TOOL
+222,tool,memcached,memcached,B-TOOL
+223,tool,metabase,metabase,B-TOOL
+224,tool,microsoft-teams,"microsoft-teams,microsoftteams,microsoft teams",B-TOOL
+225,tool,mlflow,mlflow,B-TOOL
+226,tool,monday,monday,B-TOOL
+227,tool,mongodb,"mongo,mongodb,mongo db,mono,monogdb,mongdb",B-TOOL
+228,tool,mssql,"mssql,ms sql",B-TOOL
+229,tool,mysql,"my sql,mysql",B-TOOL
+230,tool,naver works,"naverworks,naver works",B-TOOL
+231,tool,neo4j,neo4j,B-TOOL
+232,tool,nexus,nexus,B-TOOL
+233,tool,ngrinder,ngrinder,B-TOOL
+234,tool,nifi,nifi,B-TOOL
+235,tool,notion,notion,B-TOOL
+236,tool,openebs,openebs,B-TOOL
+237,tool,oracledb,"oracle db,oracledb,oracle",B-TOOL
+238,tool,packer,packer,B-TOOL
+239,tool,playwright,"playwrite,playwright",B-TOOL
+240,tool,postgresql,"postgresql,postgre,postresl,postgre sql,postgis,postgres,postgredb,postgressql",B-TOOL
+241,tool,presto,presto,B-TOOL
+242,tool,prometheus,prometheus,B-TOOL
+243,tool,rabbitmq,"rabbit,rabbitmq",B-TOOL
+244,tool,rancher,"rance,rancher",B-TOOL
+245,tool,ranger,ranger,B-TOOL
+246,tool,redash,redash,B-TOOL
+247,tool,redis,redis,B-TOOL
+248,tool,rocksdb,"rocks db,rocksdb",B-TOOL
+249,tool,saltstack,saltstack,B-TOOL
+250,tool,slack,slack,B-TOOL
+251,tool,snowflake,snowflake,B-TOOL
+252,tool,solr,solr,B-TOOL
+253,tool,sonarqube,"sonarqube,sonaqube",B-TOOL
+254,tool,storybook,storybook,B-TOOL
+255,tool,superset,"superset,supertest",B-TOOL
+256,tool,tableau,tableau,B-TOOL
+257,tool,telegram,telegram,B-TOOL
+258,tool,travis ci,"travis,travis ci",B-TOOL
+259,tool,trello,trello,B-TOOL
+260,tool,trino,trino,B-TOOL
+261,tool,tuist,tuist,B-TOOL
+262,tool,unity,unity,B-TOOL
+263,tool,vault,vault,B-TOOL
+264,tool,zabbix,zabbix,B-TOOL
+265,tool,zeppelin,zeppelin,B-TOOL
+266,tool,puppeteer,puppeteer,B-TOOL
+267,tool,opengl,opengl,B-TOOL
+268,tool,zipkin,zipkin,B-TOOL
+269,tool,impala,impala,B-TOOL
+270,tool,influxdb,influxdb,B-TOOL
+271,tool,traefik,traefik,B-TOOL
+272,tool,apache spark,apache spark,B-TOOL
+273,tool,dask,dask,B-TOOL
+274,tool,openstack,openstack,B-TOOL
+275,tool,terraform,terraform,B-TOOL
+276,tool,zeplin,zeplin,B-TOOL
+277,tool,jmeter,jmeter,B-TOOL

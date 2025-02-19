@@ -1,0 +1,5 @@
+﻿Category,Values
+Languages,"C#, C++, Dart, Go, Java, JavaScript, Kotlin, PHP, Perl, Python, R, Ruby, Rust, Scala, Swift, TypeScript"
+Frameworks,"ASP.NET, Angular, Django, Express, FastAPI, Flask, Flutter, Keras, Laravel, React, Ruby on Rails, Spark, Spring, Spring Boot, TensorFlow, Vue.js"
+Libraries,"Axios, BeautifulSoup, Bootstrap, D3.js, Keras, Lodash, Matplotlib, NumPy, Pandas, PyTorch, Requests, Scikit-learn, Seaborn, TensorFlow, Three.js, gRPC, jQuery"
+Tools,"AWS, Ansible, Azure, Docker, ElasticSearch, Elasticsearch, GCP, Git, Grafana, IntelliJ, JIRA, Jenkins, Jupyter, Kubernetes, MongoDB, MySQL, PostgreSQL, Postman, PyCharm, Redis, Slack, Tableau, Terraform, VS Code"

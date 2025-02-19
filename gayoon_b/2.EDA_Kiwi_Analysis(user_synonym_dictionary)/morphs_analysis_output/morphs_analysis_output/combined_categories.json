@@ -1,0 +1,369 @@
+{
+    "language": {
+        "go": [
+            "got"
+        ],
+        "golang": [
+            "goland"
+        ],
+        "java": [
+            "javas",
+            "javafx"
+        ],
+        "javascript": [
+            "javasript",
+            "javscript",
+            "javavscript",
+            "javascipt",
+            "javasscript",
+            "javascrpit",
+            "javacript",
+            "javsscript"
+        ],
+        "js": [
+            "jsm",
+            "jsi",
+            "jsp",
+            "jsx"
+        ],
+        "perl": [
+            "per"
+        ],
+        "php": [
+            "ph"
+        ],
+        "python": [
+            "pyhton",
+            "pyton",
+            "pythonic",
+            "pyhon",
+            "pyhthon",
+            "pytnon"
+        ],
+        "rails": [
+            "rail",
+            "raise"
+        ],
+        "rust": [
+            "rus"
+        ],
+        "scala": [
+            "scale",
+            "scada",
+            "scalab"
+        ],
+        "swift": [
+            "swiftmr",
+            "switft",
+            "swit",
+            "swiftui"
+        ],
+        "ts": [
+            "tsp",
+            "tsx"
+        ],
+        "typescript": [
+            "tyescript",
+            "typescrpit",
+            "typesciprt",
+            "typesrcipt",
+            "typscript"
+        ]
+    },
+    "frameworks": {
+        "angular": [
+            "angluar",
+            "angularjs"
+        ],
+        "backbonejs": [
+            "backbone"
+        ],
+        "codeigniter": [
+            "codelgniter"
+        ],
+        "echo": [
+            "echo"
+        ],
+        "electron": [
+            "electra",
+            "electronjs",
+            "electronic",
+            "electronics"
+        ],
+        "express": [
+            "expression"
+        ],
+        "expressjs": [
+            "expressions"
+        ],
+        "flask": [
+            "flake",
+            "flash"
+        ],
+        "gin": [
+            "gi"
+        ],
+        "grpc": [
+            "grpcio",
+            "grp"
+        ],
+        "koa": [
+            "kosa",
+            "ko"
+        ],
+        "laravel": [
+            "lalavel",
+            "laravle"
+        ],
+        "meteor": [
+            "mentor",
+            "meter"
+        ],
+        "nestjs": [
+            "nest"
+        ],
+        "nextjs": [
+            "next"
+        ],
+        "nuxtjs": [
+            "nuxt"
+        ],
+        "rails": [
+            "rail",
+            "raise"
+        ],
+        "ray": [
+            "ra"
+        ],
+        "reactnative": [
+            "reactive"
+        ],
+        "reactorkit": [
+            "reactor"
+        ],
+        "relay": [
+            "relayer"
+        ],
+        "spark": [
+            "speak"
+        ],
+        "spring": [
+            "springdoc",
+            "sping",
+            "spirng",
+            "sprint",
+            "sprting"
+        ],
+        "springboot": [
+            "springboottest"
+        ],
+        "svelte": [
+            "sveltekit"
+        ],
+        "tailwind": [
+            "tailwindcss"
+        ]
+    },
+    "libraries": {
+        "graphql": [
+            "graphol",
+            "graph"
+        ],
+        "pytorch": [
+            "pytorh",
+            "pytouch"
+        ],
+        "react": [
+            "reach",
+            "reactor"
+        ],
+        "reactivex": [
+            "reactive"
+        ],
+        "redux": [
+            "reudx",
+            "reduc",
+            "redu"
+        ],
+        "styled-components": [
+            "styledcompinents"
+        ],
+        "tensorflow": [
+            "temsorflow"
+        ],
+        "tf": [
+            "tfs",
+            "tft"
+        ],
+        "torch": [
+            "touch"
+        ],
+        "vuex": [
+            "vue"
+        ]
+    },
+    "tools": {
+        "agit": [
+            "agi"
+        ],
+        "argocd": [
+            "argo"
+        ],
+        "bazel": [
+            "babel"
+        ],
+        "cassandradb": [
+            "cassandra",
+            "casandra"
+        ],
+        "ceph": [
+            "cep",
+            "ceh"
+        ],
+        "confluence": [
+            "confluent",
+            "confleunce",
+            "conflunce",
+            "conference",
+            "confluece",
+            "confidence"
+        ],
+        "discord": [
+            "discover"
+        ],
+        "docker": [
+            "dockerize"
+        ],
+        "drone": [
+            "drones"
+        ],
+        "druid": [
+            "droid"
+        ],
+        "elasticsearch": [
+            "elasticache",
+            "elasticcache",
+            "elasticserach"
+        ],
+        "flow": [
+            "flows"
+        ],
+        "fluentd": [
+            "fluent"
+        ],
+        "gcp": [
+            "gc"
+        ],
+        "git": [
+            "gi"
+        ],
+        "github": [
+            "githb"
+        ],
+        "helm": [
+            "hem"
+        ],
+        "hive": [
+            "hiveql"
+        ],
+        "istio": [
+            "ision"
+        ],
+        "kafka": [
+            "kakao",
+            "kafak",
+            "kafa"
+        ],
+        "kubernetes": [
+            "kubernates",
+            "kubernets",
+            "kuberentes",
+            "kuberntes",
+            "kubenretes",
+            "kubanetes",
+            "kubenetes",
+            "kuberneties",
+            "kubemetes",
+            "kuerbernetes"
+        ],
+        "linkerd": [
+            "liner",
+            "linker",
+            "linkedin"
+        ],
+        "looker": [
+            "look",
+            "looper"
+        ],
+        "mongo": [
+            "mono"
+        ],
+        "mongodb": [
+            "mongdb",
+            "monogdb"
+        ],
+        "openebs": [
+            "openmesh"
+        ],
+        "opengl": [
+            "open",
+            "opencl",
+            "openal",
+            "opengles"
+        ],
+        "oracledb": [
+            "oracle"
+        ],
+        "packer": [
+            "packet",
+            "pack"
+        ],
+        "playwright": [
+            "playwrite"
+        ],
+        "postgres": [
+            "postgis",
+            "postgre",
+            "postgredb"
+        ],
+        "postgresql": [
+            "postgressql",
+            "postresl"
+        ],
+        "puppeteer": [
+            "puppet"
+        ],
+        "rabbitmq": [
+            "rabbit"
+        ],
+        "rancher": [
+            "rance"
+        ],
+        "ranger": [
+            "range"
+        ],
+        "solr": [
+            "sol",
+            "solver"
+        ],
+        "sonarqube": [
+            "sonaqube"
+        ],
+        "superset": [
+            "supertest"
+        ],
+        "tableau": [
+            "table"
+        ],
+        "trino": [
+            "train"
+        ],
+        "unity": [
+            "unit",
+            "units"
+        ],
+        "zeppelin": [
+            "zeplin"
+        ]
+    }
+}

@@ -1,0 +1,229 @@
+Category,Technology
+languages,C++
+languages,C#
+languages,Dart
+languages,Elixir
+languages,Groovy
+languages,Java
+languages,Javascript
+languages,Lua
+languages,Perl
+languages,PHP
+languages,Python
+languages,R
+languages,Ruby
+languages,Rust
+languages,Scala
+languages,Swift
+languages,Typescript
+languages,ReScript
+frameworks,Angular
+frameworks,Appium
+frameworks,Armeria
+frameworks,BackboneJS
+frameworks,CodeIgniter
+frameworks,Dagger
+frameworks,Dropwizard
+frameworks,Echo
+frameworks,Electron
+frameworks,EmberJS
+frameworks,ExpressJS
+frameworks,Falcon
+frameworks,FastAPI
+frameworks,Fastify
+frameworks,Fiber
+frameworks,Flask
+frameworks,Flink
+frameworks,Gatsby
+frameworks,Gin
+frameworks,GRPC
+frameworks,Hadoop
+frameworks,Jasmine
+frameworks,JUnit
+frameworks,Kotest
+frameworks,Ktor
+frameworks,Laravel
+frameworks,Meteor
+frameworks,Mocha
+frameworks,Mockito
+frameworks,NestJS
+frameworks,Netty
+frameworks,NextJS
+frameworks,NuxtJS
+frameworks,Phoenix
+libraries,PyTorch
+frameworks,Ray
+frameworks,React Native
+frameworks,ReactorKit
+frameworks,Relay
+frameworks,RIBs
+frameworks,Ruby on Rails
+frameworks,Sanic
+frameworks,Selenium
+frameworks,Spark
+frameworks,Spring
+frameworks,SpringBoot
+frameworks,Svelte
+frameworks,Swagger
+frameworks,Tailwind
+frameworks,Thrift
+frameworks,VueJS
+frameworks,NodeJS
+libraries,Alamofire
+libraries,Apollo
+libraries,Emotion
+libraries,Enzyme
+libraries,ExoPlayer
+libraries,Glide
+libraries,Immer
+libraries,Jotai
+libraries,Keras
+libraries,Lottie
+libraries,MobX
+libraries,Moya
+libraries,React Context
+libraries,ReactiveX
+libraries,ReactJS
+libraries,React Query
+libraries,Recoil
+libraries,Redux
+libraries,Rest-Assured
+libraries,Retrofit
+libraries,Sinon
+libraries,SnapKit
+libraries,Styled-Components
+libraries,Tensorflow
+libraries,Testing Library
+libraries,Vuex
+libraries,Zustand
+libraries,OpenGL
+tools,Agit
+tools,Airflow
+tools,Ansible
+tools,Arcus
+tools,ArangoDB
+tools,Argo CD
+tools,Asana
+tools,AWS Athena
+tools,AWS AuroraDB
+tools,AWS CodeBuild
+tools,AWS CodeDeploy
+tools,AWS CodePipeline
+tools,AWS DocumentDB
+tools,AWS DynamoDB
+tools,AWS Kinesis
+tools,AWS MariaDB
+tools,AWS Redshift
+tools,AWS SES
+tools,AWS SNS
+tools,Azure DevOps
+tools,Bazel
+tools,Bitbucket
+tools,Bitrise
+tools,Capistrano
+tools,CassandraDB
+tools,Celery
+tools,Central Dogma
+tools,Ceph
+tools,Circle CI
+tools,Clickhouse
+tools,CockroachDB
+tools,Confluence
+tools,Couchbase
+tools,Cubrid
+tools,Cucumber
+tools,Cypress
+tools,Discord
+tools,Docker
+tools,Docusaurus
+tools,Dooray
+tools,Drone
+tools,Druid
+tools,ElasticSearch
+tools,Fastlane
+tools,Fluentd
+tools,Flow
+tools,Github
+tools,Github Action
+tools,Gitlab
+tools,Go CD
+tools,Google BigQuery
+tools,Google Cloud Build
+tools,Google Data Studio
+tools,Google Firebase
+tools,Grafana
+tools,Greenplum
+tools,Gulp
+tools,H2
+tools,Harbor
+tools,HBase
+tools,Hazelcast
+tools,Helm
+tools,Hive
+tools,Hugo
+tools,Istio
+tools,Jaeger
+tools,Jandi
+tools,Jenkins
+tools,Jira
+tools,Kafka
+tools,Kakaotalk
+tools,KakaoWork
+tools,Karma
+tools,Karpenter
+tools,Kibana
+tools,Kube-Bench
+tools,Kubeflow
+tools,Kubernetes
+tools,Kudu
+tools,Linkerd
+tools,Liquibase
+tools,Locust
+tools,Looker
+tools,Memcached
+tools,Metabase
+tools,Microsoft-Teams
+tools,MLflow
+tools,Monday
+tools,MongoDB
+tools,MSSQL
+tools,MySQL
+tools,Naver Works
+tools,Neo4j
+tools,Nexus
+tools,nGrinder
+tools,NIFI
+tools,Notion
+tools,OpenEBS
+tools,OracleDB
+tools,Packer
+tools,Playwright
+tools,PostgreSQL
+tools,Presto
+tools,Prometheus
+tools,RabbitMQ
+tools,Rancher
+tools,Ranger
+tools,Redash
+tools,Redis
+tools,RocksDB
+tools,Saltstack
+tools,Slack
+tools,Snowflake
+tools,Solr
+tools,Sonarqube
+tools,Storybook
+tools,Superset
+tools,Tableau
+tools,Telegram
+tools,Travis CI
+tools,Trello
+tools,Trino
+tools,Tuist
+tools,Unity
+tools,Vault
+tools,Zabbix
+tools,Zeppelin
+tools,Playwright
+tools,Puppeteer
+tools,Zipkin

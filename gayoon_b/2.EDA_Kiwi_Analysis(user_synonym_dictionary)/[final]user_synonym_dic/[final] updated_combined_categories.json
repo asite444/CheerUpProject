@@ -1,0 +1,174 @@
+{
+    "language": {
+        "java": [
+            "javas"
+        ],
+        "javascript": [
+            "javasript",
+            "javscript",
+            "javavscript",
+            "javascipt",
+            "javasscript",
+            "javascrpit",
+            "javacript",
+            "javsscript",
+            "jsi"
+        ],
+        "python": [
+            "pyhton",
+            "pyton",
+            "pyhon",
+            "pyhthon",
+            "pytnon"
+        ],
+        "swift": [
+            "swiftmr",
+            "switft",
+            "swiftui"
+        ],
+        "typescript": [
+            "tyescript",
+            "typescrpit",
+            "typesciprt",
+            "typesrcipt",
+            "typscript"
+        ]
+    },
+    "frameworks": {
+        "angular": [
+            "angluar",
+            "angularjs"
+        ],
+        "codeigniter": [
+            "codelgniter"
+        ],
+        "electron": [
+            "electronjs"
+        ],
+        "grpc": [
+            "grpcio",
+            "grp"
+        ],
+        "laravel": [
+            "lalavel",
+            "laravle"
+        ],
+        "nestjs": [
+            "nest"
+        ],
+        "nextjs": [
+            "next"
+        ],
+        "nuxtjs": [
+            "nuxt"
+        ],
+        "ruby on rails": [
+            "rail",
+            "raise"
+        ],
+        "react native": [
+            "reactive"
+        ],
+        "reactorkit": [
+            "reactor"
+        ],
+        "relay": [
+            "relayer"
+        ],
+        "spring": [
+            "springdoc",
+            "sping",
+            "spirng",
+            "sprint",
+            "sprting"
+        ],
+        "springboot": [
+            "springboottest"
+        ],
+        "svelte": [
+            "sveltekit"
+        ],
+        "tailwind": [
+            "tailwindcss"
+        ]
+    },
+    "libraries": {
+        "graphql": [
+            "graphol"
+        ],
+        "pytorch": [
+            "pytorh",
+            "pytouch"
+        ],
+        "react": [
+            "reach"
+        ],
+        "styled-components": [
+            "styledcompinents"
+        ],
+        "tensorflow": [
+            "temsorflow"
+        ]
+    },
+    "tools": {
+        "argo cd": [
+            "argo"
+        ],
+        "cassandradb": [
+            "casandra"
+        ],
+        "confluence": [
+            "confleunce",
+            "conflunce",
+            "confluece"
+        ],
+        "elasticsearch": [
+            "elasticserach"
+        ],
+        "github": [
+            "githb"
+        ],
+        "kafka": [
+            "kafa"
+        ],
+        "kubernetes": [
+            "kubernates",
+            "kubernets",
+            "kuberentes",
+            "kuberntes",
+            "kubenretes",
+            "kubanetes",
+            "kubenetes",
+            "kuberneties",
+            "kubemetes",
+            "kuerbernetes"
+        ],
+        "mongodb": [
+            "mono",
+            "mongdb",
+            "monogdb"
+        ],
+        "playwright": [
+            "playwrite"
+        ],
+        "postgresql": [
+            "postgressql",
+            "postresl",
+            "postgis",
+            "postgre",
+            "postgredb"
+        ],
+        "rabbitmq": [
+            "rabbit"
+        ],
+        "rancher": [
+            "rance"
+        ],
+        "sonarqube": [
+            "sonaqube"
+        ],
+        "superset": [
+            "supertest"
+        ]
+    }
+}

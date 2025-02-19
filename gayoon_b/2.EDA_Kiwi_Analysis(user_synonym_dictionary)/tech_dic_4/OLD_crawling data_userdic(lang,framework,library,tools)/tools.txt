@@ -1,0 +1,16 @@
+AWS
+Ansible
+Azure
+Docker
+Elasticsearch
+GCP
+Git
+Jenkins
+Jupyter
+Kubernetes
+MongoDB
+MySQL
+PostgreSQL
+Redis
+Slack
+Terraform

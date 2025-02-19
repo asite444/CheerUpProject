@@ -1,0 +1,232 @@
+agit	NNP	*	F	agit
+airflow	NNP	*	F	airflow
+alamofire	NNP	*	F	alamofire
+angular	NNP	*	F	angular
+ansible	NNP	*	F	ansible
+apollo	NNP	*	F	apollo
+appium	NNP	*	F	appium
+arangodb	NNP	*	F	arangodb
+arcus	NNP	*	F	arcus
+argo cd	NNP	*	F	argo cd
+armeria	NNP	*	F	armeria
+asana	NNP	*	F	asana
+aws athena	NNP	*	F	aws athena
+aws auroradb	NNP	*	F	aws auroradb
+aws codebuild	NNP	*	F	aws codebuild
+aws codedeploy	NNP	*	F	aws codedeploy
+aws codepipeline	NNP	*	F	aws codepipeline
+aws documentdb	NNP	*	F	aws documentdb
+aws dynamodb	NNP	*	F	aws dynamodb
+aws kinesis	NNP	*	F	aws kinesis
+aws mariadb	NNP	*	F	aws mariadb
+aws redshift	NNP	*	F	aws redshift
+aws ses	NNP	*	F	aws ses
+aws sns	NNP	*	F	aws sns
+azure devops	NNP	*	F	azure devops
+backbonejs	NNP	*	F	backbonejs
+bazel	NNP	*	F	bazel
+bitbucket	NNP	*	F	bitbucket
+bitrise	NNP	*	F	bitrise
+capistrano	NNP	*	F	capistrano
+cassandradb	NNP	*	F	cassandradb
+celery	NNP	*	F	celery
+central dogma	NNP	*	F	central dogma
+ceph	NNP	*	F	ceph
+circle ci	NNP	*	F	circle ci
+clickhouse	NNP	*	F	clickhouse
+cockroachdb	NNP	*	F	cockroachdb
+codeigniter	NNP	*	F	codeigniter
+confluence	NNP	*	F	confluence
+couchbase	NNP	*	F	couchbase
+c++	NNP	*	F	c++
+c#	NNP	*	F	c#
+cubrid	NNP	*	F	cubrid
+cucumber	NNP	*	F	cucumber
+cypress	NNP	*	F	cypress
+dagger	NNP	*	F	dagger
+dart	NNP	*	F	dart
+discord	NNP	*	F	discord
+docker	NNP	*	F	docker
+docusaurus	NNP	*	F	docusaurus
+dooray	NNP	*	F	dooray
+drone	NNP	*	F	drone
+dropwizard	NNP	*	F	dropwizard
+druid	NNP	*	F	druid
+echo	NNP	*	F	echo
+elasticsearch	NNP	*	F	elasticsearch
+electron	NNP	*	F	electron
+elixir	NNP	*	F	elixir
+emberjs	NNP	*	F	emberjs
+emotion	NNP	*	F	emotion
+enzyme	NNP	*	F	enzyme
+exoplayer	NNP	*	F	exoplayer
+expressjs	NNP	*	F	expressjs
+falcon	NNP	*	F	falcon
+fastapi	NNP	*	F	fastapi
+fastify	NNP	*	F	fastify
+fastlane	NNP	*	F	fastlane
+fiber	NNP	*	F	fiber
+flask	NNP	*	F	flask
+flink	NNP	*	F	flink
+flow	NNP	*	F	flow
+fluentd	NNP	*	F	fluentd
+gatsby	NNP	*	F	gatsby
+gin	NNP	*	F	gin
+github	NNP	*	F	github
+github action	NNP	*	F	github action
+gitlab	NNP	*	F	gitlab
+glide	NNP	*	F	glide
+go	NNP	*	F	go
+go cd	NNP	*	F	go cd
+google bigquery	NNP	*	F	google bigquery
+google cloud build	NNP	*	F	google cloud build
+google data studio	NNP	*	F	google data studio
+google firebase	NNP	*	F	google firebase
+grafana	NNP	*	F	grafana
+graphql	NNP	*	F	graphql
+greenplum	NNP	*	F	greenplum
+groovy	NNP	*	F	groovy
+grpc	NNP	*	F	grpc
+gulp	NNP	*	F	gulp
+h2	NNP	*	F	h2
+hadoop	NNP	*	F	hadoop
+harbor	NNP	*	F	harbor
+hazelcast	NNP	*	F	hazelcast
+hbase	NNP	*	F	hbase
+helm	NNP	*	F	helm
+hive	NNP	*	F	hive
+hugo	NNP	*	F	hugo
+immer	NNP	*	F	immer
+impala	NNP	*	F	impala
+influxdb	NNP	*	F	influxdb
+istio	NNP	*	F	istio
+jaeger	NNP	*	F	jaeger
+jandi	NNP	*	F	jandi
+jasmine	NNP	*	F	jasmine
+java	NNP	*	F	java
+javascript	NNP	*	F	javascript
+jenkins	NNP	*	F	jenkins
+jira	NNP	*	F	jira
+jotai	NNP	*	F	jotai
+junit	NNP	*	F	junit
+kafka	NNP	*	F	kafka
+kakaotalk	NNP	*	F	kakaotalk
+kakaowork	NNP	*	F	kakaowork
+karma	NNP	*	F	karma
+karpenter	NNP	*	F	karpenter
+keras	NNP	*	F	keras
+kibana	NNP	*	F	kibana
+koa	NNP	*	F	koa
+kotest	NNP	*	F	kotest
+ktor	NNP	*	F	ktor
+kube-bench	NNP	*	F	kube-bench
+kubeflow	NNP	*	F	kubeflow
+kubernetes	NNP	*	F	kubernetes
+kudu	NNP	*	F	kudu
+laravel	NNP	*	F	laravel
+linkerd	NNP	*	F	linkerd
+liquibase	NNP	*	F	liquibase
+locust	NNP	*	F	locust
+looker	NNP	*	F	looker
+lottie	NNP	*	F	lottie
+lua	NNP	*	F	lua
+memcached	NNP	*	F	memcached
+metabase	NNP	*	F	metabase
+meteor	NNP	*	F	meteor
+microsoft-teams	NNP	*	F	microsoft-teams
+mlflow	NNP	*	F	mlflow
+mobx	NNP	*	F	mobx
+mocha	NNP	*	F	mocha
+mockito	NNP	*	F	mockito
+monday	NNP	*	F	monday
+mongodb	NNP	*	F	mongodb
+moya	NNP	*	F	moya
+mssql	NNP	*	F	mssql
+mysql	NNP	*	F	mysql
+naver works	NNP	*	F	naver works
+neo4j	NNP	*	F	neo4j
+nestjs	NNP	*	F	nestjs
+netty	NNP	*	F	netty
+nextjs	NNP	*	F	nextjs
+nexus	NNP	*	F	nexus
+ngrinder	NNP	*	F	ngrinder
+nifi	NNP	*	F	nifi
+nodejs	NNP	*	F	nodejs
+notion	NNP	*	F	notion
+nuxtjs	NNP	*	F	nuxtjs
+openebs	NNP	*	F	openebs
+opengl	NNP	*	F	opengl
+oracledb	NNP	*	F	oracledb
+packer	NNP	*	F	packer
+perl	NNP	*	F	perl
+phoenix	NNP	*	F	phoenix
+php	NNP	*	F	php
+playwright	NNP	*	F	playwright
+postgresql	NNP	*	F	postgresql
+presto	NNP	*	F	presto
+prometheus	NNP	*	F	prometheus
+puppeteer	NNP	*	F	puppeteer
+pytorch	NNP	*	F	pytorch
+r	NNP	*	F	r
+rabbitmq	NNP	*	F	rabbitmq
+rancher	NNP	*	F	rancher
+ranger	NNP	*	F	ranger
+ray	NNP	*	F	ray
+react context	NNP	*	F	react context
+reactivex	NNP	*	F	reactivex
+reactjs	NNP	*	F	reactjs
+react native	NNP	*	F	react native
+reactorkit	NNP	*	F	reactorkit
+react query	NNP	*	F	react query
+recoil	NNP	*	F	recoil
+redash	NNP	*	F	redash
+redis	NNP	*	F	redis
+redux	NNP	*	F	redux
+relay	NNP	*	F	relay
+rescript	NNP	*	F	rescript
+rest-assured	NNP	*	F	rest-assured
+retrofit	NNP	*	F	retrofit
+ribs	NNP	*	F	ribs
+rocksdb	NNP	*	F	rocksdb
+ruby	NNP	*	F	ruby
+ruby on rails	NNP	*	F	ruby on rails
+rust	NNP	*	F	rust
+saltstack	NNP	*	F	saltstack
+sanic	NNP	*	F	sanic
+scala	NNP	*	F	scala
+selenium	NNP	*	F	selenium
+sinon	NNP	*	F	sinon
+slack	NNP	*	F	slack
+snapkit	NNP	*	F	snapkit
+snowflake	NNP	*	F	snowflake
+solr	NNP	*	F	solr
+sonarqube	NNP	*	F	sonarqube
+spark	NNP	*	F	spark
+spring	NNP	*	F	spring
+springboot	NNP	*	F	springboot
+storybook	NNP	*	F	storybook
+styled-components	NNP	*	F	styled-components
+superset	NNP	*	F	superset
+svelte	NNP	*	F	svelte
+swagger	NNP	*	F	swagger
+swift	NNP	*	F	swift
+tableau	NNP	*	F	tableau
+tailwind	NNP	*	F	tailwind
+telegram	NNP	*	F	telegram
+tensorflow	NNP	*	F	tensorflow
+testing library	NNP	*	F	testing library
+thrift	NNP	*	F	thrift
+traefik	NNP	*	F	traefik
+travis ci	NNP	*	F	travis ci
+trello	NNP	*	F	trello
+trino	NNP	*	F	trino
+tuist	NNP	*	F	tuist
+typescript	NNP	*	F	typescript
+unity	NNP	*	F	unity
+vault	NNP	*	F	vault
+vuejs	NNP	*	F	vuejs
+vuex	NNP	*	F	vuex
+zabbix	NNP	*	F	zabbix
+zeppelin	NNP	*	F	zeppelin
+zipkin	NNP	*	F	zipkin
+zustand	NNP	*	F	zustand

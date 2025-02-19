@@ -1,0 +1,336 @@
+{
+  "languages": {
+    "c++": [
+      "c++",
+      "lua",
+      "php"
+    ],
+    "c#": [
+      "c#",
+      "go"
+    ],
+    "dart": [
+      "dart",
+      "java",
+      "perl",
+      "ruby",
+      "rust"
+    ],
+    "elixir": [
+      "elixir",
+      "groovy",
+      "python"
+    ],
+    "javascript": [
+      "javascript",
+      "typescript"
+    ],
+    "r": [
+      "r"
+    ],
+    "scala": [
+      "scala",
+      "swift"
+    ],
+    "rescript": [
+      "rescript"
+    ]
+  },
+  "frameworks": {
+    "angular": [
+      "angular",
+      "armeria",
+      "emberjs",
+      "fastapi",
+      "fastify",
+      "jasmine",
+      "laravel",
+      "mockito",
+      "phoenix",
+      "swagger"
+    ],
+    "appium": [
+      "appium",
+      "dagger",
+      "falcon",
+      "gatsby",
+      "hadoop",
+      "kotest",
+      "meteor",
+      "nestjs",
+      "nextjs",
+      "nuxtjs",
+      "spring",
+      "svelte",
+      "thrift",
+      "nodejs"
+    ],
+    "backbonejs": [
+      "backbonejs",
+      "dropwizard",
+      "reactorkit",
+      "springboot"
+    ],
+    "codeigniter": [
+      "codeigniter"
+    ],
+    "echo": [
+      "echo",
+      "grpc",
+      "ktor",
+      "ribs"
+    ],
+    "electron": [
+      "electron",
+      "selenium",
+      "tailwind"
+    ],
+    "expressjs": [
+      "expressjs"
+    ],
+    "fiber": [
+      "fiber",
+      "flask",
+      "flink",
+      "junit",
+      "mocha",
+      "netty",
+      "relay",
+      "sanic",
+      "spark",
+      "vuejs"
+    ],
+    "gin": [
+      "gin",
+      "ray",
+      "koa"
+    ],
+    "react native": [
+      "react native"
+    ],
+    "ruby on rails": [
+      "ruby on rails"
+    ]
+  },
+  "libraries": {
+    "alamofire": [
+      "alamofire",
+      "exoplayer",
+      "reactivex"
+    ],
+    "apollo": [
+      "apollo",
+      "enzyme",
+      "lottie",
+      "recoil"
+    ],
+    "emotion": [
+      "emotion",
+      "reactjs",
+      "snapkit",
+      "zustand",
+      "pytorch",
+      "graphql"
+    ],
+    "glide": [
+      "glide",
+      "immer",
+      "jotai",
+      "keras",
+      "redux",
+      "sinon"
+    ],
+    "mobx": [
+      "mobx",
+      "moya",
+      "vuex"
+    ],
+    "react context": [
+      "react context"
+    ],
+    "react query": [
+      "react query"
+    ],
+    "rest-assured": [
+      "rest-assured"
+    ],
+    "retrofit": [
+      "retrofit"
+    ],
+    "styled-components": [
+      "styled-components"
+    ],
+    "tensorflow": [
+      "tensorflow"
+    ],
+    "testing library": [
+      "testing library"
+    ]
+  },
+  "tools": {
+    "agit": [
+      "agit",
+      "ceph",
+      "flow",
+      "gulp",
+      "helm",
+      "hive",
+      "hugo",
+      "jira",
+      "kudu",
+      "nifi",
+      "solr"
+    ],
+    "airflow": [
+      "airflow",
+      "ansible",
+      "argo cd",
+      "aws ses",
+      "aws sns",
+      "bitrise",
+      "cypress",
+      "discord",
+      "fluentd",
+      "grafana",
+      "jenkins",
+      "linkerd",
+      "mongodb",
+      "openebs",
+      "rancher",
+      "rocksdb",
+      "tableau",
+      "traefik"
+    ],
+    "arcus": [
+      "arcus",
+      "asana",
+      "bazel",
+      "drone",
+      "druid",
+      "go cd",
+      "hbase",
+      "istio",
+      "jandi",
+      "kafka",
+      "karma",
+      "mssql",
+      "mysql",
+      "neo4j",
+      "nexus",
+      "redis",
+      "slack",
+      "trino",
+      "tuist",
+      "unity",
+      "vault"
+    ],
+    "arangodb": [
+      "arangodb",
+      "cucumber",
+      "fastlane",
+      "kubeflow",
+      "metabase",
+      "ngrinder",
+      "oracledb",
+      "rabbitmq",
+      "superset",
+      "telegram",
+      "zeppelin",
+      "influxdb"
+    ],
+    "aws athena": [
+      "aws athena",
+      "capistrano",
+      "clickhouse",
+      "confluence",
+      "docusaurus",
+      "kube-bench",
+      "kubernetes",
+      "playwright",
+      "postgresql",
+      "prometheus",
+      "playwright"
+    ],
+    "aws auroradb": [
+      "aws auroradb",
+      "aws dynamodb",
+      "aws redshift",
+      "azure devops"
+    ],
+    "aws codebuild": [
+      "aws codebuild",
+      "central dogma",
+      "elasticsearch",
+      "github action"
+    ],
+    "aws codedeploy": [
+      "aws codedeploy",
+      "aws documentdb"
+    ],
+    "aws codepipeline": [
+      "aws codepipeline"
+    ],
+    "aws kinesis": [
+      "aws kinesis",
+      "aws mariadb",
+      "cassandradb",
+      "cockroachdb",
+      "naver works"
+    ],
+    "bitbucket": [
+      "bitbucket",
+      "circle ci",
+      "couchbase",
+      "greenplum",
+      "hazelcast",
+      "kakaotalk",
+      "kakaowork",
+      "karpenter",
+      "liquibase",
+      "memcached",
+      "saltstack",
+      "snowflake",
+      "sonarqube",
+      "storybook",
+      "travis ci",
+      "puppeteer"
+    ],
+    "celery": [
+      "celery",
+      "cubrid",
+      "docker",
+      "dooray",
+      "github",
+      "gitlab",
+      "harbor",
+      "jaeger",
+      "kibana",
+      "locust",
+      "looker",
+      "mlflow",
+      "monday",
+      "notion",
+      "packer",
+      "presto",
+      "ranger",
+      "redash",
+      "trello",
+      "zabbix",
+      "opengl",
+      "zipkin",
+      "impala"
+    ],
+    "google bigquery": [
+      "google bigquery",
+      "google firebase",
+      "microsoft-teams"
+    ],
+    "google cloud build": [
+      "google cloud build",
+      "google data studio"
+    ],
+    "h2": [
+      "h2"
+    ]
+  }
+}

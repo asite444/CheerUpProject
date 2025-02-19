@@ -1,0 +1,833 @@
+﻿IT_Tech_Term,Frequency
+개발,13427
+AWS,2268
+C,1910
+React,1908
+Python,1803
+API,1514
+Java,1336
+Spring,1120
+Typescript,1086
+TypeScript,1086
+Git,1049
+JavaScript,1047
+Javascript,1047
+인프라,896
+보안,883
+Docker,822
+MySQL,796
+Linux,763
+Kubernetes,694
+GitHub,666
+Github,666
+데이터베이스,566
+Android,565
+SQL,564
+Kotlin,539
+iOS,514
+HTML,498
+백엔드 개발,495
+CSS,473
+ML,460
+JIRA,458
+Jira,458
+데이터 분석,383
+Redis,380
+Spring Boot,379
+GCP,379
+Restful API,371
+REST,366
+Pytorch,352
+PyTorch,352
+Azure,346
+NoSQL,337
+UX,336
+PostgreSQL,319
+Spring Framework,303
+Django,294
+DevOps,292
+React Native,291
+Tensorflow,288
+3D,280
+Slack,271
+flutter,269
+Flutter,269
+MongoDB,269
+Go,261
+Kafka,249
+API 개발,249
+RDBMS,245
+REST API,238
+소프트웨어 개발,237
+JPA,237
+Notion,231
+Confluence,218
+영상,211
+알고리즘 개발,195
+SAP,191
+Swift,186
+Redux,186
+Jenkins,179
+SaaS,177
+FastAPI,176
+Rust,165
+Figma,165
+Windows,161
+PHP,159
+Oracle,154
+ERP,153
+Elasticsearch,152
+ElasticSearch,152
+Spark,145
+GraphQL,140
+Airflow,139
+Terraform,138
+ES6,135
+HTTP,129
+하드웨어,128
+Agile,128
+Angular,127
+EC2,126
+테스트 자동화,126
+솔루션 개발,124
+IoT,122
+Golang,122
+GitLab,117
+Gitlab,117
+NLP,117
+HTML5,116
+R,115
+Webpack,114
+NestJS,114
+Nestjs,114
+Database,113
+NET,112
+jQuery,111
+ReactJS,108
+Reactjs,108
+프로젝트 관리,107
+웹 개발,106
+장비,104
+ORM,101
+Spa,97
+품질 관리,97
+Deep Learning,96
+IP,96
+MVVM,95
+Hadoop,94
+Shell,91
+MariaDB,91
+Apache,91
+GitHub Actions,90
+회로,90
+펌웨어,87
+Grafana,87
+SoC,87
+GPU,86
+Flask,84
+NodeJS,83
+Nodejs,83
+Datadog,81
+TDD,81
+TCP,80
+OpenCV,80
+gRPC,79
+GRPC,79
+OpenStack,78
+운영체제,77
+MVP,75
+zustand,74
+Zustand,74
+WebSocket,74
+컨설팅,73
+Jest,73
+기술 개발,71
+Machine Learning,71
+BI,70
+BitBucket,69
+MSSQL,69
+Bitbucket,69
+CUDA,68
+접근성,68
+UNIX,68
+Unix,68
+Firebase,68
+ETL,68
+카메라,68
+컴퓨터 비전,66
+SpringBoot,64
+Recoil,62
+Prometheus,62
+Ansible,61
+Unity,60
+Ubuntu,60
+Storage,59
+Tableau,59
+Nginx,59
+FPGA,59
+가상화,59
+회로 설계,57
+Qt,57
+RabbitMQ,56
+ARM,56
+Selenium,55
+ROS,53
+Flow,53
+웹 표준,53
+Storybook,51
+Scrum,50
+JSP,50
+SASS,50
+Tailwind,49
+CAN,49
+CSS3,48
+WebRTC,48
+Ruby,48
+AWS EC2,48
+임베디드 시스템,48
+테스트 케이스,47
+네트워크 보안,47
+클라이언트 개발,47
+Nextjs,46
+NextJS,46
+Vuejs,45
+MVC,45
+Github Action,45
+VueJS,45
+방화벽,44
+신뢰성,44
+SAP ERP,42
+WPF,41
+WebGL,41
+CAD,41
+GPS,41
+Clean Architecture,41
+협력,40
+OpenGL,39
+Blockchain,39
+NumPy,38
+Verilog,38
+MyBatis,38
+Numpy,38
+테스트 계획,37
+VPN,37
+Appium,37
+Istio,36
+ASP,36
+Shell Script,36
+MobX,36
+RTOS,36
+Playwright,34
+Bash,34
+MES,34
+소프트웨어 공학,34
+Scala,34
+DNS,34
+Ethereum,34
+Helm,33
+Keras,33
+AWS RDS,33
+ABAP,32
+ORCAD,32
+Cypress,32
+Emotion,32
+SPI,32
+MATLAB,31
+Babel,31
+Querydsl,31
+Tailwind CSS,31
+Solidity,31
+특허,31
+스위치,31
+React Query,30
+서버 관리,30
+Swagger,30
+클라우드 보안,30
+Pandas,30
+딥 러닝,30
+UART,29
+Google Analytics,29
+MFC,29
+I2C,29
+AWS Lambda,29
+Dart,28
+암호화,28
+SCM,28
+EDA,28
+Unreal Engine,28
+PaaS,28
+GUI,28
+Google Cloud Platform,27
+Yarn,27
+Embedded System,27
+ISO 27001,27
+클라우드 컴퓨팅,27
+AWS S3,26
+Laravel,26
+AngularJS,26
+OOP,26
+게임 개발,26
+Hive,25
+Apache Kafka,25
+OAuth,25
+Speech,25
+IPS,25
+데이터 통합,25
+Big Data,25
+Tomcat,25
+MLflow,24
+Argo CD,24
+DLP,24
+LTE,24
+PADS,24
+네트워크 설계,24
+DSP,24
+Scripting,24
+일본어,24
+ExpressJS,24
+SDLC,24
+네트워크 인프라,23
+TypeORM,23
+Gradle,23
+LiDAR,23
+의료 영상,23
+CISSP,23
+Coroutine,23
+SLAM,22
+Redmine,22
+Celery,22
+AR,22
+CMS,22
+SVN,21
+Electron,21
+GIS,21
+MQTT,21
+Ceph,21
+IaaS,21
+Kubeflow,21
+OSS,21
+신호 처리,21
+AWS ECS,21
+JUnit,20
+Ruby on Rails,20
+ESLint,20
+Excel,20
+VR,20
+보안 관리,19
+Embedded Linux,19
+Jotai,19
+Mocha,19
+Visual Studio,19
+Linux kernel,19
+Cisco,19
+Svelte,18
+UDP,18
+Testing Library,18
+Altium,18
+PLC,18
+JWT,18
+Redash,18
+CCNP,17
+Flink,17
+프론트엔드 개발자,17
+QA 엔지니어링,17
+USB,17
+네트워크 통신,17
+임베디드 소프트웨어,17
+Xilinx,17
+광학,17
+AWS CloudWatch,17
+Power BI,17
+AWS EKS,17
+Bootstrap,17
+Microservice Architecture,16
+Spring Batch,16
+Adobe,16
+Asana,16
+음성 인식,16
+데이터 과학,16
+Powershell,16
+Windows 서버,16
+Jupyter,15
+RTL 설계,15
+웹 기술,15
+하드웨어 개발,15
+Snowflake,15
+SSL,15
+Kibana,15
+Spring Data JPA,14
+AWS CloudFront,14
+Hilt,14
+Web Socket,14
+Machine Vision,14
+XML,14
+프로토콜 개발,14
+Zeplin,14
+보안 운영,14
+Splunk,14
+Apache Airflow,14
+IT 운영,14
+OpenCL,14
+EDI,14
+Ray,14
+AWS DynamoDB,13
+Data Analysis,13
+인공 지능,13
+CISA,13
+Superset,13
+라우터,13
+Metal,13
+NAS,13
+CodeIgniter,13
+CCTV,13
+AWS SageMaker,13
+Vuex,13
+무선 통신,12
+Microsoft Azure,12
+Product Management,12
+ADC,12
+VxWorks,12
+Xcode,12
+Fastlane,12
+Apache Spark,12
+Amplitude,12
+WinForm,11
+Spinnaker,11
+내시경,11
+RxSwift,11
+JSX,11
+ObjectiveC,11
+SDN,11
+PMP,11
+Android Studio,11
+Unity3D,11
+IntelliJ IDEA,11
+AUTOSAR,11
+Tensorflow Lite,11
+네트워크 운영,10
+데이터 보안,10
+Azure DevOps,10
+Active Directory,10
+Windows Server,10
+파일 시스템,10
+Perl,10
+초음파,10
+Shader,10
+제품 품질,10
+Zabbix,10
+Fortinet,10
+CircleCI,10
+ANSYS,10
+ES5,10
+Adobe XD,9
+Puppeteer,9
+Tuist,9
+Impala,9
+AWS CodePipeline,9
+TCL,9
+하드웨어 설계,9
+UI 디자인,9
+4G,9
+HCI,9
+Echo,9
+GUI 개발,9
+IDS,9
+VDI,9
+SAN,9
+C 프로그래밍,9
+NFC,9
+Druid,9
+AJAX,9
+Ajax,9
+GLSL,9
+Presto,9
+HP,8
+Jasmine,8
+Gin,8
+Rancher,8
+Cubrid,8
+Mac,8
+리눅스 서버,8
+Rx,8
+MS 오피스,8
+CCIE,8
+RTL 코딩,8
+DSL,8
+GCC,8
+Looker,8
+CAE,8
+Shell Scripting,8
+Solidworks,7
+Netty,7
+DBT,7
+안드로이드 개발,7
+Visual Studio Code,7
+OSGi,7
+ThreeJS,7
+Falcon,7
+DirectX,7
+AutoCAD,7
+PCB 레이아웃 설계,7
+Trino,7
+Wireshark,7
+프로젝트 계획,7
+Couchbase,7
+Fastify,7
+VHDL,7
+Bamboo,7
+Reactor,6
+공정 관리,6
+병렬 프로그래밍,6
+Vault,6
+VLAN,6
+Assembly,6
+Torch,6
+AWS CloudFormation,6
+OpenFOAM,6
+네트워크 관리,6
+Embedded C,6
+FCC,6
+Packer,6
+전자정부프레임워크,6
+Atlassian JIRA,6
+Linkerd,6
+Apollo,6
+Altium Designer,6
+문서 관리,6
+SAP MM,6
+Arduino,6
+Xen,6
+CockroachDB,6
+YOLO,6
+AWS Cloud9,6
+DHCP,6
+ITGC,5
+Axios,5
+Raspberry Pi,5
+Guice,5
+Vanilla JS,5
+CTI,5
+위성 통신,5
+SOLR,5
+SAP FI,5
+Nexus,5
+SAP SD,5
+프로토콜 설계,5
+CICD,5
+MXNET,5
+Aurora DB,5
+AWS ElasticBeanstalk,5
+NAT,5
+Drone,5
+Solr,5
+STP,5
+HBase,5
+React Admin,5
+Retrofit2,5
+CEH,5
+Amazon Web Service,5
+Fiber,5
+UX 기획,4
+SQLite,4
+AWS Athena,4
+AWS EMR,4
+Lua,4
+PCB 디자인,4
+MPI,4
+전략 개발,4
+RFID,4
+Mapbox,4
+영어 실력,4
+QML,4
+Kendo UI,4
+Groovy,4
+테스트 실행,4
+SciPy,4
+Memcached,4
+ReactorKit,4
+머신 비전,4
+OpenGL ES,4
+JSTL,4
+InfluxDB,4
+Koa,4
+Mockito,4
+Sonarqube,4
+Google Guice,4
+Relay,4
+Klaytn,4
+SMTP,4
+디지털 회로 설계,4
+Traefik,4
+RIBs,4
+AWS DocumentDB,4
+Debezium,4
+3G,4
+AWS CodeCommit,3
+AWS Kinesis,3
+RFP,3
+ERP 구현,3
+Circle CI,3
+ERP 소프트웨어,3
+Retrofit,3
+Google Tag Manager,3
+VoIP,3
+React Hooks API,3
+PLL,3
+Realm,3
+Phoenix,3
+LDAP,3
+Nexacro,3
+TeamCity,3
+Harbor,3
+Bitrise,3
+Composer,3
+WPF 개발,3
+VMware Server,3
+Elixir,3
+제품 인증,3
+nGrinder,3
+SketchUp,3
+VM웨어,3
+3D 그래픽,3
+ANSYS Fluent,3
+Eigen,3
+VRRP,3
+Office 365,3
+UML,3
+NIFI,3
+SSIS,3
+Gulp,3
+Trello,3
+VMware view,3
+MPEG,3
+Highcharts,3
+전략 기획,3
+AWS Redshift,3
+Dagger,3
+WSUS,3
+Eclipse,3
+Kernel Programming,3
+Apache Hadoop,2
+React Native Router,2
+테스트 및 평가,2
+Mantis Bug Tracker,2
+소프트웨어 구현,2
+테스트 관리,2
+Gatsby,2
+Ranger,2
+Typeform,2
+OpenFlow,2
+SnapKit,2
+React Context,2
+SIP,2
+클라우드 스토리지,2
+Kotest,2
+Spotfire,2
+CouchDB,2
+NX Unigraphics,2
+3Ds Max,2
+문서 검토,2
+3D 시각화,2
+Metabase,2
+VMware Infrastructure,2
+잉크젯,2
+취약점 스캐닝,2
+공공 부문,2
+ScikitLearn,2
+Solidworks Simulation,2
+Oracle Database,2
+Lottie,2
+PCle,2
+Regular expression,2
+IPL,2
+dlib,2
+Karpenter,2
+Microsoft Outlook,2
+Zeppelin,2
+iBatis,2
+web3js,2
+CocoaPods,2
+NVIDIA TensorRT,2
+게임 프로그래밍,2
+SAP BI,2
+하드웨어 테스트,2
+SAP 구현,2
+HTML 스크립트,2
+SPDK,2
+Apache HTTP Server,2
+ML Kit,2
+Xamarin,2
+SAP BW,2
+Visual Basic,2
+Kudu,2
+Heroku,2
+SAP HR,2
+PADS Layout,2
+EEO,2
+Cucumber,2
+DWDM,2
+DevExpress,2
+프로젝트 납품,1
+QAD,1
+하드웨어 지원,1
+Locust,1
+Microsoft License,1
+PowerBuilder,1
+웹 전략,1
+Clickhouse,1
+Apache Tomcat,1
+CanvasJS,1
+마이크로프로세서,1
+Access 데이터베이스,1
+Power Point,1
+Azure Cache for Redis,1
+DNS 관리,1
+장비 유지 보수,1
+Bazel,1
+Azure Microsoft portal,1
+Windows 서비스,1
+Element UI,1
+Red Hat Ceph Storage,1
+회로 테스트,1
+소프트웨어 산업,1
+Armeria,1
+음성 장애,1
+Apache Druid,1
+ReactiveX,1
+RESTful WebServices,1
+Cisco VPN,1
+Azure Emotion,1
+Microsoft Project,1
+D3js,1
+Neo4j,1
+Google Container Registry,1
+Pyxis,1
+Slack API,1
+Flex,1
+Data mining,1
+광학 현미경,1
+Microsoft Dynamics,1
+네트워크 설치,1
+Apache Maven,1
+CSS 자바 스크립트,1
+Data Guard,1
+Azure Network Watcher,1
+CATIA V5,1
+Fusion360,1
+RESTful Architecture,1
+라이브러리 관리,1
+IT 관리,1
+AWS Route 53,1
+프로젝트 실행,1
+Cisco Wireless,1
+mSQL,1
+Google Cloud Functions,1
+ExoPlayer,1
+AWS Certificate Manager,1
+Moya,1
+Google BigQuery,1
+MeteorJS,1
+Windows Forms,1
+FPGA 프로토 타이핑,1
+Travis CI,1
+Xilinx ISE,1
+AWS Alexa,1
+문서 제도,1
+공공 관리,1
+Microchip PIC,1
+Monday,1
+SAP 포털,1
+DACS,1
+Keil,1
+Glide,1
+셀레니움,1
+클라우드 응용 프로그램,1
+AWS API Gateway,1
+제어 이론,1
+하드웨어 아키텍처,1
+안드로이드 SDK,1
+ReScript,0
+AWS Simple Queue ServiceAWS SQS,0
+CNNConvolutional Neural Network,0
+Ktor,0
+OracleDB,0
+ReduxSaga,0
+Discord,0
+Greenplum,0
+Reduxjs,0
+Jandi,0
+JPAJava Persistent API,0
+Karma,0
+Sanic,0
+NCPNaver Cloud Platform,0
+EmberJS,0
+AWS SNS,0
+ReduxThunk,0
+HLSHTTP Live Streaming,0
+Google Cloud Build,0
+Agit,0
+StyledComponents,0
+Kakaotalk,0
+Arcus,0
+Amazon Web ServicesAWS,0
+Saltstack,0
+ASP NET,0
+DBADatabase administration,0
+TCPIP,0
+Dooray,0
+ASPNET,0
+GCPGoogle Cloud Platform,0
+Sinon,0
+H2,0
+Telegram,0
+KakaoWork,0
+Dropwizard,0
+Hazelcast,0
+Thrift,0
+MVVMModelViewViewModel,0
+Go CD,0
+RestAssured,0
+CaffeConvolutional Architecture for Fast Feature Embedding,0
+Hugo,0
+Sequelizejs,0
+Google Firebase,0
+Salesforcecom,0
+ethersjs,0
+AWS AuroraDB,0
+Zipkin,0
+ArangoDB,0
+Azure Kubernetes Service AKS,0
+C  C,0
+AWS MariaDB,0
+MicrosoftTeams,0
+ReduxObservable,0
+Capistrano,0
+Google Data Studio,0
+CassandraDB,0
+Docusaurus,0
+RocksDB,0
+Liquibase,0
+Naver Works,0
+Central Dogma,0
+Jaeger,0
+Immer,0
+KubeBench,0
+Enzyme,0
+GANGenerative Adversarial Network,0
+AWS CodeDeploy,0
+Google GKE OnPrem,0
+Meteor,0
+BackboneJS,0
+Unity MLAgents,0
+SOX 404,0
+OpenEBS,0
+NuxtJS,0
+AWS SES,0
+AWS CodeBuild,0
+Alamofire,0
+SassSCSS,0
+DRFDjango REST framework,0
+Fluentd,0
+styledcomponents,0
+Nuxtjs,0
+MSSQLMicrosoft SQL Server,0

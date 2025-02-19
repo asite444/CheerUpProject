@@ -1,0 +1,264 @@
+{
+  "languages": {
+    "python": [
+      "py"
+    ],
+    "java": [
+      "jdk"
+    ],
+    "javascript": [
+      "js",
+      "reactjs",
+      "react"
+    ],
+    "c++": [
+      "c",
+      "c++",
+      "c#"
+    ],
+    "go": [
+      "golang"
+    ],
+    "ruby": [
+      "rails"
+    ],
+    "typescript": [
+      "ts"
+    ],
+    "swift": [
+      "swift"
+    ],
+    "rust": [
+      "rust"
+    ],
+    "php": [
+      "php"
+    ],
+    "r": [
+      "r"
+    ],
+    "perl": [
+      "perl"
+    ],
+    "scala": [
+      "scala"
+    ],
+    "dart": [
+      "dart"
+    ],
+    "groovy": [
+      "groovy"
+    ],
+    "elixir": [
+      "elixir"
+    ],
+    "lua": [
+      "lua"
+    ],
+    "rescript": [
+      "rescript"
+    ]
+  },
+  "frameworks": {
+    "angular": [
+      "ng"
+    ],
+    "nodejs": [
+      "node"
+    ],
+    "react native": [
+      "reactnative"
+    ],
+    "expressjs": [
+      "express"
+    ],
+    "spring": [
+      "springboot"
+    ],
+    "flask": [
+      "flask"
+    ],
+    "vuejs": [
+      "vue"
+    ],
+    "ruby on rails": [
+      "rails"
+    ],
+    "django": [
+      "django"
+    ],
+    "nextjs": [
+      "next"
+    ],
+    "nuxtjs": [
+      "nuxt"
+    ],
+    "angularjs": [
+      "ngjs"
+    ],
+    "laravel": [
+      "laravel"
+    ],
+    "emberjs": [
+      "ember"
+    ],
+    "koa": [
+      "koa"
+    ],
+    "fastapi": [
+      "fastapi"
+    ],
+    "nestjs": [
+      "nestjs"
+    ],
+    "svelte": [
+      "svelte"
+    ],
+    "mocha": [
+      "mocha"
+    ],
+    "react": [
+      "reactjs"
+    ],
+    "tailwind": [
+      "tailwind"
+    ],
+    "grc": [
+      "grpc"
+    ]
+  },
+  "libraries": {
+    "reactjs": [
+      "react"
+    ],
+    "redux": [
+      "redux"
+    ],
+    "tensorflow": [
+      "tf"
+    ],
+    "pytorch": [
+      "torch"
+    ],
+    "vuex": [
+      "vuex"
+    ],
+    "graphql": [
+      "graphql"
+    ],
+    "redux-saga": [
+      "redux-saga"
+    ],
+    "axios": [
+      "axios"
+    ],
+    "apollo": [
+      "apollo"
+    ],
+    "keras": [
+      "keras"
+    ],
+    "styled-components": [
+      "styledcomponents"
+    ],
+    "testing-library": [
+      "testinglibrary"
+    ],
+    "recoil": [
+      "recoil"
+    ],
+    "mobx": [
+      "mobx"
+    ],
+    "react query": [
+      "reactquery"
+    ],
+    "lottie": [
+      "lottie"
+    ],
+    "snapkit": [
+      "snapkit"
+    ],
+    "sinon": [
+      "sinon"
+    ]
+  },
+  "tools": {
+    "docker": [
+      "docker"
+    ],
+    "aws": [
+      "aws",
+      "aws codebuild",
+      "aws kinesis",
+      "aws redshift",
+      "aws auroradb"
+    ],
+    "github": [
+      "git"
+    ],
+    "jenkins": [
+      "jenkins"
+    ],
+    "google cloud": [
+      "gcp",
+      "google cloud build",
+      "google data studio"
+    ],
+    "slack": [
+      "slack"
+    ],
+    "bitbucket": [
+      "bitbucket"
+    ],
+    "redis": [
+      "redis"
+    ],
+    "elasticsearch": [
+      "es"
+    ],
+    "kubernetes": [
+      "k8s"
+    ],
+    "mongodb": [
+      "mongo"
+    ],
+    "mysql": [
+      "mysql"
+    ],
+    "postgresql": [
+      "postgres",
+      "postgresql"
+    ],
+    "jira": [
+      "jira"
+    ],
+    "travis ci": [
+      "travis"
+    ],
+    "prometheus": [
+      "prometheus"
+    ],
+    "azure": [
+      "azure"
+    ],
+    "circleci": [
+      "circleci"
+    ],
+    "tableau": [
+      "tableau"
+    ],
+    "rabbitmq": [
+      "rabbitmq"
+    ],
+    "graphql": [
+      "graphql"
+    ],
+    "kafka": [
+      "kafka"
+    ],
+    "mssql": [
+      "mssql"
+    ]
+  }
+}

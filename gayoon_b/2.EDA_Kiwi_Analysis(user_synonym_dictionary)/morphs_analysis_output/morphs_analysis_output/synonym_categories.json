@@ -1,0 +1,209 @@
+{
+  "languages": {
+    "c++": [
+      "c",
+      "c++",
+      "csharp",
+      "c#"
+    ],
+    "python": [
+      "py",
+      "python"
+    ],
+    "javascript": [
+      "js",
+      "javascript"
+    ],
+    "java": [
+      "jdk",
+      "java"
+    ],
+    "ruby": [
+      "ruby"
+    ],
+    "go": [
+      "go"
+    ],
+    "typescript": [
+      "ts",
+      "typescript"
+    ],
+    "scala": [
+      "scala"
+    ],
+    "swift": [
+      "swift"
+    ],
+    "rust": [
+      "rust"
+    ],
+    "perl": [
+      "perl"
+    ],
+    "php": [
+      "php"
+    ],
+    "r": [
+      "r"
+    ],
+    "dart": [
+      "dart"
+    ],
+    "elixir": [
+      "elixir"
+    ],
+    "groovy": [
+      "groovy"
+    ],
+    "lua": [
+      "lua"
+    ]
+  },
+  "frameworks": {
+    "angular": [
+      "ng",
+      "angular"
+    ],
+    "react native": [
+      "reactnative",
+      "react native"
+    ],
+    "nodejs": [
+      "node",
+      "nodejs"
+    ],
+    "spring": [
+      "spring",
+      "springboot"
+    ],
+    "flask": [
+      "flask"
+    ],
+    "vuejs": [
+      "vue",
+      "vuejs"
+    ],
+    "react": [
+      "react",
+      "reactjs"
+    ],
+    "expressjs": [
+      "express",
+      "expressjs"
+    ],
+    "django": [
+      "django"
+    ],
+    "laravel": [
+      "laravel"
+    ],
+    "svelte": [
+      "svelte"
+    ],
+    "mocha": [
+      "mocha"
+    ],
+    "nextjs": [
+      "nextjs"
+    ],
+    "nuxtjs": [
+      "nuxt",
+      "nuxtjs"
+    ]
+  },
+  "libraries": {
+    "reactjs": [
+      "react",
+      "reactjs"
+    ],
+    "tensorflow": [
+      "tf",
+      "tensorflow"
+    ],
+    "redux": [
+      "redux"
+    ],
+    "pytorch": [
+      "torch",
+      "pytorch"
+    ],
+    "apollo": [
+      "apollo"
+    ],
+    "graphql": [
+      "graphql"
+    ],
+    "keras": [
+      "keras"
+    ],
+    "vuex": [
+      "vuex"
+    ],
+    "styled-components": [
+      "styled-components"
+    ],
+    "rest-assured": [
+      "rest-assured"
+    ],
+    "axios": [
+      "axios"
+    ]
+  },
+  "tools": {
+    "docker": [
+      "docker"
+    ],
+    "github": [
+      "git",
+      "github"
+    ],
+    "kubernetes": [
+      "k8s",
+      "kubernetes"
+    ],
+    "aws": [
+      "aws"
+    ],
+    "jenkins": [
+      "jenkins"
+    ],
+    "bitbucket": [
+      "bitbucket"
+    ],
+    "google cloud": [
+      "gcp",
+      "google cloud"
+    ],
+    "azure": [
+      "azure"
+    ],
+    "jira": [
+      "jira"
+    ],
+    "travis ci": [
+      "travis",
+      "travis ci"
+    ],
+    "slack": [
+      "slack"
+    ],
+    "redis": [
+      "redis"
+    ],
+    "elasticsearch": [
+      "es",
+      "elasticsearch"
+    ],
+    "mongodb": [
+      "mongo",
+      "mongodb"
+    ],
+    "mysql": [
+      "mysql"
+    ],
+    "postgresql": [
+      "postgres",
+      "postgresql"
+    ]
+  }
+}

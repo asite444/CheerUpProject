@@ -1,0 +1,24 @@
+Languages,Frameworks,Libraries,Tools
+C#,ASP.NET,Axios,AWS
+C++,Angular,Bootstrap,Ansible
+Dart,Django,Keras,Azure
+Go,Express,Matplotlib,Docker
+Java,FastAPI,NumPy,ElasticSearch
+JavaScript,Flask,Pandas,Elasticsearch
+Kotlin,Flutter,PyTorch,GCP
+PHP,Keras,Seaborn,Git
+Perl,Laravel,TensorFlow,Grafana
+Python,React,Three.js,IntelliJ
+R,Ruby on Rails,gRPC,JIRA
+Ruby,Spark,jQuery,Jenkins
+Rust,Spring,,Jupyter
+Scala,Spring Boot,,Kubernetes
+Swift,TensorFlow,,MongoDB
+TypeScript,Vue.js,,MySQL
+,,,PostgreSQL
+,,,Postman
+,,,PyCharm
+,,,Redis
+,,,Slack
+,,,Tableau
+,,,Terraform
