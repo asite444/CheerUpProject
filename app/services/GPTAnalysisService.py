@@ -171,34 +171,39 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05)
                 AND unit = 1
                 ORDER BY rank
                 LIMIT ?
-            ),
-            Filtered AS (
-                SELECT
-                    sp.skill,
-                    sp.probability,
-                    sp.pre_probability,
-                    r.skill AS rskill,
-                    r.probability AS rprobability,
-                    r.rank AS rrank,
-                    ROW_NUMBER() OVER (PARTITION BY r.rank ORDER BY sp.probability DESC, sp.pre_probability DESC) AS rn
-                FROM skill_probability sp
-                RIGHT OUTER JOIN Ranked r 
-                    ON sp.skill LIKE '%' || r.skill || '%'
-                WHERE sp.category = ?
-                AND sp.duty = ?
-                AND sp.unit > 1
-                AND sp.probability >= ?
-                AND sp.pre_probability != 0
-                AND sp.skill NOT IN (?)
             )
-            SELECT skill, probability, rskill, rprobability, rrank
-            FROM Filtered
-            WHERE rn <= 2  -- rrank별로 최대 2개 선택
-            ORDER BY rrank, probability DESC;
+            SELECT
+                sp.skill,
+                sp.probability,
+                sp.pre_probability,
+                r.skill AS rskill,
+                r.probability AS rprobability,
+                r.rank AS rrank,
+                ROW_NUMBER() OVER (PARTITION BY r.rank ORDER BY sp.probability DESC, sp.pre_probability DESC) AS rn
+            FROM skill_probability sp
+            RIGHT OUTER JOIN Ranked r 
+                ON sp.skill LIKE '%' || r.skill || '%'
+            WHERE sp.category = ?
+            AND sp.duty = ?
+            AND sp.unit > 1
+            AND sp.probability >= ?
+            AND sp.skill NOT IN (?)
+            ORDER BY rrank ASC, rn ASC, sp.probability DESC;
         """
         purchases = (category, duty, limit, category, duty, probability, ', '.join(user_skill), )
         data = pd.read_sql_query(query, connection, params=purchases)
-        return data
+
+        # 중복된 skill을 가진 행 중 첫 번째 값만 유지
+        df_filtered = data.drop_duplicates(subset=["skill"], keep="first")
+
+        # 삭제할 skill 값 결정 후 필터링
+        rank_skills = ', '.join(sorted(df_filtered['rskill'].unique()))
+        df_filtered = df_filtered[df_filtered['skill'] != rank_skills]
+
+        # rrank 별 상위 2개 선택
+        df_filtered = df_filtered.groupby("rrank").head(2)
+
+        return df_filtered
     except Exception as e:
         print("Error during SQL execution:", str(e))
         return {"error": str(e)}
@@ -240,7 +245,7 @@ def get_improvement_html(data_dict):
             continue
 
         # ✅ rskill별 그룹 생성
-        for i in range(len(values["rskill"])):
+        for i in values["rskill"].keys():
             rskill = values["rskill"][i]
             if rskill not in rskill_groups:
                 rskill_groups[rskill] = {col: {} for col in columns.keys()}
@@ -255,7 +260,7 @@ def get_improvement_html(data_dict):
 
         # ✅ rskill별 테이블 생성
         for rskill, rvalues in rskill_groups.items():
-            html_content += f"<h3>{rskill} 관련 기술</h3>\n"
+            html_content += f"<h3>{rskill} 관련 기술 조합</h3>\n"
             html_content += "<table border='1'>\n"
 
             # ✅ 테이블 헤더 생성
