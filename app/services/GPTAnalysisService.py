@@ -297,7 +297,7 @@ def analyze_conclusion(user_data:UserInputData):
     response = get_openai_response(prompt)
     try:
         res_eval = ast.literal_eval(response)
-        print(res_eval)
+       
         result_dict = {'duty': duty, 'score': score, 'description': res_eval}
     except SyntaxError as e:
         print("Error during openai api response change eval(analyze_conclusion):", str(e))
