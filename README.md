@@ -3,6 +3,8 @@
 
 # Descriptions (프로젝트 목적) 
 
+# Key Features (프로젝트 기능 및 특장점) 
+
 # Datasets (프로젝트 데이터) 
 
 # Approach (프로젝트 구조도) 
