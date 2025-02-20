@@ -103,7 +103,7 @@ def generate_html_table(duty, data, user_selected_skills, category):
     """
 
     if not data:
-        return f"<p>현재 {duty[0]}에 해당하는 기술 스택이 등록되어 있지 않습니다.</p>"
+        return f'<p class="no_data">현재 {duty[0]}에 해당하는 기술 스택이 등록되어 있지 않습니다.</p>'
 
     # 컬럼 추가 여부 결정
     has_base_language = category == "framework"  # 프레임워크에서만 기반 언어 표시
