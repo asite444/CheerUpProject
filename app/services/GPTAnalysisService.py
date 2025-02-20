@@ -10,6 +10,8 @@ from datetime import datetime
 from openai import OpenAI
 from dotenv import load_dotenv
 
+from .category_weights import get_weight
+
 def get_api_key():
     # 프로젝트 루트의 .env 파일을 로드 (web/.env)
     dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), ".env")
@@ -43,7 +45,7 @@ def analyze_customize(user_data:UserInputData):
     print('data: ', data)
     if data is None:
         # DB에 분석 결과가 없음
-        improvement_result = False # analyze_improvement(duty, categories)
+        improvement_result = analyze_improvement(duty, categories)
         conclusion_result = analyze_conclusion(user_data)
         if improvement_result is not False and conclusion_result is not False:
             set_customized_analysis(duty, categories, improvement_result, conclusion_result)
@@ -291,8 +293,6 @@ def analyze_conclusion(user_data:UserInputData):
     data = user_data.languages + user_data.frameworks + user_data.libraries + user_data.devtools
 
     score = get_duty_scores(data)
-    print(score)
-    return False
 
     prompt = make_conclusion_prompt(data, score)
 
@@ -312,19 +312,19 @@ def get_duty_scores(skills):
     connection = get_connection()
 
     try:
-        query = """
+        query = f"""
             SELECT skill, category, duty, probability,
                 RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC, skill ASC) AS rank 
             FROM skill_probability
             WHERE unit = 1
             AND duty NOT IN ('언어별 개발자')
-            and duty == 'AI'
-            and probability != 0.0
+            AND probability != 0.0
+            AND skill IN ({','.join(['?'] * len(skills))})
             ORDER BY duty, category
         """
-        data = pd.read_sql_query(query, connection)
+        data = pd.read_sql_query(query, connection, params=(*skills, ))
 
-        score_series = data.groupby(by='duty', group_keys=False).apply(lambda x: calculate_score(x.drop(columns=['duty']), skills))
+        score_series = data.groupby(by='duty', group_keys=False).apply(calculate_score)
         score_dict = score_series.to_dict()
         return dict(sorted(score_dict.items(), key=lambda item: item[1], reverse=True))
     except Exception as e:
@@ -334,152 +334,26 @@ def get_duty_scores(skills):
         if connection:
             connection.close()
 
-def calculate_score(df, user_skills):
-    # 카테고리 가중치
-    category_weights = {
-        'it_language': 0.4,
-        'framework': 0.1,
-        'library': 0.4,
-        'tool': 0.1
-    }
-
-    print("-"*80)
-    print(df)
-
-    # 사용자 스킬 필터링
-    user_skills_df = df[df['skill'].isin(user_skills)].copy()
-
-    if user_skills_df.empty:
+def calculate_score(df):
+    if df.empty:
         return 0
 
-    # 카테고리 가중치 적용
-    user_skills_df['category_weight'] = user_skills_df['category'].map(category_weights)
-    print(user_skills_df, end='\n\n')
-    #######################지수함수, 소프트맥스 함수 적용##################
-    PM_category_weights = {
-            'it_language': 0.2,
-            'framework': 0.25,
-            'library': 0.45,
-            'tool': 0.1
-        }
+    # 카테고리 가중치
+    duty = df['duty'].unique()[0]
+    category_weight = get_weight(duty)
 
-    data_category_weights = {
-            'it_language': 0.1,
-            'framework': 0.4,
-            'library': 0.4,
-            'tool': 0.1
-        }
 
-    back_category_weights = {
-            'it_language': 0.25,
-            'framework': 0.25,
-            'library': 0.3,
-            'tool': 0.2
-        }
-
-    infra_category_weights = {
-            'it_language': 0.2,
-            'framework': 0.35,
-            'library': 0.3,
-            'tool': 0.15
-        }
-
-    app_category_weights = {
-            'it_language': 0.3,
-            'framework': 0.45,
-            'library': 0.1,
-            'tool': 0.15
-        }
-
-    game_category_weights = {
-            'it_language': 0.4,
-            'framework': 0.4,
-            'library': 0.1,
-            'tool': 0.1
-        }
-
-    AI_category_weights = {
-            'it_language': 0.4,
-            'framework': 0.1,
-            'library': 0.4,
-            'tool': 0.1
-        }
-
-    embeded_category_weights = {
-            'it_language': 0.4,
-            'framework': 0.1,
-            'library': 0.4,
-            'tool': 0.1
-        }
-
-    front_category_weights = {
-            'it_language': 0.3,
-            'framework': 0.4,
-            'library': 0.2,
-            'tool': 0.1
-        }
-
-    QA_category_weights = {
-            'it_language': 0.4,
-            'framework': 0.3,
-            'library': 0.1,
-            'tool': 0.2
-        }
-
-    data_analysis_category_weights = {
-            'it_language': 0.4,
-            'framework': 0.25,
-            'library': 0.25,
-            'tool': 0.1
-        }
-
-    VR_category_weights = {
-            'it_language': 0.5,
-            'framework': 0.1,
-            'library': 0.1,
-            'tool': 0.3
-        }
-    
-    system_category_weights = {
-            'it_language': 0.35,
-            'framework': 0.2,
-            'library': 0.35,
-            'tool': 0.1
-        }
-
-    blockchain_category_weights = {
-            'it_language': 0.2,
-            'framework': 0.3,
-            'library': 0.3,
-            'tool': 0.2
-        }
-
-    ERP_category_weights = {
-            'it_language': 0.4,
-            'framework': 0.3,
-            'library': 0.1,
-            'tool': 0.2
-        }
-
-    language_category_weights = {
-            'it_language': 0.7,
-            'framework': 0.1,
-            'library': 0.1,
-            'tool': 0.1
-        }
-    category_prob_sum_df = user_skills_df.groupby("category")['probability'].sum().reset_index()
+    # 지수함수, 소프트맥스 함수 적용
+    category_prob_sum_df = df.groupby("category")['probability'].sum().reset_index()
     category_prob_sum_df["except_prob"] = 100 - category_prob_sum_df["probability"]
-    # ##지수함수 10 = 57점점
+
     category_prob_sum_df["e_func"] = (10 **(category_prob_sum_df["probability"]/100))-1
     category_prob_sum_df["except_e_func"]=(10 **(category_prob_sum_df["except_prob"]/100))-1
     category_prob_sum_df["score"] = 100*category_prob_sum_df["e_func"]/(category_prob_sum_df['e_func']+category_prob_sum_df['except_e_func'])
 
-    category_prob_sum_df['category_weight'] = category_prob_sum_df['category'].map(category_weights)
+    # 카테고리 가중치 적용
+    category_prob_sum_df['category_weight'] = category_prob_sum_df['category'].map(category_weight)
     category_prob_sum_df['final_score'] = category_prob_sum_df['score'] * category_prob_sum_df['category_weight']
-    print(category_prob_sum_df, end='\n\n')
-    print(user_skills_df, end='\n\n')
-    #####################################################################
-    # 최종 점수 계산 (100점 만점)
     total_score = round(category_prob_sum_df['final_score'].sum(), 2)
     return total_score
 
