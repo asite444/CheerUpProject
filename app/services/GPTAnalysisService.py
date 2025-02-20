@@ -10,7 +10,7 @@ from datetime import datetime
 from openai import OpenAI
 from dotenv import load_dotenv
 
-from .category_weights import get_weight
+from ..models.category_weights import get_weight
 
 def get_api_key():
     # 프로젝트 루트의 .env 파일을 로드 (web/.env)
@@ -164,7 +164,10 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05)
     connection = get_connection()
 
     try:
-        not_like_conditions = " OR ".join([f"sp.skill LIKE '%{skill}%'" for skill in user_skill])
+        not_like_conditions = ''
+        if user_skill:  # 데이터가 없으면
+            not_like_conditions = 'AND NOT '
+            not_like_conditions += " OR ".join([f"sp.skill LIKE '%{skill}%'" for skill in user_skill])
 
         query = f"""
             WITH Ranked AS (
@@ -196,7 +199,7 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05)
             AND sp.duty = ?
             AND sp.unit > 1
             AND sp.probability >= ?
-            AND NOT ({not_like_conditions})
+            {not_like_conditions}
             ORDER BY rrank ASC, rn ASC, sp.probability DESC;
         """
         purchases = (category, duty, limit, category, duty, probability, )
