@@ -10,6 +10,7 @@ Descriptions (프로젝트 목적)
 Key Features (프로젝트 기능 및 특장점) 
 
 Datasets (프로젝트 데이터) 
+![image](https://github.com/user-attachments/assets/3b4d6d42-47ec-414a-908c-554205dbf7f7)
 
 Approach (프로젝트 구조도) 
 
