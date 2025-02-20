@@ -38,6 +38,7 @@ def analyze_stack_top5(user_data: UserInputData):
     connection = get_connection()
 
     try:
+        duty = user_data.jobs
         # 카테고리 매핑 (SQL 쿼리에서 사용할 기술 카테고리를 설정)
         categories = {
             "언어": ("it_language", user_data.languages),
@@ -67,21 +68,21 @@ def analyze_stack_top5(user_data: UserInputData):
                     base_language,
                     use_framework
                 FROM skill_probability
-                WHERE category = ? AND duty IN ({','.join(['?'] * len(user_data.jobs))}) AND unit = 1
+                WHERE category = ? AND duty IN ({','.join(['?'] * len(duty))}) AND unit = 1
             )
             SELECT skill, rank, probability, pre_probability, description, base_language, use_framework
             FROM Ranked
             ORDER BY rank
             """
 
-            df = pd.read_sql_query(query, connection, params=(category, *user_data.jobs))
+            df = pd.read_sql_query(query, connection, params=(category, *duty))
 
             # 중간 랭크 포함하여 추가적인 데이터 확보
             temp_ranked = set(list(range(1, 6)) + [x for i in df.loc[df["skill"].isin(selected_skills), 'rank'].to_list() for x in range(i-3, i+1)])
             extra_selected_data = list(df[df['rank'].isin(temp_ranked)].itertuples(index=False, name=None))
 
             # HTML 테이블 생성 (category 정보 추가)
-            html_outputs[display_name] = generate_html_table(extra_selected_data, selected_skills, category)
+            html_outputs[display_name] = generate_html_table(duty, extra_selected_data, selected_skills, category)
 
         return html_outputs
 
@@ -94,7 +95,7 @@ def analyze_stack_top5(user_data: UserInputData):
             connection.close()
 
 
-def generate_html_table(data, user_selected_skills, category):
+def generate_html_table(duty, data, user_selected_skills, category):
     """
     HTML 테이블을 생성하는 함수
     - data: 기술 데이터 리스트 (순위가 비연속적인 경우 중간 생략 추가)
@@ -102,7 +103,7 @@ def generate_html_table(data, user_selected_skills, category):
     """
 
     if not data:
-        return f"<p>데이터 없음</p>"
+        return f"<p>현재 {duty}에 대한 기술 스택이 존재하지 않습니다.</p>"
 
     # 컬럼 추가 여부 결정
     has_base_language = category == "framework"  # 프레임워크에서만 기반 언어 표시
