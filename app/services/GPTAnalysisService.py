@@ -10,6 +10,8 @@ from datetime import datetime
 from openai import OpenAI
 from dotenv import load_dotenv
 
+from .category_weights import get_weight
+
 def get_api_key():
     # 프로젝트 루트의 .env 파일을 로드 (web/.env)
     dotenv_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), ".env")
@@ -216,10 +218,10 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05)
 
 def make_improvement_prompt(duty, combination):
     """ 보완사항에 대한 프롬프트 작성 """
-    prompt = f'''다음 스킬 조합을 "{duty}"에 지원하는 사람에게 추천하는 이유를 JSON 딕셔너리 형식으로 감싸서 반환하세요.
-반드시 "JSON 형식"을 따르며 키는 스킬 조합, 값은 "조합끼리의 시너지 효과(50자 이내)"의 형태여야 하며 본론만 말하세요.'''
+    prompt = f'''다음 스킬 조합을 "{duty}"에 지원하는 사람에게 추천하는 이유를 JSON 딕셔너리 형식으로 감싸서 반환해라.
+반드시 "JSON 형식"을 따르며 키는 스킬 조합, 값은 "조합끼리의 시너지 효과(50자 이내)"의 형태여야 하며 본론만 말해라'''
     
-    prompt += '(예시: {"c#, c++, java, rust": "성능 최적화, 메모리 관리, 네트워크 프로그래밍에 강점을 가짐"}): '
+    prompt += '(예시: {"c#, c++, java, rust": "성능 최적화, 메모리 관리, 네트워크 프로그래밍에 강점을 가짐"}).: '
 
     # 중괄호 이슈 해결 및 리스트 변환
     skills = list(combination['skill'])  # Pandas Series가 아닐 경우 to_list() 필요 없음
@@ -311,17 +313,19 @@ def get_duty_scores(skills):
     connection = get_connection()
 
     try:
-        query = """
-            SELECT skill, category, duty,
+        query = f"""
+            SELECT skill, category, duty, probability,
                 RANK() OVER (PARTITION BY duty, category ORDER BY probability DESC, pre_probability DESC, skill ASC) AS rank 
             FROM skill_probability
             WHERE unit = 1
             AND duty NOT IN ('언어별 개발자')
+            AND probability != 0.0
+            AND skill IN ({','.join(['?'] * len(skills))})
             ORDER BY duty, category
         """
-        data = pd.read_sql_query(query, connection)
+        data = pd.read_sql_query(query, connection, params=(*skills, ))
 
-        score_series = data.groupby(by='duty', group_keys=False).apply(lambda x: calculate_score(x.drop(columns=['duty']), skills))
+        score_series = data.groupby(by='duty', group_keys=False).apply(calculate_score)
         score_dict = score_series.to_dict()
         return dict(sorted(score_dict.items(), key=lambda item: item[1], reverse=True))
     except Exception as e:
@@ -331,30 +335,27 @@ def get_duty_scores(skills):
         if connection:
             connection.close()
 
-def calculate_score(df, user_skills):
+def calculate_score(df):
+    if df.empty:
+        return 0
+
     # 카테고리 가중치
-    category_weights = {
-        'it_language': 0.3,
-        'framework': 0.3,
-        'library': 0.2,
-        'tool': 0.2
-    }
+    duty = df['duty'].unique()[0]
+    category_weight = get_weight(duty)
 
-    # 사용자 스킬 필터링
-    user_skills_df = df[df['skill'].isin(user_skills)].copy()
 
-    if user_skills_df.empty:
-        return 0  # 일치하는 기술이 없으면 0점 반환
+    # 지수함수, 소프트맥스 함수 적용
+    category_prob_sum_df = df.groupby("category")['probability'].sum().reset_index()
+    category_prob_sum_df["except_prob"] = 100 - category_prob_sum_df["probability"]
 
-    # 지수 가중치 계산 (rank가 낮을수록 가중치 높음)
-    user_skills_df['weight'] = np.exp(-user_skills_df['rank'])
+    category_prob_sum_df["e_func"] = (10 **(category_prob_sum_df["probability"]/100))-1
+    category_prob_sum_df["except_e_func"]=(10 **(category_prob_sum_df["except_prob"]/100))-1
+    category_prob_sum_df["score"] = 100*category_prob_sum_df["e_func"]/(category_prob_sum_df['e_func']+category_prob_sum_df['except_e_func'])
 
     # 카테고리 가중치 적용
-    user_skills_df['category_weight'] = user_skills_df['category'].map(category_weights)
-    user_skills_df['final_weight'] = user_skills_df['weight'] * user_skills_df['category_weight']
-
-    # 최종 점수 계산 (100점 만점)
-    total_score = round(user_skills_df['final_weight'].sum() * 100, 2)
+    category_prob_sum_df['category_weight'] = category_prob_sum_df['category'].map(category_weight)
+    category_prob_sum_df['final_score'] = category_prob_sum_df['score'] * category_prob_sum_df['category_weight']
+    total_score = round(category_prob_sum_df['final_score'].sum(), 2)
     return total_score
 
 def make_conclusion_prompt(skills, score, top=3):
