@@ -116,6 +116,8 @@
     margin-bottom: 15px;
 }
 
+
+
 /* 그래프 분석 결과 스타일 (result-graph) */
 /* .analysis-result #result-graph-career,   */
 .analysis-result #result-graph-language,
@@ -327,4 +329,15 @@
 #result-conclusion span.indent{
     display: block;
     text-indent: 2em; /* 2em = 글자 크기의 2배 만큼 들여쓰기 */
+}
+
+.no_data {
+    font-size: 18px !important; /* 강제 적용 */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    font-weight: bold;
+    color: #333;
 }
