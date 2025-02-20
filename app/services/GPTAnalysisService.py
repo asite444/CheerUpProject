@@ -241,7 +241,7 @@ def get_improvement_html(data_dict):
     html_content = ""
 
     if all(value is None for value in data_dict.values()):
-        return '<p>현재 보유한 기술 스택이 직무에 적합하여 추가적인 보완이 필요하지 않습니다. 그대로 자신 있게 지원하시면 좋겠습니다😊!</p>'
+        return '<p class="no_data">현재 보유한 기술 스택이 직무에 적합하여 추가적인 보완이 필요하지 않습니다. 그대로 자신 있게 지원하시면 좋겠습니다😊!</p>'
 
     for category, values in data_dict.items():
 
