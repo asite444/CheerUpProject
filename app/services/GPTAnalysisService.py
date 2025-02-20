@@ -132,7 +132,10 @@ def analyze_improvement(duty, categories):
     try:
         result = dict()
         for category in categories.keys():
-            combination_df = get_skill_combination(duty, category, categories[category][0])
+            combination_df = get_skill_combination(duty, category, categories[category][1])
+            if combination_df is None:
+                result[categories[category][0]] = None
+                continue
 
             prompt = make_improvement_prompt(duty, combination_df)
 
@@ -161,7 +164,9 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05)
     connection = get_connection()
 
     try:
-        query = """
+        not_like_conditions = " OR ".join([f"sp.skill LIKE '%{skill}%'" for skill in user_skill])
+
+        query = f"""
             WITH Ranked AS (
                 SELECT
                     skill,
@@ -176,14 +181,13 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05)
             )
             SELECT
                 sp.skill,
-                sp.probability,
-                sp.pre_probability,
+                ROUND(sp.probability, 2) AS probability,
                 r.skill AS rskill,
                 r.probability AS rprobability,
                 r.rank AS rrank,
-                ROW_NUMBER() OVER (PARTITION BY r.rank ORDER BY sp.probability DESC, sp.pre_probability DESC) AS rn
+                ROW_NUMBER() OVER (PARTITION BY r.rank ORDER BY sp.probability DESC, sp.pre_probability DESC) AS rn    
             FROM skill_probability sp
-            RIGHT OUTER JOIN Ranked r 
+            RIGHT OUTER JOIN Ranked r
                 ON sp.skill = r.skill
                 OR sp.skill LIKE r.skill || ',%'
                 OR sp.skill LIKE '% ' || r.skill
@@ -192,14 +196,16 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05)
             AND sp.duty = ?
             AND sp.unit > 1
             AND sp.probability >= ?
-            AND sp.skill NOT IN (?)
+            AND NOT ({not_like_conditions})
             ORDER BY rrank ASC, rn ASC, sp.probability DESC;
         """
-        purchases = (category, duty, limit, category, duty, probability, ', '.join(user_skill), )
-        data = pd.read_sql_query(query, connection, params=purchases)
+        purchases = (category, duty, limit, category, duty, probability, )
+        df = pd.read_sql_query(query, connection, params=purchases)
+        if df.empty:
+            return None
 
         # 중복된 skill을 가진 행 중 첫 번째 값만 유지
-        df_filtered = data.drop_duplicates(subset=["skill"], keep="first")
+        df_filtered = df.drop_duplicates(subset=["skill"], keep="first")
 
         # 삭제할 skill 값 결정 후 필터링
         rank_skills = ', '.join(sorted(df_filtered['rskill'].unique()))
@@ -234,7 +240,11 @@ def get_improvement_html(data_dict):
     columns = {'skill': '기술 조합', 'probability': '자격조건(%)', 'text': '설명'}
     html_content = ""
 
+    if all(value is None for value in data_dict.values()):
+        return '<p>현재 보유한 기술 스택이 직무에 적합하여 추가적인 보완이 필요하지 않습니다. 그대로 자신 있게 지원하시면 좋겠습니다😊!</p>'
+
     for category, values in data_dict.items():
+
         # ✅ 데이터가 없는 카테고리는 건너뛰기
         if not values or not any(values.values()):
             print(f"⚠️ Warning: {category} 데이터 없음, 건너뜀")
