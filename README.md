@@ -1,6 +1,6 @@
 # 🚀 Cheer Up (취얼업) 솔루션
 
-<div align="center">
+<div>
    <img src="https://github.com/user-attachments/assets/cdcfd335-c2c0-4596-82ee-5558928f38be">
 </div>
 <h1 align="center">개인 맞춤형 직무 기술 트렌드 분석 솔루션</h1>
