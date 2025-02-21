@@ -46,7 +46,7 @@ def analyze_customize(user_data:UserInputData):
     if data is None:
         # DB에 분석 결과가 없음
         improvement_result = analyze_improvement(duty, categories)
-        conclusion_result = analyze_conclusion(user_data)
+        conclusion_result = False # analyze_conclusion(user_data)
         if improvement_result is not False and conclusion_result is not False:
             set_customized_analysis(duty, categories, improvement_result, conclusion_result)
     else:
@@ -141,8 +141,10 @@ def analyze_improvement(duty, categories):
                 continue
 
             prompt = make_improvement_prompt(duty, combination_df)
+            print(prompt)
 
             response = get_openai_response(prompt)
+            print(response)
             try:
                 res_eval = ast.literal_eval(response)
                 combination_df["text"] = combination_df["skill"].apply(find_matching_text, args=(res_eval, ))
@@ -238,15 +240,16 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=1.0):
 
 def make_improvement_prompt(duty, combination):
     """ 보완사항에 대한 프롬프트 작성 """
-    prompt = f'''다음 스킬 조합을 "{duty}"에 지원하는 사람에게 추천하는 이유를 JSON 딕셔너리 형식으로 감싸서 반환해라.
-반드시 "JSON 형식"을 따르며 키는 스킬 조합, 값은 "조합끼리의 시너지 효과(50자 이내)"의 형태여야 하며 본론만 말해라'''
+    prompt = f'''다음은 {duty} 직무에서 사용하는 기술 조합이다.
+JSON 딕셔너리 형식을 따르며 키는 스킬 조합, 값은 "조합끼리의 시너지 효과(50자 이내)을 가진다. JSON만 반환해라.'''
     
-    prompt += '(예시: {"c#, c++, java, rust": "성능 최적화, 메모리 관리, 네트워크 프로그래밍에 강점을 가짐"}).: '
+    prompt += '(예시: {"c#, c++, java, rust": "성능 최적화, 메모리 관리, 네트워크 프로그래밍에 강점을 가짐"}).'
 
     # 중괄호 이슈 해결 및 리스트 변환
     skills = list(combination['skill'])  # Pandas Series가 아닐 경우 to_list() 필요 없음
     skill_str = ', '.join(f'"{item}"' for item in skills)
-    prompt += f'{{{skill_str}}}'
+    prompt += f'''
+    기술 조합: {{{skill_str}}}'''
     
     return prompt
 
