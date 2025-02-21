@@ -8,10 +8,6 @@
 
 ---
 
-## 📌 Work Bench Structure (업무 분류 체계 및 사용 기술)
-
-
----
 
 ## 📝 Descriptions (프로젝트 목적)
 **Cheer Up**은 IT 취업 준비생을 위한 **개인 맞춤형 기술 역량 분석 및 추천 서비스**입니다.  
@@ -47,7 +43,9 @@
 ---
 
 ## 📊 Datasets (프로젝트 데이터)
-![Datasets](https://github.com/user-attachments/assets/3b4d6d42-47ec-414a-908c-554205dbf7f7)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/adcd0ef5-9d88-47e5-a616-863b106b2448" alt="Cheer Up Logo" width="400"/>
+</p>
 
 - 취업 전문 사이트에서 크롤링한 **채용 공고 데이터**
 - **자연어 처리 기반** 기술 트렌드 분석 데이터
@@ -56,7 +54,9 @@
 ---
 
 ## 🏗 Approach (프로젝트 구조도)
-![구조도](https://github.com/user-attachments/assets/4f38c537-d031-4c60-8d6f-16fdc0d04928)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/adcd0ef5-9d88-47e5-a616-863b106b2448" alt="Cheer Up Logo" width="400"/>
+</p>
 
 ### 🎯 기술 스택
 
