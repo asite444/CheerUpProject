@@ -1,7 +1,7 @@
 # 🚀 Cheer Up (취얼업) 솔루션
 
 <div>
-   <img src="https://github.com/user-attachments/assets/cdcfd335-c2c0-4596-82ee-5558928f38be">
+   <img src="https://github.com/user-attachments/assets/a35ce0fb-399d-45b7-b61c-804d99ce9e64">
 </div>
 <h1 align="center">개인 맞춤형 직무 기술 트렌드 분석 솔루션</h1>
 
@@ -64,14 +64,15 @@ Cheer Up은 IT 취업 준비생을 위한 **개인 맞춤형 기술 역량 분�
 </div>
 
 
-### 🎯Technology Stack(기술 스택)
+
+## 🎯Technology Stack(기술 스택)
 
 - **Backend:** FastAPI, Python, SQLite
 - **Frontend:** HTML, CSS, JavaScript (Jinja2 Templates,Jquery)
 - **Data Processing:** Kiwi, ChatGPT API, ETL, Pandas, NLP, 형태소 분석
 - **Server:** Render Server 
 
-### 📌 System Flow(시스템 흐름)
+## 📌 System Flow(시스템 흐름)
 1. **사용자 입력**: 직무 및 기술 선택
 2. **데이터 분석:** 주요 기술 역량 매칭
 3. **기술 스택 보완 추천:** 부족한 기술 분석 및 학습 방향 제안
