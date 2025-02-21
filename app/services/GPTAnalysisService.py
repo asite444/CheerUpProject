@@ -132,6 +132,9 @@ def analyze_improvement(duty, categories):
     try:
         result = dict()
         for category in categories.keys():
+            if category == 'tool':
+                continue
+
             combination_df = get_skill_combination(duty, category, categories[category][1])
             if combination_df is None:
                 result[categories[category][0]] = None
@@ -160,14 +163,13 @@ def analyze_improvement(duty, categories):
         if connection:
             connection.close()
 
-def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05):
+def get_skill_combination(duty, category, user_skill, limit=2, probability=1.0):
     connection = get_connection()
 
     try:
         not_like_conditions = ''
         if user_skill:  # 데이터가 없으면
-            not_like_conditions = 'AND NOT '
-            not_like_conditions += " OR ".join([f"sp.skill LIKE '%{skill}%'" for skill in user_skill])
+            not_like_conditions = f'AND sp.skill NOT IN ("{', '.join(user_skill)}")'
 
         query = f"""
             WITH Ranked AS (
@@ -188,38 +190,47 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05)
                 r.skill AS rskill,
                 r.probability AS rprobability,
                 r.rank AS rrank,
-                ROW_NUMBER() OVER (PARTITION BY r.rank ORDER BY sp.probability DESC, sp.pre_probability DESC) AS rn    
+                ROW_NUMBER() OVER (PARTITION BY r.rank ORDER BY sp.probability DESC, sp.pre_probability DESC) AS rn
             FROM skill_probability sp
             RIGHT OUTER JOIN Ranked r
-                ON sp.skill = r.skill
-                OR sp.skill LIKE r.skill || ',%'
+                ON sp.skill LIKE r.skill || ',%'
                 OR sp.skill LIKE '% ' || r.skill
                 OR sp.skill LIKE '% ' || r.skill || ',%'
             WHERE sp.category = ?
             AND sp.duty = ?
-            AND sp.unit > 1
+            AND sp.unit > 1 AND sp.unit < 4
             AND sp.probability >= ?
             {not_like_conditions}
             ORDER BY rrank ASC, rn ASC, sp.probability DESC;
         """
         purchases = (category, duty, limit, category, duty, probability, )
         df = pd.read_sql_query(query, connection, params=purchases)
+
         if df.empty:
             return None
 
-        # 중복된 skill을 가진 행 중 첫 번째 값만 유지
-        df_filtered = df.drop_duplicates(subset=["skill"], keep="first")
+         # 중복 호출되는 unique() 값 저장
+        unique_rskills = sorted(df['rskill'].unique())
+        rank_skills = ', '.join(unique_rskills)
 
-        # 삭제할 skill 값 결정 후 필터링
-        rank_skills = ', '.join(sorted(df_filtered['rskill'].unique()))
-        df_filtered = df_filtered[df_filtered['skill'] != rank_skills]
+        # 필터링 수행
+        df_filtered = df[df['skill'] != rank_skills].copy()
+        df_filtered.reset_index(drop=True, inplace=True)
+
+        df_filtered = df_filtered.loc[
+            df_filtered[df_filtered['rrank'] == 1].iloc[:2].index.to_list() +
+            df_filtered[df_filtered['rrank'] != 1].index.to_list()
+        ].reset_index(drop=True)
+
+        # 중복된 skill을 가진 행 중 첫 번째 값만 유지
+        df_filtered.drop_duplicates(subset=['skill'], keep='first', inplace=True)
 
         # rrank 별 상위 2개 선택
-        df_filtered = df_filtered.groupby("rrank").head(2)
+        df_filtered = df_filtered.groupby('rrank').head(2)
 
         return df_filtered
     except Exception as e:
-        print("Error during SQL execution:", str(e))
+        print("Error get_skill_combination:", str(e))
         return {"error": str(e)}
     finally:
         if connection:
