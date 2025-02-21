@@ -1,7 +1,7 @@
 # 🚀 Cheer Up (취얼업) 솔루션
 
 <div>
-   <img src="https://github.com/user-attachments/assets/a35ce0fb-399d-45b7-b61c-804d99ce9e64">
+   <img src="https://github.com/user-attachments/assets/d638ba02-7bab-4586-a5ef-1ffd3090628d">
 </div>
 <h1 align="center">개인 맞춤형 직무 기술 트렌드 분석 솔루션</h1>
 
@@ -11,6 +11,7 @@
 </p>
 
 ---
+
 
 
 ## 📝 Descriptions (프로젝트 목적)
@@ -67,7 +68,7 @@
 
 
 
-## 🎯Technology Stack(기술 스택)
+## 🎯Technology Stack (기술 스택)
 
 - **Backend:** FastAPI, Python, SQLite
 - **Frontend:** HTML, CSS, JavaScript (Jinja2 Templates,jQuery)
@@ -89,14 +90,10 @@
 
 ---
 
-## 🎯 Expected Benefits & Future Development Plan(기대 효과 및 발전 계획)
+## 🎯 Expected Benefits & Future Development Plan (기대 효과 및 발전 계획)
 - **개인 맞춤형 IT 취업 컨설팅**을 제공하여 구직자의 강점 강화
 - **데이터 기반의 객관적인 취업 전략 수립** 지원
 - **기업 입장에서도 적합한 인재 매칭 가능**하여 인력 채용 효율성 향상
-
----
-
-## 🤝 Contributing
 
 ---
 
