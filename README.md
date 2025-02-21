@@ -1,17 +1,97 @@
-# 취얼업 솔루션 소개 
-![image](https://github.com/user-attachments/assets/adcd0ef5-9d88-47e5-a616-863b106b2448)
+# 🚀 Cheer Up (취얼업) 솔루션
 
-Work Bench Structure (업무 분류 체계 및 사용 기술) 
-![image](https://github.com/user-attachments/assets/0bba5924-cd20-4cf0-95b9-b046de9ef888)
+![Cheer Up Logo](https://github.com/user-attachments/assets/adcd0ef5-9d88-47e5-a616-863b106b2448)
+
+> 개인 맞춤형 **직무 기술 트렌드 분석** 솔루션  
+> IT 직업의 취업난을 해결하고, 기업이 적합한 인재를 확보할 수 있도록  
+> **기술 역량 분석 기반 취업 컨설팅**을 제공합니다.
+
+---
+
+## 📌 Work Bench Structure (업무 분류 체계 및 사용 기술)
 
 
-Descriptions (프로젝트 목적) 
+---
 
-Key Features (프로젝트 기능 및 특장점) 
+## 📝 Descriptions (프로젝트 목적)
+**Cheer Up**은 IT 취업 준비생을 위한 **개인 맞춤형 기술 역량 분석 및 추천 서비스**입니다.  
+취업 시장의 불안정성과 방향성을 잃은 구직자들을 위해 **객관적인 직무 분석 및 보고서**를 제공합니다.
 
-Datasets (프로젝트 데이터) 
-![image](https://github.com/user-attachments/assets/3b4d6d42-47ec-414a-908c-554205dbf7f7)
+### 🎯 주요 목적
+- IT 직업별 요구하는 **기술 역량**을 구체적으로 분석하여 맞춤형 보고서 제공
+- 기술 역량의 **트렌드 분석**을 통해 적합한 직무와 보완해야 할 기술 제안
+- **개인화된 취업 전략**을 제공하여 성공적인 커리어 구축 지원
 
-Approach (프로젝트 구조도) 
+---
 
-Screenshots (데모 영상) 
+## 🌟 Key Features (프로젝트 기능 및 특장점)
+### 🔍 1. IT 직군 기술 분석 및 추천
+- 사용자가 희망하는 직무 및 보유 기술 입력 시 **주요 기술 트렌드** 분석
+- **취업 공고 데이터**를 기반으로 **직무별 상위 기술 스택** 제공
+
+### 🛠 2. 기술 보완 및 추천
+- 부족한 기술을 **AI 기반 분석**을 통해 자동 추천
+- 학습 방향을 설정할 수 있도록 **프로그래밍 언어, 프레임워크, 라이브러리,개발툴** 제안
+
+### 📊 3. 직무 및 취업 시장 분석
+- **경력 및 학력 분포 그래프** 제공
+- **어학 역량 및 기타 요구사항 분석** (e.g., 영어, 중국어 등)
+
+### 🔥 4. 실시간 트렌드 분석
+- **Google Trends API**를 활용하여 **현재 인기 있는 기술** 트렌드 제공
+
+### 🏆 5. 최종 분석 보고서
+- 개인 맞춤형 **IT 직무 추천 및 최종 평가**
+- **지원 가능한 직무 및 취업 가능성 분석**
+
+---
+
+## 📊 Datasets (프로젝트 데이터)
+![Datasets](https://github.com/user-attachments/assets/3b4d6d42-47ec-414a-908c-554205dbf7f7)
+
+- 취업 전문 사이트에서 크롤링한 **채용 공고 데이터**
+- **자연어 처리 기반** 기술 트렌드 분석 데이터
+- IT 직무별 **기술 역량 및 요구사항 DB**
+
+---
+
+## 🏗 Approach (프로젝트 구조도)
+![구조도](https://github.com/user-attachments/assets/4f38c537-d031-4c60-8d6f-16fdc0d04928)
+
+### 🎯 기술 스택
+
+- **Backend:** FastAPI, Python, SQLite
+- **Frontend:** HTML, CSS, JavaScript (Jinja2 Templates)
+- **Data Processing:** Pandas, NumPy, OpenAI API (GPT 활용)
+- **Deployment:** Docker, Ubuntu
+
+### 📌 시스템 흐름
+1. **사용자 입력:** 직무 및 기술 선택
+2. **데이터 분석:** 주요 기술 역량 매칭
+3. **기술 스택 보완 추천:** 부족한 기술 분석 및 학습 방향 제안
+4. **최종 보고서 출력:** 개인 맞춤형 IT 직무 추천 및 평가
+
+---
+
+## 🎯 기대 효과 및 활용 방안
+- **개인 맞춤형 IT 취업 컨설팅**을 제공하여 구직자의 강점 강화
+- **데이터 기반의 객관적인 취업 전략 수립** 지원
+- **기업 입장에서도 적합한 인재 매칭 가능**하여 인력 채용 효율성 향상
+
+---
+
+## 🤝 Contributing
+환영합니다! 해당 프로젝트에 기여하고 싶다면 **Pull Request**를 보내주세요.  
+버그 리포트 및 개선 사항은 **Issues**에 등록해 주세요.
+
+---
+
+## 📜 License
+본 프로젝트는 MIT 라이선스 하에 제공됩니다.
+
+---
+
+## 📬 Contact
+- **프로젝트 팀원**: 안이찬, 이재원, 이현아, 임동현, 최가윤
+- **문의**: [이메일 또는 GitHub Issues]
+
