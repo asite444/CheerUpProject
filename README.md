@@ -69,7 +69,8 @@ Cheer Up은 IT 취업 준비생을 위한 **개인 맞춤형 기술 역량 분�
 
 - **Backend:** FastAPI, Python, SQLite
 - **Frontend:** HTML, CSS, JavaScript (Jinja2 Templates,jQuery)
-- **Data Processing:** Kiwi, ChatGPT API, ETL, Pandas, NLP, 형태소 분석
+- **Data Processing:** Kiwi, User-Dictionary, Pandas, Matplotlib, SQL 
+- **Prompt Engineering:** GPT4 API
 - **Server:** Render Server 
 
 ## 📌 System Flow(시스템 흐름)
