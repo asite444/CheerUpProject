@@ -64,14 +64,14 @@ Cheer Up은 IT 취업 준비생을 위한 **개인 맞춤형 기술 역량 분�
 </div>
 
 
-### 🎯 기술 스택
+### 🎯Technology Stack(기술 스택)
 
 - **Backend:** FastAPI, Python, SQLite
 - **Frontend:** HTML, CSS, JavaScript (Jinja2 Templates,Jquery)
 - **Data Processing:** Kiwi, ChatGPT API, ETL, Pandas, NLP, 형태소 분석
 - **Server:** Render Server 
 
-### 📌 시스템 흐름
+### 📌 System Flow(시스템 흐름)
 1. **사용자 입력**: 직무 및 기술 선택
 2. **데이터 분석:** 주요 기술 역량 매칭
 3. **기술 스택 보완 추천:** 부족한 기술 분석 및 학습 방향 제안
@@ -79,7 +79,7 @@ Cheer Up은 IT 취업 준비생을 위한 **개인 맞춤형 기술 역량 분�
 
 ---
 
-## 🎯 기대 효과 및 발전 계획(활용방안?)
+## 🎯 Expected Benefits & Future Development Plan(기대 효과 및 발전 계획)
 - **개인 맞춤형 IT 취업 컨설팅**을 제공하여 구직자의 강점 강화
 - **데이터 기반의 객관적인 취업 전략 수립** 지원
 - **기업 입장에서도 적합한 인재 매칭 가능**하여 인력 채용 효율성 향상
