@@ -62,8 +62,7 @@
 
 ## 🏗 Approach (프로젝트 구조도)
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/14f84071-9044-4268-9313-1dee5d4b6fbe"  />
-
+  <img src="https://github.com/user-attachments/assets/f6352997-6cea-4508-89fd-40c9cfa096b5"  />
 </div>
 
 
