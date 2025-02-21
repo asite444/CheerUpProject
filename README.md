@@ -63,9 +63,9 @@
 ### 🎯 기술 스택
 
 - **Backend:** FastAPI, Python, SQLite
-- **Frontend:** HTML, CSS, JavaScript (Jinja2 Templates)
-- **Data Processing:** Pandas, NumPy, OpenAI API (GPT 활용)
-- **Deployment:** Docker, Ubuntu
+- **Frontend:** HTML, CSS, JavaScript (Jinja2 Templates,Jquery)
+- **Data Processing:** Kiwi, ChatGPT API, ETL, Pandas, NLP, 형태소 분석
+- **Server:** Render Server 
 
 ### 📌 시스템 흐름
 1. **사용자 입력:** 직무 및 기술 선택
@@ -83,17 +83,11 @@
 ---
 
 ## 🤝 Contributing
-환영합니다! 해당 프로젝트에 기여하고 싶다면 **Pull Request**를 보내주세요.  
-버그 리포트 및 개선 사항은 **Issues**에 등록해 주세요.
 
 ---
 
 ## 📜 License
-본 프로젝트는 MIT 라이선스 하에 제공됩니다.
 
 ---
 
-## 📬 Contact
-- **프로젝트 팀원**: 안이찬, 이재원, 이현아, 임동현, 최가윤
-- **문의**: [이메일 또는 GitHub Issues]
 
