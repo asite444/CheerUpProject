@@ -68,7 +68,7 @@ Cheer Up은 IT 취업 준비생을 위한 **개인 맞춤형 기술 역량 분�
 ## 🎯Technology Stack(기술 스택)
 
 - **Backend:** FastAPI, Python, SQLite
-- **Frontend:** HTML, CSS, JavaScript (Jinja2 Templates,Jquery)
+- **Frontend:** HTML, CSS, JavaScript (Jinja2 Templates,jQuery)
 - **Data Processing:** Kiwi, ChatGPT API, ETL, Pandas, NLP, 형태소 분석
 - **Server:** Render Server 
 
