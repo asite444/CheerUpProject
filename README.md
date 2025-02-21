@@ -1,7 +1,8 @@
 # 🚀 Cheer Up (취얼업) 솔루션
 
-![Cheer Up Logo](https://github.com/user-attachments/assets/adcd0ef5-9d88-47e5-a616-863b106b2448)
-
+<div align="center">
+   <img src="https://github.com/user-attachments/assets/adcd0ef5-9d88-47e5-a616-863b106b2448">
+</div>
 > 개인 맞춤형 **직무 기술 트렌드 분석** 솔루션  
 > IT 직업의 취업난을 해결하고, 기업이 적합한 인재를 확보할 수 있도록  
 > **기술 역량 분석 기반 취업 컨설팅**을 제공합니다.
@@ -44,7 +45,7 @@
 
 ## 📊 Datasets (프로젝트 데이터)
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/adcd0ef5-9d88-47e5-a616-863b106b2448" alt="Cheer Up Logo" width="400"/>
+  <img src="https://github.com/user-attachments/assets/3b4d6d42-47ec-414a-908c-554205dbf7f7" alt="Cheer Up Logo" />
 </p>
 
 - 취업 전문 사이트에서 크롤링한 **채용 공고 데이터**
@@ -54,9 +55,10 @@
 ---
 
 ## 🏗 Approach (프로젝트 구조도)
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/adcd0ef5-9d88-47e5-a616-863b106b2448" alt="Cheer Up Logo" width="400"/>
-</p>
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/dba06029-1270-492b-b0ab-9d0d6fe574fa"  />
+</div>
+
 
 ### 🎯 기술 스택
 
