@@ -5,6 +5,7 @@ import os
 import ast
 import pandas as pd
 import numpy as np
+from itertools import combinations
 from datetime import datetime
 
 from openai import OpenAI
@@ -46,7 +47,7 @@ def analyze_customize(user_data:UserInputData):
     if data is None:
         # DB에 분석 결과가 없음
         improvement_result = analyze_improvement(duty, categories)
-        conclusion_result = False # analyze_conclusion(user_data)
+        conclusion_result = analyze_conclusion(user_data)
         if improvement_result is not False and conclusion_result is not False:
             set_customized_analysis(duty, categories, improvement_result, conclusion_result)
     else:
@@ -137,14 +138,12 @@ def analyze_improvement(duty, categories):
 
             combination_df = get_skill_combination(duty, category, categories[category][1])
             if combination_df is None:
-                result[categories[category][0]] = None
+                result[categories[category][0]] = ''
                 continue
 
             prompt = make_improvement_prompt(duty, combination_df)
-            print(prompt)
 
             response = get_openai_response(prompt)
-            print(response)
             try:
                 res_eval = ast.literal_eval(response)
                 combination_df["text"] = combination_df["skill"].apply(find_matching_text, args=(res_eval, ))
@@ -170,8 +169,8 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=1.0):
 
     try:
         not_like_conditions = ''
-        if user_skill:  # 데이터가 없으면
-            not_like_conditions = f'AND sp.skill NOT IN ("{', '.join(user_skill)}")'
+        if user_skill:  # 데이터가 있으면
+            not_like_conditions = f'AND sp.skill NOT IN ("{'", "'.join(', '.join(com) for com in combinations(user_skill, 3))}")'
 
         query = f"""
             WITH Ranked AS (
@@ -200,13 +199,14 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=1.0):
                 OR sp.skill LIKE '% ' || r.skill || ',%'
             WHERE sp.category = ?
             AND sp.duty = ?
-            AND sp.unit > 1 AND sp.unit < 4
+            AND sp.unit = 3
             AND sp.probability >= ?
             {not_like_conditions}
             ORDER BY rrank ASC, rn ASC, sp.probability DESC;
         """
         purchases = (category, duty, limit, category, duty, probability, )
         df = pd.read_sql_query(query, connection, params=purchases)
+
 
         if df.empty:
             return None
@@ -233,7 +233,7 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=1.0):
         return df_filtered
     except Exception as e:
         print("Error get_skill_combination:", str(e))
-        return {"error": str(e)}
+        return None # {"error": str(e)}
     finally:
         if connection:
             connection.close()
