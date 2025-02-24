@@ -5,6 +5,7 @@ import os
 import ast
 import pandas as pd
 import numpy as np
+from itertools import combinations
 from datetime import datetime
 
 from openai import OpenAI
@@ -132,9 +133,12 @@ def analyze_improvement(duty, categories):
     try:
         result = dict()
         for category in categories.keys():
+            if category == 'tool':
+                continue
+
             combination_df = get_skill_combination(duty, category, categories[category][1])
             if combination_df is None:
-                result[categories[category][0]] = None
+                result[categories[category][0]] = ''
                 continue
 
             prompt = make_improvement_prompt(duty, combination_df)
@@ -160,14 +164,13 @@ def analyze_improvement(duty, categories):
         if connection:
             connection.close()
 
-def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05):
+def get_skill_combination(duty, category, user_skill, limit=2, probability=1.0):
     connection = get_connection()
 
     try:
         not_like_conditions = ''
-        if user_skill:  # 데이터가 없으면
-            not_like_conditions = 'AND NOT '
-            not_like_conditions += " OR ".join([f"sp.skill LIKE '%{skill}%'" for skill in user_skill])
+        if user_skill:  # 데이터가 있으면
+            not_like_conditions = f'AND sp.skill NOT IN ("{'", "'.join(', '.join(com) for com in combinations(user_skill, 3))}")'
 
         query = f"""
             WITH Ranked AS (
@@ -188,54 +191,65 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=0.05)
                 r.skill AS rskill,
                 r.probability AS rprobability,
                 r.rank AS rrank,
-                ROW_NUMBER() OVER (PARTITION BY r.rank ORDER BY sp.probability DESC, sp.pre_probability DESC) AS rn    
+                ROW_NUMBER() OVER (PARTITION BY r.rank ORDER BY sp.probability DESC, sp.pre_probability DESC) AS rn
             FROM skill_probability sp
             RIGHT OUTER JOIN Ranked r
-                ON sp.skill = r.skill
-                OR sp.skill LIKE r.skill || ',%'
+                ON sp.skill LIKE r.skill || ',%'
                 OR sp.skill LIKE '% ' || r.skill
                 OR sp.skill LIKE '% ' || r.skill || ',%'
             WHERE sp.category = ?
             AND sp.duty = ?
-            AND sp.unit > 1
+            AND sp.unit = 3
             AND sp.probability >= ?
             {not_like_conditions}
             ORDER BY rrank ASC, rn ASC, sp.probability DESC;
         """
         purchases = (category, duty, limit, category, duty, probability, )
         df = pd.read_sql_query(query, connection, params=purchases)
+
+
         if df.empty:
             return None
 
-        # 중복된 skill을 가진 행 중 첫 번째 값만 유지
-        df_filtered = df.drop_duplicates(subset=["skill"], keep="first")
+         # 중복 호출되는 unique() 값 저장
+        unique_rskills = sorted(df['rskill'].unique())
+        rank_skills = ', '.join(unique_rskills)
 
-        # 삭제할 skill 값 결정 후 필터링
-        rank_skills = ', '.join(sorted(df_filtered['rskill'].unique()))
-        df_filtered = df_filtered[df_filtered['skill'] != rank_skills]
+        # 필터링 수행
+        df_filtered = df[df['skill'] != rank_skills].copy()
+        df_filtered.reset_index(drop=True, inplace=True)
+
+        df_filtered = df_filtered.loc[
+            df_filtered[df_filtered['rrank'] == 1].iloc[:2].index.to_list() +
+            df_filtered[df_filtered['rrank'] != 1].index.to_list()
+        ].reset_index(drop=True)
+
+        # 중복된 skill을 가진 행 중 첫 번째 값만 유지
+        df_filtered.drop_duplicates(subset=['skill'], keep='first', inplace=True)
 
         # rrank 별 상위 2개 선택
-        df_filtered = df_filtered.groupby("rrank").head(2)
+        df_filtered = df_filtered.groupby('rrank').head(2)
 
         return df_filtered
     except Exception as e:
-        print("Error during SQL execution:", str(e))
-        return {"error": str(e)}
+        print("Error get_skill_combination:", str(e))
+        return None # {"error": str(e)}
     finally:
         if connection:
             connection.close()
 
 def make_improvement_prompt(duty, combination):
     """ 보완사항에 대한 프롬프트 작성 """
-    prompt = f'''다음 스킬 조합을 "{duty}"에 지원하는 사람에게 추천하는 이유를 JSON 딕셔너리 형식으로 감싸서 반환해라.
-반드시 "JSON 형식"을 따르며 키는 스킬 조합, 값은 "조합끼리의 시너지 효과(50자 이내)"의 형태여야 하며 본론만 말해라'''
+    prompt = f'''다음은 {duty} 직무에서 사용하는 기술 조합이다.
+JSON 딕셔너리 형식을 따르며 키는 스킬 조합, 값은 "조합끼리의 시너지 효과(50자 이내)을 가진다. JSON만 반환해라.'''
     
-    prompt += '(예시: {"c#, c++, java, rust": "성능 최적화, 메모리 관리, 네트워크 프로그래밍에 강점을 가짐"}).: '
+    prompt += '(예시: {"c#, c++, java, rust": "성능 최적화, 메모리 관리, 네트워크 프로그래밍에 강점을 가짐"}).'
 
     # 중괄호 이슈 해결 및 리스트 변환
     skills = list(combination['skill'])  # Pandas Series가 아닐 경우 to_list() 필요 없음
     skill_str = ', '.join(f'"{item}"' for item in skills)
-    prompt += f'{{{skill_str}}}'
+    prompt += f'''
+    기술 조합: {{{skill_str}}}'''
     
     return prompt
 
@@ -373,7 +387,7 @@ def calculate_score(df):
 
 def make_conclusion_prompt(skills, score, top=3):
     prompt = '''다음은 사용자의 기술 스택을 기반으로 직무별 점수를 계산한 결과이다.
-JSON 딕셔너리 형식을 따르며 키는 직무, 값은 ["직무에 대한 설명(50자 이내), 직무를 추천하는 이유에 대한 설명(100자 이내, 관련 스택이 없다면 "관련된 기술 스택이 없어 직무에 대한 판단을 드릴 수 없습니다.")"]을 반환해라
+JSON 딕셔너리 형식을 따르며 키는 직무, 값은 ["직무에 대한 설명(50자 이내), 사용자의 기술 스택을 기반으로 직무를 추천하는 이유에 대한 설명(100자 이내, 관련 기술 스택이 없다면 "관련된 기술 스택이 없어 직무에 대한 판단을 드릴 수 없습니다.")"]을 반환해라
 (예시: {"AI": ["AI 개발 및 데이터 분석을 수행하는 직무","Python, Pandas, FastAPI를 활용한 데이터 처리 및 AI 모델 개발 역량 보유"]}).'''
 
     prompt += f'''
