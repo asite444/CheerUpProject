@@ -1,17 +1,103 @@
-# 취얼업 솔루션 소개 
-![image](https://github.com/user-attachments/assets/adcd0ef5-9d88-47e5-a616-863b106b2448)
+# 🚀 Cheer Up (취얼업) 솔루션
 
-Work Bench Structure (업무 분류 체계 및 사용 기술) 
-![image](https://github.com/user-attachments/assets/0bba5924-cd20-4cf0-95b9-b046de9ef888)
+<div>
+   <img src="https://github.com/user-attachments/assets/d638ba02-7bab-4586-a5ef-1ffd3090628d">
+</div>
+<h1 align="center">개인 맞춤형 직무 기술 트렌드 분석 솔루션</h1>
+
+<p align="center">
+  IT 직업의 취업난을 해결하고, 기업이 적합한 인재를 확보할 수 있도록<br>
+  <strong>기술 역량 분석 기반 취업 컨설팅</strong>을 제공합니다.
+</p>
+
+---
 
 
-Descriptions (프로젝트 목적) 
 
-Key Features (프로젝트 기능 및 특장점) 
+## 📝 Descriptions (프로젝트 목적)
 
-Datasets (프로젝트 데이터) 
-![image](https://github.com/user-attachments/assets/3b4d6d42-47ec-414a-908c-554205dbf7f7)
+**Cheer Up**은 IT 구직자들이 선택한 기술 스택과 **실제 채용 시장 데이터(메타DB)** 를 비교 분석하여  
+**현재 가장 요구되는 기술과 직무 정보를 제공하는 분석 서비스**입니다.  
+사용자가 입력한 기술과 일치하는 채용 공고 데이터를 바탕으로 **객관적인 기술 트렌드 및 직무 분석 결과**를 도출합니다.
 
-Approach (프로젝트 구조도) 
+### 🎯 주요 목적
+- **채용 시장 데이터 기반 분석:** 사용자가 선택한 기술과 **실제 채용 공고**를 매칭하여 수요 분석 제공  
+- **기술 트렌드 인사이트 제공:** 현재 IT 업계에서 **가장 요구되는 기술 스택과 직무 역량** 안내  
+- **직무 및 기술 매칭 최적화:** 선택한 기술이 채용 시장에서 **어떤 역할(직무)과 연관되는지 시각적 분석**  
+- **보완해야 할 기술 추천:** 부족한 기술을 파악하고 **추가적으로 학습할 스택 및 방향 제안**  
+---
 
-Screenshots (데모 영상) 
+## 🌟 Key Features (프로젝트 기능 및 특장점)
+### 🔍 1. IT 직군 기술 분석 및 추천
+- 사용자가 희망하는 직무 및 보유 기술 입력 시 **주요 기술 트렌드** 분석
+- **취업 공고 데이터**를 기반으로 **직무별 상위 기술 스택** 제공
+
+### 🛠 2. 기술 보완 및 추천
+- 부족한 기술을 **AI 기반 분석**을 통해 자동 추천
+- 학습 방향을 설정할 수 있도록 **프로그래밍 언어, 프레임워크, 라이브러리,개발툴** 제안
+
+### 📊 3. 직무 및 취업 시장 분석
+- **경력 및 학력 분포 그래프** 제공
+- **어학 역량 및 기타 요구사항 분석** (e.g., 영어, 중국어 등)
+
+### 🔥 4. 실시간 트렌드 분석
+- **Google Trends API**를 활용하여 **현재 인기 있는 기술** 트렌드 제공
+
+### 🏆 5. 최종 분석 보고서
+- 개인 맞춤형 **IT 직무 추천 및 최종 평가**
+- **지원 가능한 직무 및 취업 가능성 분석**
+
+---
+
+## 📊 Datasets (프로젝트 데이터)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/3b4d6d42-47ec-414a-908c-554205dbf7f7" alt="Cheer Up Logo" />
+</p>
+
+- 취업 전문 사이트에서 크롤링한 **채용 공고 데이터**
+- **자연어 처리 기반** 기술 트렌드 분석 데이터
+- IT 직무별 **기술 역량 및 요구사항 DB**
+
+---
+
+## 🏗 Approach (프로젝트 구조도)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/f6352997-6cea-4508-89fd-40c9cfa096b5"  />
+</div>
+
+
+
+## 🎯Technology Stack (기술 스택)
+
+- **Backend:** FastAPI, Python, SQLite
+- **Frontend:** HTML, CSS, JavaScript (Jinja2 Templates,jQuery)
+- **Data Processing:** Kiwi, User-Dictionary, Pandas, Matplotlib, SQL 
+- **Prompt Engineering:** GPT4 API
+- **Server:** Render Server 
+
+## 📌 System Flow (시스템 흐름)
+
+1. **사용자 입력:** 원하는 직무 및 기술 선택  
+2. **데이터 매칭:** 선택한 기술과 **구직 사이트 메타DB**를 기반으로 분석  
+3. **기술 트렌드 분석:** 현재 채용 시장에서 **가장 요구되는 기술 스택** 제공  
+4. **기술 보완 및 추천:** 부족한 기술 역량을 파악하여 추가 학습 방향 제안  
+5. **최종 보고서 출력:** 선택한 기술과 **채용 공고 데이터의 매칭 결과** 제공  
+
+> 같은 기술 스택을 선택한 사용자는 동일한 분석 결과를 얻게 되며,  
+> 이는 **현재 시장에서 해당 기술이 어떻게 활용되고 있는지 객관적으로 분석**한 결과입니다.  
+
+
+---
+
+## 🎯 Expected Benefits & Future Development Plan (기대 효과 및 발전 계획)
+- **개인 맞춤형 IT 취업 컨설팅**을 제공하여 구직자의 강점 강화
+- **데이터 기반의 객관적인 취업 전략 수립** 지원
+- **기업 입장에서도 적합한 인재 매칭 가능**하여 인력 채용 효율성 향상
+
+---
+
+## 📜 License
+
+---
+
+
