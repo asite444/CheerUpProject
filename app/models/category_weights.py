@@ -31,10 +31,10 @@ def get_weight(duty):
             'tool': 0.15
         },
         '게임': {
-            'it_language': 0.4,
-            'framework': 0.4,
-            'library': 0.0,
-            'tool': 0.2
+            'it_language': 0.3,
+            'framework': 0.2,
+            'library': 0.2,
+            'tool': 0.3
         },
         'AI': {
             'it_language': 0.4,
@@ -55,9 +55,9 @@ def get_weight(duty):
             'tool': 0.1
         },
         'QA': {
-            'it_language': 0.4,
+            'it_language': 0.3,
             'framework': 0.3,
-            'library': 0.1,
+            'library': 0.2,
             'tool': 0.2
         },
         '데이터 분석': {
