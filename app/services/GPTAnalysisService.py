@@ -170,7 +170,8 @@ def get_skill_combination(duty, category, user_skill, limit=2, probability=1.0):
     try:
         not_like_conditions = ''
         if user_skill:  # 데이터가 있으면
-            not_like_conditions = f'AND sp.skill NOT IN ("{'", "'.join(', '.join(com) for com in combinations(user_skill, 3))}")'
+            not_like_conditions = 'AND sp.skill NOT IN ("{}")'.format('", "'.join(', '.join(com) for com in combinations(user_skill, 3)))
+
 
         query = f"""
             WITH Ranked AS (
