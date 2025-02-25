@@ -109,7 +109,11 @@
 4. **Google Trends 검색**: 분석 결과에서 언어, 프레임워크, 라이브러리, 툴 항목의 기술명을 드래그하면 Google Trends 검색이 가능합니다.
 
 ## 🎬 시연 영상
-(시연 영상 추가 예정)
+
+
+
+https://github.com/user-attachments/assets/2de91340-435e-4a52-95ab-a0b3b6ad795a
+
 
 
 ## 📜 License
