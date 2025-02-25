@@ -38,7 +38,7 @@
 
 ### 📊 3. 직무 및 취업 시장 분석
 - **경력 및 학력 분포 그래프** 제공
-- **어학 역량 및 기타 요구사항 분석** (e.g., 영어, 중국어 등)
+- **어학 역량 및 기타 요구사항 분석** (e.g. 영어, 중국어 등)
 
 ### 🔥 4. 실시간 트렌드 분석
 - **Google Trends API**를 활용하여 **현재 인기 있는 기술** 트렌드 제공
@@ -70,7 +70,7 @@
 ## 🎯Technology Stack (기술 스택)
 
 - **Backend:** FastAPI, Python, SQLite
-- **Frontend:** HTML, CSS, JavaScript (Jinja2 Templates,jQuery)
+- **Frontend:** HTML, CSS, JavaScript (Jinja2 Templates, jQuery)
 - **Data Processing:** Kiwi, User-Dictionary, Pandas, Matplotlib, SQL 
 - **Prompt Engineering:** GPT4 API
 - **Server:** Render Server 
