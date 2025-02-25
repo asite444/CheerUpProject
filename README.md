@@ -110,9 +110,10 @@
 
 ## 🎬 시연 영상
 
+https://github.com/user-attachments/assets/9fd40fd5-6c30-48c6-8780-f20b9035e19a
 
 
-https://github.com/user-attachments/assets/2de91340-435e-4a52-95ab-a0b3b6ad795a
+
 
 
 
