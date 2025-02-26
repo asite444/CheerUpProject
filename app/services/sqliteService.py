@@ -107,9 +107,9 @@ def generate_html_table(duty, data, user_selected_skills, category):
 
     # 컬럼 추가 여부 결정
     has_base_language = category == "framework"  # 프레임워크에서만 기반 언어 표시
-    has_use_framework = category == "library"  # 라이브러리에서 적용 프레임워크 표시
+    has_use_framework = category == "library"  # 라이브러리에서 종속속 프레임워크 표시
 
-    # 기본 컬럼 개수 (순위, 기술명, 자격 요건, 우대 사항, 설명)
+    # 기본 컬럼 개수 (순위, 기술명, 자격조건(%), 우대조건(%), 설명)
     base_column_count = 5
     extra_columns = int(has_base_language) + int(has_use_framework)  # 추가 컬럼 개수
     total_columns = base_column_count + extra_columns  # 전체 컬럼 개수
@@ -121,13 +121,13 @@ def generate_html_table(duty, data, user_selected_skills, category):
         <tr>
             <th>순위</th>
             <th>기술명</th>
-            <th>자격 요건(%)</th>
-            <th>우대 사항(%)</th>"""
+            <th>자격조건(%)</th>
+            <th>우대조건(%)</th>"""
 
     if has_base_language:
         html_output += "<th>기반 언어</th>"  # 프레임워크에만 표시
     if has_use_framework:
-        html_output += "<th>적용 프레임워크</th>"  # 라이브러리에만 표시
+        html_output += "<th>종속 프레임워크</th>"  # 라이브러리에만 표시
 
     html_output += "<th>설명</th></tr>"
 
