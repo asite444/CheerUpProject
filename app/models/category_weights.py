@@ -7,10 +7,10 @@ def get_weight(duty):
             'tool': 0.1
         },
         '백엔드': {
-            'it_language': 0.25,
-            'framework': 0.25,
+            'it_language': 0.3,
+            'framework': 0.45,
             'library': 0.3,
-            'tool': 0.2
+            'tool': 0.15
         },
         '데이터 직무': {
             'it_language': 0.1,

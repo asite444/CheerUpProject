@@ -5,15 +5,31 @@
     padding: 20px 0;
     margin-top: 40px;
     font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 전체를 중앙 정렬 */
 }
 
-.site-footer .footer-content {
-    width: 80%;
-    margin: 0 auto;
+.site-footer .footer-main {
+    display: flex;
+    justify-content: center; /* 완전 중앙 정렬 */
+    width: 100%;
+    margin-bottom: 10px;
 }
 
-.site-footer p {
-    margin: 5px 0;
+.site-footer .footer-info {
+    width: 50%; /* 중앙에서 살짝 왼쪽으로 치우치게 */
+    text-align: left; /* 내부 텍스트 왼쪽 정렬 */
+    display: flex;
+    justify-content: flex-start; /* 내부 요소 왼쪽 정렬 */
+    gap: 15px; /* 문의와 GIT 사이 간격 설정 */
+    flex-wrap: wrap;
+}
+
+.site-footer .footer-info p {
+    margin: 0;
+    /* display: inline; 블록 요소가 아닌 인라인 요소로 변경하여 줄바꿈 방지 */
+    white-space: nowrap; /* 긴 텍스트도 자동 줄 바꿈 방지 */
 }
 
 .site-footer a {
@@ -23,17 +39,4 @@
 
 .site-footer a:hover {
     text-decoration: underline;
-}
-
-.site-footer .footer-links {
-    list-style: none;
-    padding: 0;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
-
-.site-footer .footer-links li {
-    display: inline;
 }

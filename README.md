@@ -34,11 +34,11 @@
 
 ### 🛠 2. 기술 보완 및 추천
 - 부족한 기술을 **AI 기반 분석**을 통해 자동 추천
-- 학습 방향을 설정할 수 있도록 **프로그래밍 언어, 프레임워크, 라이브러리,개발툴** 제안
+- 학습 방향을 설정할 수 있도록 **프로그래밍 언어, 프레임워크, 라이브러리, 개발툴** 제안
 
 ### 📊 3. 직무 및 취업 시장 분석
 - **경력 및 학력 분포 그래프** 제공
-- **어학 역량 및 기타 요구사항 분석** (e.g., 영어, 중국어 등)
+- **어학 역량 및 기타 요구사항 분석** (e.g. 영어, 중국어 등)
 
 ### 🔥 4. 실시간 트렌드 분석
 - **Google Trends API**를 활용하여 **현재 인기 있는 기술** 트렌드 제공
@@ -70,7 +70,7 @@
 ## 🎯Technology Stack (기술 스택)
 
 - **Backend:** FastAPI, Python, SQLite
-- **Frontend:** HTML, CSS, JavaScript (Jinja2 Templates,jQuery)
+- **Frontend:** HTML, CSS, JavaScript (Jinja2 Templates, jQuery)
 - **Data Processing:** Kiwi, User-Dictionary, Pandas, Matplotlib, SQL 
 - **Prompt Engineering:** GPT4 API
 - **Server:** Render Server 
@@ -95,6 +95,30 @@
 - **기업 입장에서도 적합한 인재 매칭 가능**하여 인력 채용 효율성 향상
 
 ---
+## 🚀 사용 방법
+1. **기술 선택**: 원하는 기술 스택을 선택하고 찾고 싶은 기술명을 입력하면 자동 완성됩니다.
+2. **직무 선택**: 최소 1개, 최대 1개의 직무만 선택 가능합니다.
+3. **분석 실행**: "분석" 버튼을 클릭하면 아래의 항목별 분석 결과가 제공됩니다.
+   - **언어**
+   - **프레임워크**
+   - **라이브러리**
+   - **개발툴**
+   - **보완사항**
+   - **기타 공통 분석**
+   - **총평**
+4. **Google Trends 검색**: 분석 결과에서 언어, 프레임워크, 라이브러리, 개발툴 항목의 기술명을 드래그하면 Google Trends 검색이 가능합니다.
+
+## 🎬 시연 영상
+
+
+
+
+https://github.com/user-attachments/assets/99825bc5-8730-482c-8894-5e3eb6bcaf4b
+
+
+
+
+
 
 ## 📜 License
 
