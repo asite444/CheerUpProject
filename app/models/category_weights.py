@@ -73,10 +73,10 @@ def get_weight(duty):
             'tool': 0.3
         },
         '시스템': {
-            'it_language': 0.35,
-            'framework': 0.2,
-            'library': 0.35,
-            'tool': 0.1
+            'it_language': 0.25,
+            'framework': 0.3,
+            'library': 0.15,
+            'tool': 0.3
         },
         '블록체인': {
             'it_language': 0.2,
