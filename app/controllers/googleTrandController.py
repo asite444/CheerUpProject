@@ -34,9 +34,9 @@ async def googleTrandSearch_ajax(keywords: str = Form(...)):
             if keyword in data.columns:
                 plt.plot(data['date'], data[keyword], label=keyword)
 
-        plt.title('Google Trends 검색 트렌드')
-        plt.xlabel('날짜')
-        plt.ylabel('검색 관심도')
+        plt.title('Google Trends Search Trend')  # ✅ 영어로 변경
+        plt.xlabel('Date')  # ✅ 영어로 변경
+        plt.ylabel('Search Interest')  # ✅ 영어로 변경
         plt.legend()
         plt.grid()
 
