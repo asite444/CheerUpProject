@@ -48,7 +48,7 @@ def analyze_customize(user_data:UserInputData):
         # DB에 분석 결과가 없음
         improvement_result = analyze_improvement(duty, categories)
         conclusion_result = analyze_conclusion(user_data)
-        if improvement_result is not False and conclusion_result is not False:
+        if improvement_result is not False or conclusion_result is not False:
             set_customized_analysis(duty, categories, improvement_result, conclusion_result)
     else:
         improvement_result = ast.literal_eval(data[0])
