@@ -48,7 +48,7 @@ def analyze_customize(user_data:UserInputData):
         # DB에 분석 결과가 없음
         improvement_result = analyze_improvement(duty, categories)
         conclusion_result = analyze_conclusion(user_data)
-        if improvement_result is not False and conclusion_result is not False:
+        if improvement_result is not False or conclusion_result is not False:
             set_customized_analysis(duty, categories, improvement_result, conclusion_result)
     else:
         improvement_result = ast.literal_eval(data[0])
@@ -329,6 +329,7 @@ def analyze_conclusion(user_data:UserInputData):
         res_eval = ast.literal_eval(response)
        
         result_dict = {'duty': duty, 'score': score, 'description': res_eval}
+        print(result_dict)
     except SyntaxError as e:
         print("Error during openai api response change eval(analyze_conclusion):", str(e))
         return False
@@ -413,6 +414,7 @@ def get_conclusion_html(conclusion):
     <ol>'''
 
     for key, val in description.items():
+        print(score, key, val)
         report += f'''
     <li><b>{key} ({score[key]}점)</b>: {val[0]}<br>
     <span class="indent">{val[1]}</span>
