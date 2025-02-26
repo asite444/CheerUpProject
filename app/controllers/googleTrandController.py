@@ -4,42 +4,53 @@ import matplotlib.pyplot as plt
 from matplotlib import rc
 from pytrends.request import TrendReq
 from fastapi.responses import StreamingResponse, JSONResponse
-import time
 
 router = APIRouter()
 
+# 한글 폰트 설정
 rc('font', family='Malgun Gothic')
 plt.rcParams['axes.unicode_minus'] = False
 
 @router.post("/process_ajax/")
 async def googleTrandSearch_ajax(keywords: str = Form(...)):
     try:
-        pytrends = TrendReq(hl='ko-KR', tz=360, timeout=(10, 25))
+        pytrends = TrendReq(hl='ko-KR', tz=360, timeout=(5, 15))  # 타임아웃 값 축소
         keywords_list = [keyword.strip() for keyword in keywords.split(',')]
 
-        time.sleep(1)  # 딜레이 감소
-
+        # Google Trends 데이터 요청
         pytrends.build_payload(keywords_list, timeframe='today 12-m', geo='KR')
         data = pytrends.interest_over_time()
 
+        # 데이터가 없을 경우 예외 처리
         if data.empty:
             return JSONResponse(content={"error": "No data available"}, status_code=404)
 
-        data = data.infer_objects(copy=False).fillna(False).reset_index()
+        # fillna(False) 대신 infer_objects(copy=False) 적용
+        data = data.drop(columns=['isPartial'], errors='ignore').infer_objects(copy=False).reset_index()
 
-        plt.figure(figsize=(12, 6))
+        # 그래프 생성
+        plt.figure(figsize=(10, 5))
         for keyword in keywords_list:
             if keyword in data.columns:
                 plt.plot(data['date'], data[keyword], label=keyword)
 
-        plt.title('Google Trends')
-        plt.xlabel('Date')
-        plt.ylabel('Interest Over Time')
+        plt.title('Google Trends 검색 트렌드')
+        plt.xlabel('날짜')
+        plt.ylabel('검색 관심도')
         plt.legend()
         plt.grid()
 
+        # ✅ 안내 문구 최상단 중앙에 배치 (최대한 기존 코드 유지)
+        max_value = max(data[keywords_list].max()) if not data.empty else 100  # y축 최대값
+        center_x = data['date'].iloc[len(data) // 2]  # x축 중앙 (가운데 날짜)
+
+        # plt.text(center_x, max_value + (max_value * 0.1), 
+        #          "이 그래프는 6개월간 검색 정도를 나타내는 그래프입니다.", 
+        #          fontsize=10, color='gray', ha='center', fontweight='bold')
+
+        # 이미지 반환
         buf = io.BytesIO()
-        plt.savefig(buf, format="png")
+        plt.savefig(buf, format="png", bbox_inches="tight")  # ✅ bbox_inches="tight" 추가
         buf.seek(0)
         plt.close()
 
