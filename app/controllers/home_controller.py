@@ -40,12 +40,13 @@ async def process_user_data(user_data: UserInputData):
 
 
     report_top5 = sql.analyze_stack_top5(user_data)
-    report_improvement, report_conclusion = gpt.analyze_customize(user_data)
+    report_improvement, report_conclusion = "임시차단","임시차단" #gpt.analyze_customize(user_data)
 
-    report_graph_career = "\n".join(sql.career_graph_search(user_data))      # 경력 그래프
-    report_graph_degree = "\n".join(sql.degree_graph_search(user_data))      # 학력 그래프
-    report_graph_language =  "\n".join(sql.language_graph_search(user_data)) # 어학 그래프
-
+    report_graph_career = "\n".join(sql.career_graph_search(user_data))                 # 경력 그래프
+    report_graph_degree = "\n".join(sql.degree_graph_search(user_data))                 # 학력 그래프
+    report_graph_language =  "\n".join(sql.language_graph_search(user_data))            # 어학 그래프
+    report_job_recommended = sql.fetch_job_recommendations_with_similarity(user_data)   # 공고추천
+   
     # JSON 응답 생성
     return JSONResponse(content={
         "report_top5_language": report_top5["언어"],
@@ -56,5 +57,6 @@ async def process_user_data(user_data: UserInputData):
         "report_conclusion": report_conclusion,
         "report_graph_career":report_graph_career,
         "report_graph_degree":report_graph_degree,
-        "report_graph_language":report_graph_language
+        "report_graph_language":report_graph_language,
+        "report_job_recommended":report_job_recommended
         })
