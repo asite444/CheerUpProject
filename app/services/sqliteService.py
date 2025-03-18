@@ -3,7 +3,11 @@ from app.models.user_input_data import UserInputData
 import ast
 import html
 import re 
+import json
 import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+from app.database.sqliteserver import get_connection
 
 def fetch_tech_stack():
     """
@@ -32,7 +36,68 @@ def fetch_tech_stack():
         if connection:
             connection.close()
 
-import pandas as pd
+
+def fetch_job_recommendations_with_similarity(user_data:UserInputData):
+    """
+    사용자의 기술 스택과 채용 공고 기술 태그 간 유사도를 계산하여 추천 공고 반환
+    """
+    connection = get_connection()
+    try:
+        cursor = connection.cursor()
+        
+        # 저장된 JSON 형식의 공고 데이터를 조회
+        query = "SELECT job_data FROM original"
+        cursor.execute(query)
+        results = cursor.fetchall()
+
+        job_list = []
+        for row in results:
+            job_data = json.loads(row[0])  # JSON 데이터를 Python 딕셔너리로 변환
+            job_position = job_data.get("jobPosition", {})
+
+            # 기술 태그 리스트 추출
+            technical_tags = [tag["name"] for tag in job_position.get("technicalTags", [])]
+
+            # 공고 데이터 리스트 생성
+            job_list.append({
+                "title": job_position.get("title"),
+                "company": job_position.get("company", {}).get("name"),
+                "url": "https://career.programmers.co.kr" + job_position.get("url"),
+                "skills": " ".join(technical_tags),  # 기술 태그를 문자열로 변환
+                "deadline": job_position.get("endAt")
+            })
+
+        if not job_list:
+            return []
+
+        # 사용자의 기술 스택을 문자열로 변환
+        user_skills_str = " ".join(user_data)
+
+        # 공고 기술 태그 + 사용자 기술을 TF-IDF 벡터화
+        job_skills = [job["skills"] for job in job_list]  # 공고 기술 목록
+        vectorizer = TfidfVectorizer()
+        tfidf_matrix = vectorizer.fit_transform([user_skills_str] + job_skills)
+
+        # Cosine Similarity 계산 (사용자 기술과 모든 공고 기술 비교)
+        cosine_sim = cosine_similarity(tfidf_matrix[0], tfidf_matrix[1:])
+
+        # 유사도가 높은 순으로 정렬
+        sorted_indices = cosine_sim.argsort()[0][::-1]
+
+        # 상위 5개 공고 반환
+        matched_jobs = [job_list[idx] for idx in sorted_indices[:5]]
+
+        return matched_jobs
+
+    except Exception as e:
+        return {"error": str(e)}
+
+    finally:
+        if connection:
+            connection.close()
+
+
+
 
 def analyze_stack_top5(user_data: UserInputData):
     connection = get_connection()
