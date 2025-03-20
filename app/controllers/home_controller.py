@@ -40,7 +40,7 @@ async def process_user_data(user_data: UserInputData):
 
 
     report_top5 = sql.analyze_stack_top5(user_data)
-    report_improvement, report_conclusion = "임시차단","임시차단" #gpt.analyze_customize(user_data)
+    report_improvement, report_conclusion =gpt.analyze_customize(user_data)
 
     report_graph_career = "\n".join(sql.career_graph_search(user_data))                 # 경력 그래프
     report_graph_degree = "\n".join(sql.degree_graph_search(user_data))                 # 학력 그래프
