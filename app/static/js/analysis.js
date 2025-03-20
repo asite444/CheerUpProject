@@ -1,4 +1,5 @@
 import { handleItemClick,handleRemoveItem,validateSelectedData,collectSelectedItems } from "./selection.js";
+import { job_recommended_html } from "./search.js";
  
 /**
  * 각 이벤트 초기화
@@ -128,27 +129,8 @@ function submitDataToServer(data) {
             $('#result-graph-degree').html(response.report_graph_degree);
             $('#result-graph-language').html(response.report_graph_language);
 
-             // 추천 공고 리스트 처리
-             if (response.report_job_recommended && response.report_job_recommended.length > 0) {
-                let jobHtml = '<h3>추천 채용 공고</h3><ul>';
-                
-                response.report_job_recommended.forEach(job => {
-                    jobHtml += `
-                        <li>
-                            <a href="${job.url}" target="_blank"><strong>${job.title}</strong></a> 
-                            - ${job.company} (📌 마감일: ${job.deadline || '상시 채용'})
-                            <br>🛠 기술 스택: ${job.skills}
-                        </li>
-                    `;
-                });
-
-                jobHtml += '</ul>';
-                $('#report-job-recommended').html(jobHtml);
-            } else {
-                $('#report-job-recommended').html('<p>추천 공고가 없습니다.</p>');
-            }
-
-
+            job_recommended_html(response);
+             
             // 분석 완료 후 분석 결과 영역 표시
             $("#analysis-result-section").slideDown();
 

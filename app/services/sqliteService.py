@@ -40,6 +40,7 @@ def fetch_tech_stack():
 def fetch_job_recommendations_with_similarity(user_data: UserInputData):
     """
     사용자의 기술 스택과 채용 공고 기술 태그 간 유사도를 계산하여 추천 공고 반환
+    최소 5개의 공고를 반환하도록 보완
     """
     connection = get_connection()
     try:
@@ -96,8 +97,14 @@ def fetch_job_recommendations_with_similarity(user_data: UserInputData):
         # 유사도가 높은 순으로 정렬
         sorted_indices = cosine_sim.argsort()[::-1]
 
-        # 상위 5개 공고 반환
+        # 유사도가 높은 상위 5개 공고 선택 (부족하면 최대한 채움)
         matched_jobs = [job_list[idx] for idx in sorted_indices[:5]]
+
+        # 🔹 만약 유사한 공고가 5개 미만이라면, 나머지는 랜덤으로 채우기
+        if len(matched_jobs) < 5:
+            remaining_jobs = [job_list[idx] for idx in sorted_indices[5:]]  # 남은 공고들
+            additional_jobs = remaining_jobs[: 5 - len(matched_jobs)]  # 부족한 개수만큼 채우기
+            matched_jobs.extend(additional_jobs)
 
         return matched_jobs
 
