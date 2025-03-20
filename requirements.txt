@@ -8,3 +8,4 @@ jinja2
 pytrends
 matplotlib
 python-multipart
+scikit-learn
