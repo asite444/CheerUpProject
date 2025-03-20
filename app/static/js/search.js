@@ -67,3 +67,40 @@ export function mapTechStackData() {
     });
 }
 
+export function job_recommended_html(response) {
+    // 추천 공고 리스트 처리
+    if (response.report_job_recommended && response.report_job_recommended.length > 0) {
+        let jobHtml = `
+            <h3 class="job-title">🚀 추천 채용 공고</h3>
+            <div class="job-list">
+        `;
+
+        response.report_job_recommended.forEach(job => {
+            let deadlineText = job.deadline || '상시 채용';
+            let deadlineClass = deadlineText.includes('상시') ? 'deadline-open' : 'deadline-warning';
+
+            let skillTags = job.skills
+                .split(" ")
+                .map(skill => `<span class="job-skill-tag">${skill}</span>`)
+                .join(" ");
+
+            jobHtml += `
+                <div class="job-card">
+                    <h4 class="job-card-title">
+                        <a href="${job.url}" target="_blank">${job.title}</a>
+                    </h4>
+                    <p class="job-card-company">🏢 ${job.company}</p>
+                    <p class="job-card-deadline ${deadlineClass}">📌 마감일: ${deadlineText}</p>
+                    <div class="job-card-skills">
+                        🛠 기술 스택: ${skillTags}
+                    </div>
+                </div>
+            `;
+        });
+
+        jobHtml += `</div>`; // job-list 닫기
+        $('#report-job-recommended').html(jobHtml);
+    } else {
+        $('#report-job-recommended').html('<p class="no-job">❌ 추천 공고가 없습니다.</p>');
+    }
+}

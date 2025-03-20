@@ -1,0 +1,85 @@
+/* 추천 공고 스타일 */
+.job-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.job-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.job-card {
+    width: 300px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.job-card:hover {
+    transform: scale(1.03);
+}
+
+.job-card-title a {
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #007BFF;
+    transition: color 0.3s;
+}
+
+.job-card-title a:hover {
+    color: #0056b3;
+}
+
+.job-card-company {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.job-card-deadline {
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-top: 8px;
+}
+
+.deadline-open {
+    background-color: #e0f7fa;
+    color: #00796b;
+}
+
+.deadline-warning {
+    background-color: #ffebee;
+    color: #d32f2f;
+    font-weight: bold;
+}
+
+.job-card-skills {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.job-skill-tag {
+    background: #007BFF;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    margin: 2px;
+    display: inline-block;
+}
+
+.no-job {
+    text-align: center;
+    font-size: 16px;
+    color: #777;
+}

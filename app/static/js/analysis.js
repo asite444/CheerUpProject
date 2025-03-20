@@ -1,4 +1,5 @@
 import { handleItemClick,handleRemoveItem,validateSelectedData,collectSelectedItems } from "./selection.js";
+import { job_recommended_html } from "./search.js";
  
 /**
  * 각 이벤트 초기화
@@ -127,6 +128,9 @@ function submitDataToServer(data) {
             $('#result-graph-career').html(response.report_graph_career);
             $('#result-graph-degree').html(response.report_graph_degree);
             $('#result-graph-language').html(response.report_graph_language);
+
+            job_recommended_html(response);
+             
             // 분석 완료 후 분석 결과 영역 표시
             $("#analysis-result-section").slideDown();
 
