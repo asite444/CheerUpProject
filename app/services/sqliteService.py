@@ -97,13 +97,13 @@ def fetch_job_recommendations_with_similarity(user_data: UserInputData):
         # 유사도가 높은 순으로 정렬
         sorted_indices = cosine_sim.argsort()[::-1]
 
-        # 유사도가 높은 상위 5개 공고 선택 (부족하면 최대한 채움)
-        matched_jobs = [job_list[idx] for idx in sorted_indices[:5]]
+        # 유사도가 높은 상위 10개 공고 선택 (부족하면 최대한 채움)
+        matched_jobs = [job_list[idx] for idx in sorted_indices[:10]]
 
-        # 🔹 만약 유사한 공고가 5개 미만이라면, 나머지는 랜덤으로 채우기
-        if len(matched_jobs) < 5:
-            remaining_jobs = [job_list[idx] for idx in sorted_indices[5:]]  # 남은 공고들
-            additional_jobs = remaining_jobs[: 5 - len(matched_jobs)]  # 부족한 개수만큼 채우기
+        # 🔹 만약 유사한 공고가 10개 미만이라면, 나머지는 랜덤으로 채우기
+        if len(matched_jobs) < 10:
+            remaining_jobs = [job_list[idx] for idx in sorted_indices[10:]]  # 남은 공고들
+            additional_jobs = remaining_jobs[: 10 - len(matched_jobs)]  # 부족한 개수만큼 채우기
             matched_jobs.extend(additional_jobs)
 
         return matched_jobs
