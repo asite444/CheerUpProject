@@ -7,14 +7,17 @@
 }
 
 .job-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 한 줄에 3개 */
+    gap: 20px;
+    justify-items: center;
+    align-items: stretch;
+    margin-top: 20px;
 }
 
+
 .job-card {
-    width: 300px;
+    width: 270px;
     background: #fff;
     padding: 15px;
     border-radius: 8px;
@@ -82,4 +85,16 @@
     text-align: center;
     font-size: 16px;
     color: #777;
+}
+
+@media (max-width: 1024px) {
+    .job-list {
+        grid-template-columns: repeat(2, 1fr); /* 태블릿에서는 2칸 */
+    }
+}
+
+@media (max-width: 600px) {
+    .job-list {
+        grid-template-columns: 1fr; /* 모바일에서는 1칸 */
+    }
 }
